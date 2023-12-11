@@ -1,11 +1,8 @@
-//app/signin/page.tsx
-
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { getProviders, signIn, signOut } from "next-auth/react";
 
 function Login() {
-  // 추가된 부분
   const [providers, setProviders] = useState(null);
 
   useEffect(() => {
@@ -15,14 +12,11 @@ function Login() {
       setProviders(res);
     })();
   }, []);
-  // 추가된 부분
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   const handleSubmit = async () => {
-    // console.log(emailRef.current);
-    // console.log(passwordRef.current);
     const result = await signIn("credentials", {
       username: emailRef.current,
       password: passwordRef.current,

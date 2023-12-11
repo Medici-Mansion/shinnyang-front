@@ -1,41 +1,50 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { getProviders, signIn, signOut } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function Home() {
+const Login = () => {
+  const [providers, setProviders] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const res: any = await getProviders();
+      console.log(res);
+      setProviders(res);
+    })();
+  }, []);
+  const backgroundStyle = {
+    backgroundImage: `url('/shincat-login.png')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-yellow-100">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center bg-gradient-to-b from-red-400 pb-6 pt-8 backdrop-blur-2xl text-2xl">
-          {/* 신냥이 우체국 */}
-        </p>
-      </div>
-
-      <Image
-        className="relative"
-        src="/cat.gif"
-        alt="Next.js Logo"
-        width={450}
-        height={70}
-        priority
-      />
-
-      <div className=" grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="/signin"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 "
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold text-red-400`}>
-            로그인{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-red-400`}>
-            신냥이 우체국에 가입해주세요
-          </p>
-        </a>
+    <main
+      className="max-w-sm py-4 sm:py-0 flex flex-col sm:justify-center mx-auto w-full h-full"
+      style={backgroundStyle}
+    >
+      <div className="flex flex-col h-full">
+        <div className="h-[80%] w-full"></div>
+        <div className="p-5">
+          <Button
+            className="w-full transform rounded-md bg-[#FFCD29] px-4 py-2 tracking-wide text-black transition-colors duration-200 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none"
+            onClick={() =>
+              signIn("kakao", { redirect: true, callbackUrl: "/test" })
+            }
+          >
+            카카오 로그인
+          </Button>
+          <Button
+            className="mt-5 w-full transform rounded-md bg-gray-700 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none"
+            onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
     </main>
   );
-}
+};
+export default Login;
