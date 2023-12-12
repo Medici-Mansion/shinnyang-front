@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-export const fontSans = FontSans({
+export const fontSans = Roboto({
+  weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "h-[100dvh] bg-background font-sans antialiased relative",
           fontSans.variable
         )}
       >
