@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-export const fontSans = Roboto({
+const fontSans = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-sans",
