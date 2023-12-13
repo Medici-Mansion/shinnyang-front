@@ -1,7 +1,13 @@
 {
-  "name": "init",
-  "version": "0.1.0",
+  "name": "shinnyang-front",
+  "version": "0.0.9",
   "private": true,
+  "author": {
+    "name": "Medici",
+    "email": "raymondanything@gmail.com",
+    "url": "https://www.medici-mansion.com"
+  },
+  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
