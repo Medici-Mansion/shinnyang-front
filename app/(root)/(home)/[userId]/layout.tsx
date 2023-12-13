@@ -9,6 +9,7 @@ const UserLayout = ({ children, params: { userId } }: WithParam<"userId">) => {
       </main>
     </div>
   );
+
 };
 
 export default UserLayout;
