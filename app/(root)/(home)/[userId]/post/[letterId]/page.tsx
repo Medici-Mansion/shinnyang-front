@@ -1,18 +1,31 @@
+"use client";
+
 import Reply from "@/components/reply";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const LetterPage = () => {
+  const router = useRouter();
   return (
-    <section className="flex flex-col space-y-4 h-full items-center">
-      <h1 className="text-center mt-[10dvh] font-semibold text-2xl mb-4">
-        냥이 1이 보관한
+    <section className="theme-responsive overflow-hidden bg-gray-500">
+      <ArrowLeft onClick={() => router.back()} />
+      <h1 className="mb-4 mt-[5dvh] text-center text-2xl font-semibold text-white">
+        유무가 보관한
         <br />
         첫번 째 편지
         <br />
-        <Button className="w-full">#1</Button>
       </h1>
-      <Reply items={["df", "wfwef", "we213123"]} />
+      <div className="flex w-full justify-center">
+        <div className="flex h-10 w-24 items-center justify-center rounded-sm bg-gray-400 text-center text-black">
+          #1
+        </div>
+      </div>
+      <Reply items={["1", "2", "3"]} />
+      <div className="mt-20 items-end">
+        <Button variant={"primary"}>답장하기</Button>
+      </div>
     </section>
   );
 };

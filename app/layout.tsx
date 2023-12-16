@@ -22,8 +22,8 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body
         className={cn(
-          "h-[100dvh] bg-background font-sans antialiased relative",
-          fontSans.variable
+          "relative h-[100dvh] bg-background font-sans antialiased",
+          fontSans.variable,
         )}
       >
         {children}
