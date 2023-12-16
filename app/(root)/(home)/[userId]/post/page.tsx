@@ -44,7 +44,6 @@ const PostPage = () => {
             <PostBox text="#9" />
           </div>
         </div>
-        <div className="relative bottom-0 h-[60%] w-full bg-foreground"></div>
       </div>
       <div className="flex w-full grow items-end">
         <div className="relative bottom-0 h-[240px] w-full bg-foreground">
