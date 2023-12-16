@@ -37,7 +37,9 @@ const PostPage = () => {
         <div className="relative bg-foreground h-[60%] w-full bottom-0"></div>
       </div>
       <div className="absolute bottom-10 w-full px-4">
-        <Button className="w-full py-6">편지쓰기</Button>
+        <Link href="/letter">
+          <Button className="w-full py-6">편지쓰기</Button>
+        </Link>
       </div>
     </section>
   );
