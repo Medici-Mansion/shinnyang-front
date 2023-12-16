@@ -1,10 +1,16 @@
+import TextArea from "@/components/textarea";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const LetterPage = () => {
   return (
     <section className="flex flex-col space-y-4 h-full p-6">
+      <Link href={"/userId/post"}>
+        <ArrowLeft />
+      </Link>
       <h1 className="mt-[7dvh] font-semibold text-2xl mb-4">
         편지를 배달할 냥이를
         <br />
@@ -34,10 +40,14 @@ const LetterPage = () => {
           <span className="mt-2 text-base">냥이 3</span>
         </div>
       </div>
-      <div className="grow relative overflow-hidden rounded-2xl py-4 pl-8">
+      <div className="grow relative overflow-hidden rounded-2xl py-4 pl-8 pr-4">
         <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
         <h1 className="text-2xl">수해니 에게</h1>
-        <textarea className="z-10" rows={13}></textarea>
+        <TextArea
+          className="bg-transparent w-full border-none outline-none"
+          maxLength={100}
+          maxRows={6}
+        />
       </div>
       <Button className="w-full py-6">선택 완료</Button>
     </section>

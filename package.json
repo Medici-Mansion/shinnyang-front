@@ -1,13 +1,12 @@
 {
   "name": "shinnyang-front",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "private": true,
   "author": {
     "name": "Medici",
     "email": "raymondanything@gmail.com",
     "url": "https://www.medici-mansion.com"
   },
-  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -24,6 +23,7 @@
     "next-navigation": "^1.0.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-textarea-autosize": "^8.5.3",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7"
   },
