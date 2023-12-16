@@ -7,7 +7,6 @@
     "email": "raymondanything@gmail.com",
     "url": "https://www.medici-mansion.com"
   },
-  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -35,7 +34,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",
+    "prettier-plugin-tailwindcss": "^0.5.9",
     "tailwindcss": "^3.3.0",
+    "tailwindcss-spinner": "^1.2.0",
     "typescript": "^5"
   }
 }

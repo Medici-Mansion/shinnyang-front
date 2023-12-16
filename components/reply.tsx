@@ -5,13 +5,13 @@ const Reply = ({ items }: { items?: string[] }) => {
   const [emblaRef, ...rest] = useEmblaCarousel({});
   console.log(emblaRef, ...rest, "<<emblaRef,...rest");
   return (
-    <div className="embla">
+    <div className="embla mt-4 rounded-md bg-white">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="flex">
           {items?.map((value, index) => {
             return (
               <div
-                className="text-center"
+                className="h-[45dvh] w-full text-center"
                 style={{
                   flex: "0 0 100%",
                 }}
