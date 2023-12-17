@@ -1,56 +1,69 @@
-import TextArea from "@/components/textarea";
-import { Button } from "@/components/ui/button";
+"use client";
+import { HashContext } from "@/hooks/use-hash-router";
+import BaseLayout from "@/layout/base-layout";
 import { ArrowLeft } from "lucide-react";
-import Image from "next/image";
+import React, { useContext } from "react";
+import SelectPad from "../../../../components/pages/letter/select-pad";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form } from "@/components/ui/form";
+import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import React from "react";
+import WriteLetter from "@/components/pages/letter/write-letter";
+import FinishLetter from "@/components/pages/letter/finish-letter";
+import Mailing from "@/components/pages/letter/mailing";
+const formState = z.object({
+  catType: z.enum(["cat1", "cat2", "cat3"]),
+  letterContent: z.string().min(1).max(100),
+  to: z.string().min(1),
+  from: z.string().min(1),
+});
+
+export type LetterFormValues = z.infer<typeof formState>;
 
 const LetterPage = () => {
+  const router = useContext(HashContext);
+  const form = useForm<LetterFormValues>({
+    resolver: zodResolver(formState),
+    defaultValues: {
+      catType: "cat1",
+      letterContent: "",
+      to: "",
+      from: "",
+    },
+  });
+  const onValid = (values: LetterFormValues) => {
+    console.log(values, "<<values");
+  };
   return (
-    <section className="flex flex-col space-y-4 h-full p-6">
-      <Link href={"/userId/post"}>
-        <ArrowLeft />
-      </Link>
-      <h1 className="mt-[7dvh] font-semibold text-2xl mb-4">
-        편지를 배달할 냥이를
-        <br />
-        선택해주세요!
-        <br />
-        <sub className="text-sm font-normal">
-          냥이마다 편지 디자인이 달라요.
-        </sub>
-      </h1>
-      <div className="grid grid-cols-3 gap-x-2">
-        <div className="w-full text-sm font-normal mx-auto text-center">
-          <div className="relative mb-2 aspect-square bg-gray-200 rounded-md">
-            <Image src="/cat_1.png" alt="cat1" fill />
-          </div>
-          <span className="mt-2 text-base">냥이 1</span>
-        </div>
-        <div className="w-full text-sm font-normal mx-auto text-center">
-          <div className="relative mb-2 aspect-square bg-gray-200 rounded-md">
-            <Image src="/cat_2.png" alt="cat1" fill />
-          </div>
-          <span className="mt-2 text-base">냥이 2</span>
-        </div>
-        <div className="w-full text-sm font-normal mx-auto text-center">
-          <div className="relative mb-2 aspect-square bg-gray-200 rounded-md">
-            <Image src="/cat_3.png" alt="cat1" fill />
-          </div>
-          <span className="mt-2 text-base">냥이 3</span>
-        </div>
-      </div>
-      <div className="grow relative overflow-hidden rounded-2xl py-4 pl-8 pr-4">
-        <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
-        <h1 className="text-2xl">수해니 에게</h1>
-        <TextArea
-          className="bg-transparent w-full border-none outline-none"
-          maxLength={100}
-          maxRows={6}
-        />
-      </div>
-      <Button className="w-full py-6">선택 완료</Button>
-    </section>
+    <Form {...form}>
+      <BaseLayout
+        as="form"
+        onSubmit={form.handleSubmit(onValid)}
+        className='"flex flex-col h-full p-6"'
+      >
+        {router.hash ? (
+          <ArrowLeft onClick={() => router.back()} />
+        ) : (
+          <Link href="/userId/post">
+            <ArrowLeft />
+          </Link>
+        )}
+        <AnimatePresence mode="wait">
+          {!router.hash ? (
+            <SelectPad router={router} control={form.control} />
+          ) : null}
+          {router.hash === "#letter" ? (
+            <WriteLetter router={router} control={form.control} />
+          ) : null}
+          {router.hash === "#finish" ? (
+            <FinishLetter router={router} control={form.control} />
+          ) : null}
+          {router.hash === "#mailing" ? <Mailing router={router} /> : null}
+        </AnimatePresence>
+      </BaseLayout>
+    </Form>
   );
 };
 
