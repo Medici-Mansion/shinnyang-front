@@ -11,7 +11,6 @@ const TextArea = (props: TextAreaProps) => {
   return (
     <TextareaAutosize
       className="z-10 border-none outline-none"
-      cacheMeasurements
       {...props}
     ></TextareaAutosize>
   );
