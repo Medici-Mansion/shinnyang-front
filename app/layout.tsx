@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import QueryProvider from "@/components/provider/query-provider";
 
 const fontSans = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -23,7 +25,10 @@ export default function RootLayout({
       <body
         className={cn("bg-background font-sans antialiased", fontSans.variable)}
       >
-        {children}
+        <QueryProvider>
+          {children}
+          <ReactQueryDevtools />
+        </QueryProvider>
       </body>
     </html>
   );
