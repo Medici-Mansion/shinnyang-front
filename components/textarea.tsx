@@ -1,5 +1,6 @@
 "use client";
-import React, { HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
+import React, { HTMLAttributes, forwardRef } from "react";
 import TextareaAutosize, {
   TextareaAutosizeProps,
 } from "react-textarea-autosize";
@@ -7,13 +8,19 @@ import TextareaAutosize, {
 type TextAreaProps = HTMLAttributes<HTMLTextAreaElement> &
   TextareaAutosizeProps;
 
-const TextArea = (props: TextAreaProps) => {
-  return (
-    <TextareaAutosize
-      className="z-10 border-none outline-none"
-      {...props}
-    ></TextareaAutosize>
-  );
-};
-
+const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  (props, ref) => {
+    return (
+      <TextareaAutosize
+        {...props}
+        className={cn(
+          "z-10 p-3 px-5 placeholder:text-muted-foreground rounded-md border-none outline-none",
+          props.className
+        )}
+        ref={ref}
+      ></TextareaAutosize>
+    );
+  }
+);
+TextArea.displayName = "TextArea";
 export default TextArea;

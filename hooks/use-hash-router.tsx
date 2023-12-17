@@ -1,6 +1,7 @@
 "use client";
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import {
   PropsWithChildren,
   createContext,
@@ -9,7 +10,31 @@ import {
   useState,
 } from "react";
 
-export interface IHashContext extends AppRouterInstance {
+type HashAppRouterInstance = {
+  back: () => void;
+  forward: () => void;
+  refresh: () => void;
+  push: (
+    href: string,
+    options?: Parameters<AppRouterInstance["push"]>[1] & {
+      native: boolean;
+    }
+  ) => void;
+  prefetch: (
+    href: string,
+    options?: Parameters<AppRouterInstance["push"]>[1] & {
+      native: boolean;
+    }
+  ) => void;
+  replace: (
+    href: string,
+    options?: Parameters<AppRouterInstance["push"]>[1] & {
+      native: boolean;
+    }
+  ) => void;
+};
+
+export interface IHashContext extends HashAppRouterInstance {
   hashStack: string[];
   hash: string;
 }
@@ -25,36 +50,58 @@ const initialContext: IHashContext = {
 };
 export const HashContext = createContext<IHashContext>(initialContext);
 const useHashRouter = (): IHashContext => {
-  const [hashStack, setHashStack] = useState<string[]>([
-    typeof window !== "undefined" ? window.location.hash : "",
-  ]);
+  const nativeRouter = useRouter();
+  const [hashStack, setHashStack] = useState<string[]>(
+    typeof window !== "undefined"
+      ? window.location.hash
+        ? [window.location.hash]
+        : []
+      : []
+  );
 
   const handleListener = useCallback(
     (event: PopStateEvent) => {
       event.preventDefault();
-      const newHash = event.state?.hash as string;
-      setHashStack([...hashStack, newHash || ""]);
+      const type = event.state.type as keyof HashAppRouterInstance;
+      const newHash = window.location.hash;
+      switch (type) {
+        case "push":
+          setHashStack([...hashStack, newHash]);
+          break;
+        case "back":
+        case undefined:
+          setHashStack((prev) => {
+            prev.pop();
+            return [...prev];
+          });
+          break;
+        case "replace":
+          setHashStack(newHash ? [newHash] : []);
+      }
     },
     [hashStack]
   );
 
-  const push: AppRouterInstance["push"] = (href, options) => {
+  const push: IHashContext["push"] = (
+    href,
+    { native, ...options } = { native: false }
+  ) => {
+    if (native) {
+      nativeRouter.push(href, options);
+      return;
+    }
     const newHash = `#${href}`;
     if (hashStack[hashStack.length - 1] !== newHash) {
-      window.history.pushState(
-        { ...window.history.state, hash: newHash },
-        "",
-        newHash
-      );
+      window.history.pushState({ ...window.history.state }, "", newHash);
       window.dispatchEvent(
         new PopStateEvent("popstate", {
-          state: { ...window.history.state, hash: newHash },
+          state: { ...window.history.state, type: "push" },
         })
       );
     }
   };
 
-  const back: AppRouterInstance["back"] = () => {
+  const back: IHashContext["back"] = () => {
     window.history.back();
   };
 
@@ -67,8 +114,13 @@ const useHashRouter = (): IHashContext => {
   const refresh = () => {
     throw new Error("Not Implement");
   };
-  const replace = () => {
-    throw new Error("Not Implement");
+  const replace: IHashContext["replace"] = (href, options) => {
+    window.history.replaceState({ ...window.history.state }, "", href);
+    window.dispatchEvent(
+      new PopStateEvent("popstate", {
+        state: { ...window.history.state, type: "replace" },
+      })
+    );
   };
 
   useEffect(() => {

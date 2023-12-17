@@ -10,7 +10,13 @@ type P = BaseLayoutProps &
 const BaseLayout = ({ children, as, ...rest }: PropsWithChildren<P>) => {
   const Tag = as ?? "section";
   return (
-    <Tag {...rest} className={cn("flex flex-col space-y-4 h-full p-6")}>
+    <Tag
+      {...rest}
+      className={cn(
+        "flex flex-col h-full p-6",
+        rest.className?.replaceAll('"', "")
+      )}
+    >
       {children}
     </Tag>
   );

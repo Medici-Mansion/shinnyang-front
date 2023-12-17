@@ -4,22 +4,23 @@ import { FormField } from "@/components/ui/form";
 import { IHashContext } from "@/hooks/use-hash-router";
 import Image from "next/image";
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { Control } from "react-hook-form";
+import { motion } from "framer-motion";
+import { LetterFormValues } from "@/app/(root)/(home)/letter/page";
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
-  form: UseFormReturn<
-    {
-      catType: "cat1" | "cat2" | "cat3";
-    },
-    any,
-    undefined
-  >;
+  control: Control<LetterFormValues, any>;
 }
 
-const SelectPad = ({ router, form }: SelectPadProps) => {
+const SelectPad = ({ router, control }: SelectPadProps) => {
   return (
-    <>
-      <h1 className="mt-[7dvh] font-semibold text-2xl mb-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex flex-col grow space-y-4 pt-2"
+    >
+      <h1 className="font-semibold text-2xl mb-4">
         편지를 배달할 냥이를
         <br />
         선택해주세요!
@@ -30,7 +31,7 @@ const SelectPad = ({ router, form }: SelectPadProps) => {
       </h1>
       <FormField
         name="catType"
-        control={form.control}
+        control={control}
         render={({ field }) => (
           <div className="grid grid-cols-3 gap-x-2">
             <div className="w-full text-sm font-normal mx-auto text-center">
@@ -103,21 +104,17 @@ const SelectPad = ({ router, form }: SelectPadProps) => {
           value="냥이 1은 귀여운 글씨체와
           편지 디자인 설명?"
           disabled
-          className="bg-transparent w-2/3 border-none outline-none"
+          className="bg-transparent w-2/3 px-0 border-none outline-none"
           maxLength={100}
           maxRows={6}
         />
-        <h1 className="absolute text-2xl bottom-4 right-4">닉네임 씀</h1>
+        <h1 className="absolute text-2xl bottom-4 right-[15%]">닉네임 씀</h1>
       </div>
 
-      <Button
-        type="submit"
-        onClick={() => router.push("test")}
-        className="w-full py-6"
-      >
+      <Button onClick={() => router.push("letter")} className="w-full py-6">
         선택 완료
       </Button>
-    </>
+    </motion.div>
   );
 };
 
