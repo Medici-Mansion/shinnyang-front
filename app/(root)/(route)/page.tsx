@@ -1,15 +1,26 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+
 const OnBoardingPage = () => {
+  const router = useRouter();
   const [login, setLogin] = useState(false);
   const [nickname, setNickname] = useState("");
+
   const backgroundStyle = {
     backgroundImage: `url('/bg-shinnyang.png')`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+  };
+
+  const nicknameCheckHandler = () => {
+    nickname ? router.push("/userId/post") : router.push("userId/nickname");
   };
 
   return (
@@ -40,11 +51,9 @@ const OnBoardingPage = () => {
         </div>
         <div className="items-end">
           {!login ? (
-            <Link href="/">
               <Button variant="kakao" onClick={() => setLogin(true)}>
                 카카오 로그인
               </Button>
-            </Link>
           ) : (
             <div className="mb-8">
               <Link href={nickname ? "/userId/post" : "/userId/nickname"}>
