@@ -21,8 +21,8 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         umu: ["umu", ...fontFamily.sans],
-        chejeu: ["chejeu", ...fontFamily.sans],
-        guki: ["guki", ...fontFamily.sans],
+        cheezu: ["cheezu", ...fontFamily.sans],
+        gookie: ["gookie", ...fontFamily.sans],
       },
       colors: {
         black: "#111111",

@@ -16,7 +16,7 @@ body {
   }
 
   @font-face {
-    font-family: "chejeu";
+    font-family: "cheezu";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeJJIBBABBA.woff")
       format("woff");
     font-weight: normal;
@@ -24,7 +24,7 @@ body {
   }
 
   @font-face {
-    font-family: "guki";
+    font-family: "gookie";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeGENWOO.woff")
       format("woff");
     font-weight: normal;
@@ -36,19 +36,19 @@ body {
     font-size: 20px;
   }
 
-  .font-chejeu {
-    font-family: "chejeu", sans-serif;
+  .font-cheezu {
+    font-family: "cheezu", sans-serif;
     font-size: 20px;
   }
 
-  .font-guki {
-    font-family: "guki", sans-serif;
+  .font-gookie {
+    font-family: "gookie", sans-serif;
     font-size: 20px;
   }
 
   .theme-responsive {
     max-width: 574px;
-    height: 101dvh;
+    height: 100dvh;
     margin: auto;
     padding: 1rem;
     display: flex;

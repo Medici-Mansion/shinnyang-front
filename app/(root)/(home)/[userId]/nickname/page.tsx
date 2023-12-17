@@ -36,26 +36,25 @@ const NicknamePage = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    router.push('/userId/post')
+    router.push("/userId/post");
   };
 
+  const isNicknameEntered = !!form.getValues("nickname");
 
   return (
-
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="max-w-sm flex flex-col justify-between py-4 sm:py-0 mx-auto w-full px-4 h-[100dvh] bg-[#F6F6F6]"
+        className="theme-responsive"
       >
         <div>
           <ArrowLeft onClick={() => router.back()} />
-          <div className="text-2xl text-black justify-start py-5">
-
+          <div className="justify-start py-5 text-2xl text-black">
             편지를 보낼 때<br />
             표시할 닉네임을 알려주세요.
           </div>
         </div>
-        <div className="flex flex-col mt-2 justify-between h-full">
+        <div className="mt-2 flex h-full flex-col justify-between">
           <FormField
             control={form.control}
             name="nickname"
@@ -63,15 +62,19 @@ const NicknamePage = () => {
               <FormItem>
                 <FormLabel>닉네임</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} placeholder="닉네임을 작성해주세요." />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="h-[56px] bg-[#5F5F5F] text-white" type="submit">
-            확인
-          </Button>
+          {isNicknameEntered ? (
+            <Button variant={"primary"} type="submit">
+              확인
+            </Button>
+          ) : (
+            <Button variant={"disable"}>닉네임을 설정해주세요.</Button>
+          )}
         </div>
       </form>
     </Form>

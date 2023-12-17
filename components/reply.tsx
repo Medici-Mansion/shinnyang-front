@@ -5,7 +5,7 @@ const Reply = ({ items }: { items?: string[] }) => {
   const [emblaRef, ...rest] = useEmblaCarousel({});
   console.log(emblaRef, ...rest, "<<emblaRef,...rest");
   return (
-    <div className="embla mt-4 rounded-md bg-white">
+    <div className="embla mt-4 overflow-hidden rounded-md bg-white">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="flex">
           {items?.map((value, index) => {
