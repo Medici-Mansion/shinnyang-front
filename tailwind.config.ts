@@ -20,8 +20,21 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        umu: ["umu", ...fontFamily.sans],
+        cheezu: ["cheezu", ...fontFamily.sans],
+        gookie: ["gookie", ...fontFamily.sans],
       },
       colors: {
+        black: "#111111",
+        kakao: "#FFCD29",
+        gray: {
+          600: "#767676",
+          500: "#999999",
+          400: "#CCCCCC",
+          300: "#DDDDDD",
+          200: "#EDEDED",
+          100: "#F6F6F6",
+        },
         activate: "hsl(var(--activate))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
