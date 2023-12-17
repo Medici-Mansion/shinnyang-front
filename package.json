@@ -7,7 +7,6 @@
     "email": "raymondanything@gmail.com",
     "url": "https://www.medici-mansion.com"
   },
-  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,6 +14,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -24,8 +25,10 @@
     "next-navigation": "^1.0.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.49.2",
     "tailwind-merge": "^2.1.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
