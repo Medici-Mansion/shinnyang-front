@@ -15,7 +15,7 @@ const PostPage = () => {
     <section className="theme-responsive p-0">
       <div className="px-4 pt-4">
         <ArrowLeft onClick={() => router.back()} />
-        <div className="mt-10 text-center">
+        <div className="text-center">
           <h1 className="text-2xl font-semibold text-black">
             {"신냥이"}
             <br />
@@ -46,16 +46,17 @@ const PostPage = () => {
         </div>
       </div>
       <div className="flex w-full grow items-end">
-        <div className="relative bottom-0 h-[240px] w-full bg-foreground">
-          <div className="relative -top-[55%] -z-10 mx-auto aspect-[31/32] h-[90%]">
-            <Image src="/cat.png" alt="cat" fill />
-          </div>
-          <div className="absolute bottom-10 w-full p-4">
-            <Link href="/letter">
-              <Button variant="primary">편지쓰기</Button>
-            </Link>
-          </div>
+      <div className="relative w-full grow flex flex-col h-full items-end">
+        <div className="relative grow mx-auto top-[20%] h-[65%] -z-10 aspect-[31/32]">
+          <Image src="/cat.png" alt="cat" fill />
         </div>
+        <div className="relative bg-foreground h-[60%] w-full bottom-0"></div>
+        </div>
+        <div className="absolute bottom-10 w-full px-4">
+        <Link href="/letter">
+          <Button className="w-full py-6">편지쓰기</Button>
+        </Link>
+      </div>
       </div>
     </section>
   );

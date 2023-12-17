@@ -1,13 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-html,
-body,
-:root {
-  height: 100%;
+body {
+  max-width: 574px;
+  margin : 0 auto;
 }
-
 @layer base {
   @font-face {
     font-family: "umu";
