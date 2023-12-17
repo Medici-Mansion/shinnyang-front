@@ -36,7 +36,7 @@ const NicknamePage = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    router.push(`/${'userId'}/post`)
   };
 
   return (
