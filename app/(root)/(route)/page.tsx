@@ -66,3 +66,5 @@ const OnBoardingPage = () => {
     </div>
   );
 };
+
+export default OnBoardingPage;
