@@ -1,28 +1,41 @@
-import axios from 'axios'
-
+import { GetUserResponse } from "@/type";
+import axios from "axios";
+const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
-  const params: { [key: string]: string } = {
-    client_id: process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID || "",
-    redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL || "",
-    response_type: "code",
-    scope: "https://www.googleapis.com/auth/userinfo.email",
-    access_type: "offline",
-  };
+  const authUrl = new URL(
+    "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount",
+  );
 
-  const queryString = Object.keys(params)
-    .map(
-      (key) =>
-        encodeURIComponent(key) + "=" + encodeURIComponent(params[key]),
-    )
-    .join("&");
+  authUrl.searchParams.set(
+    "client_id",
+    process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID || "",
+  );
+  authUrl.searchParams.set(
+    "redirect_uri",
+    process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL || "",
+  );
+  authUrl.searchParams.set("response_type", "code");
+  authUrl.searchParams.set(
+    "scope",
+    "https://www.googleapis.com/auth/userinfo.email",
+  );
+  authUrl.searchParams.set("access_type", "offline");
 
-  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?${queryString}`;
+  window.location.href = authUrl.toString();
+};
 
-  window.location.href = authUrl;
+export const getUser = async (code: string) => {
+  const userResponse = await api.get<GetUserResponse>("/oauth/google/user", {
+    params: {
+      code,
+    },
+  });
+  return userResponse.data;
 };
 
 const APIs = {
-  getGoogleCode
-}
+  getGoogleCode,
+  getUser,
+};
 
-export default APIs
+export default APIs;

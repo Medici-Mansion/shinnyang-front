@@ -1,45 +1,35 @@
-"use client";
-
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { notFound } from "next/navigation";
+import APIs from "@/apis";
+import UserProvider from "@/components/provider/user-provider";
 
-import { userStore } from "@/store/user";
+interface GoogleSearchParams {
+  code: string;
+  scope: string;
+  authuser: string;
+  prompt: string;
+}
 
-const Page = () => {
-  const { setUser } = userStore();
-  const searchParam = useSearchParams();
-  const code = searchParam.get("code");
+interface AuthPageProps {
+  searchParams: Partial<GoogleSearchParams>;
+}
 
-  const getUser = useCallback(async () => {
-    const userData = await axios.get(
-      "https://medici-mension.com/oauth/google/user",
-      {
-        params: {
-          code,
-        },
-      },
-    );
-    if (userData) {
-      const { token, user } = userData.data || {};
-      const { access, refresh } = token || {};
-      const { email, id, nickname } = user || {};
-      setUser({
-        isLogin: true,
-        access,
-        refresh,
-        email,
-        id,
-        nickname,
-      });
-    }
-  }, [code, setUser]);
-
-  if (code) {
-    getUser();
+const Page = async ({ searchParams }: AuthPageProps) => {
+  if (!searchParams.code) {
+    notFound();
   }
+  try {
+    const { user, token } = await APIs.getUser(searchParams.code);
+    if (!user) {
+      notFound();
+    }
 
-  return <div></div>;
+    return <UserProvider user={user} token={token} />;
+  } catch (error: any) {
+    console.error(`[AUTH ERROR] : ${error?.message}`);
+    notFound();
+  }
 };
 
 export default Page;

@@ -5,3 +5,19 @@ export interface WithParam<T extends string> extends PropsWithChildren {
     [key in T]: string;
   };
 }
+
+export interface GetUserResponse {
+  token: Token;
+  user: User;
+}
+
+export interface Token {
+  access: string;
+  refresh: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  nickname: string;
+}
