@@ -1,44 +1,62 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import React from "react";
 
 const PostPage = () => {
+  const router = useRouter();
+
   return (
-    <section className="flex flex-col space-y-4 h-full items-center">
-      <h1 className="text-center mt-[10dvh] font-semibold text-2xl mb-4">
-        닉네임의
-        <br />
-        신냥이 우체국
-        <br />
-        <sub className="text-sm font-normal">
-          서랍을 누르면 편지를 확인할 수 있어요!
-        </sub>
-      </h1>
-      <div className="w-full flex flex-col space-y-8 px-4">
-        <div className="grid grid-cols-3 gap-2 w-full justify-items-center">
-          <PostBox text="냥이 1" />
-          <PostBox text="냥이 2" />
-          <PostBox text="냥이 3" />
+    <section className="theme-responsive p-0">
+      <div className="px-4 pt-4">
+        <ArrowLeft onClick={() => router.back()} />
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold text-black">
+            {"신냥이"}
+            <br />
+            신냥이 우체국
+            <br />
+          </h1>
+          <sub className="text-lg font-normal text-gray-500">
+            서랍을 누르면 편지를 확인할 수 있어요!
+          </sub>
         </div>
-        <div className="grid grid-cols-3 gap-2 gap-y-4 w-full justify-items-center">
-          <PostBox text="#1" />
-          <PostBox text="#2" />
-          <PostBox text="#3" />
-          <PostBox text="#4" />
-          <PostBox text="#5" />
-          <PostBox text="#6" />
-        </div>
-      </div>
-      <div className="w-full grow flex items-end">
-        <div className="relative bg-foreground h-[60%] w-full bottom-0">
-          <div className="relative mx-auto -top-[55%] h-[90%] -z-10 aspect-[31/32]">
-            <Image src="/cat.png" alt="cat" fill />
+        <div className="mt-6 flex w-full flex-col space-y-6">
+          <div className="grid w-full grid-cols-3 justify-items-center gap-2">
+            <PostBox text="우무" font="font-umu" />
+            <PostBox text="체즈" font="font-cheezu" />
+            <PostBox text="구키" font="font-gookie" />
+          </div>
+          <div className="grid w-full grid-cols-3 justify-items-center gap-2">
+            <PostBox text="#1" />
+            <PostBox text="#2" />
+            <PostBox text="#3" />
+            <PostBox text="#4" />
+            <PostBox text="#5" />
+            <PostBox text="#6" />
+            <PostBox text="#7" />
+            <PostBox text="#8" />
+            <PostBox text="#9" />
           </div>
         </div>
       </div>
-      <div className="absolute bottom-10 w-full px-4">
-        <Button className="w-full py-6">편지쓰기</Button>
+      <div className="flex w-full grow items-end">
+        <div className="relative flex h-full w-full grow flex-col items-end">
+          <div className="relative -z-10 mx-auto aspect-[31/32] h-[60%]">
+            <Image src="/cat.png" alt="cat" fill />
+          </div>
+          <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>
+        </div>
+        <div className="absolute bottom-12 w-full px-4">
+          <Link href="/letter">
+            <Button className="w-full py-6">편지쓰기</Button>
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -46,13 +64,12 @@ const PostPage = () => {
 
 export default PostPage;
 
-function PostBox({ text }: { text: string }) {
+function PostBox({ text, font }: { text: string; font?: string }) {
   return (
-    <Link
-      href={"post/" + text.replace("#", "")}
-      className="w-full text-center bg-primary rounded-sm py-2 font-bold text-black"
-    >
-      {text}
+    <Link href={"post/" + text.replace("#", "")} className="w-full">
+      <Button variant="link" size="sm" className={`${font || ""}`}>
+        {text}
+      </Button>
     </Link>
   );
 }
