@@ -21,3 +21,9 @@ export interface User {
   email: string;
   nickname: string;
 }
+
+export interface Me {
+  id: string
+  email: string
+  nickname: string
+}

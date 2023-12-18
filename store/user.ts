@@ -1,12 +1,16 @@
 import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 export interface UserInfo {
   isLogin: boolean;
+  email: string;
+  id: number;
+  nickname: string | null
+}
+
+export interface UserToken {
   access: string
   refresh: string
-  id: number;
-  email: string;
-  nickname: string | null;
 }
 
 interface UserStore {
@@ -15,22 +19,45 @@ interface UserStore {
   removeUser: (id: number) => void;
 }
 
+interface TokenStore {
+  userToken: UserToken
+  setToken: (user: UserToken) => void;
+  removeToken: () => void;
+}
+
 export const userStore = create<UserStore>((set) => ({
   userInfo: {
     isLogin: false,
     email: '',
-    nickname: null,
     id: 0,
-    access: '',
-    refresh: ''
+    nickname: '',
   },
   setUser: (userInfo: UserInfo) => {
     set((state) => ({
-      userInfo: { ...state.userInfo, ...userInfo }
+      userInfo: { ...userInfo }
     }));
   },
   removeUser: () => {
-    set({ userInfo: { isLogin: false, email: '', nickname: null, id: 0, access: '', refresh: '' } });
+    set({ userInfo: { isLogin: false, email: '', id: 0, nickname: '' } });
   },
 }));
 
+export const tokenStore = create(
+  persist<TokenStore>((set, get) => ({
+    userToken: {
+      access: '',
+      refresh: ''
+    },
+    setToken: (userToken: UserToken) => {
+      set((state) => ({
+        userToken: { ...userToken }
+      }));
+    },
+    removeToken: () => {
+      set({ userToken: { access: '', refresh: '' } });
+    },
+  }), {
+    name: 'shinnyang',
+    storage: createJSONStorage(() => localStorage)
+  })
+)

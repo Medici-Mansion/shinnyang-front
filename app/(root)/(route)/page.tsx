@@ -1,25 +1,24 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { userStore } from "@/store/user";
+import useGetMe from "@/hooks/use-get-me";
 import APIs from "@/apis";
 
+import { Button } from "@/components/ui/button";
+
 const OnBoardingPage = () => {
-  const router = useRouter();
-  const [login, setLogin] = useState(false);
-  const [nickname, setNickname] = useState("");
+  const { userInfo } = userStore();
+  const { data } = useGetMe();
+  const { isLogin } = userInfo || {};
+  const { nickname, id } = data || {};
 
   const backgroundStyle = {
     backgroundImage: `url('/bg-shinnyang.png')`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-  };
-
-  const nicknameCheckHandler = () => {
-    nickname ? router.push("/userId/post") : router.push("userId/nickname");
   };
 
   return (
@@ -34,13 +33,13 @@ const OnBoardingPage = () => {
           <span className="text-md mt-2">신년카드 대신 전달해드립니다.</span>
         </div>
         <div className="items-end">
-          {!login ? (
+          {!isLogin ? (
             <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
               구글 로그인
             </Button>
           ) : (
             <div className="mb-8">
-              <Link href={nickname ? "/userId/post" : "/userId/nickname"}>
+              <Link href={nickname ? `/${id}/post` : `/${id}/nickname`}>
                 <Button variant={"primary"}>우체국 방문하기</Button>
               </Link>
             </div>

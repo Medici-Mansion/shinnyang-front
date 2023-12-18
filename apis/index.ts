@@ -1,4 +1,4 @@
-import { GetUserResponse } from "@/type";
+import { GetUserResponse, Me } from "@/type";
 import axios from "axios";
 const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
@@ -33,9 +33,21 @@ export const getUser = async (code: string) => {
   return userResponse.data;
 };
 
+export const getMe = async () => {
+  const res = await api.get<Me>(`/user/me`)
+  return res.data
+}
+
+export const setNickName = async (param: { nickname: string }) => {
+  const res = await api.post<boolean>('/user/nickname', param)
+  return res.data
+}
+
 const APIs = {
   getGoogleCode,
   getUser,
+  getMe,
+  setNickName
 };
 
 export default APIs;

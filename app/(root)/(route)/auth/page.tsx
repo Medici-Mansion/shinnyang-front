@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { notFound } from "next/navigation";
 import APIs from "@/apis";
 import UserProvider from "@/components/provider/user-provider";
