@@ -26,7 +26,7 @@ module.exports = {
       },
       colors: {
         black: "#111111",
-        kakao: "#FFCD29",
+        kakao: "white",
         gray: {
           600: "#767676",
           500: "#999999",

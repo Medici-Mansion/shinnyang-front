@@ -1,11 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import Link from 'next/link';
+import APIs from "@/apis";
 
 const OnBoardingPage = () => {
   const router = useRouter();
@@ -25,21 +24,6 @@ const OnBoardingPage = () => {
 
   return (
     <div className="theme-responsive" style={backgroundStyle}>
-      {!login ? (
-        <Button
-          className="h-10 w-20 rounded-md bg-red-400 p-1 text-center text-white"
-          onClick={() => setLogin(true)}
-        >
-          비회원
-        </Button>
-      ) : (
-        <Button
-          className="h-10 w-20 rounded-md bg-blue-400 p-1 text-center text-white"
-          onClick={() => setLogin(false)}
-        >
-          회원
-        </Button>
-      )}
       <div className="flex h-full w-full flex-col">
         <div className="mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
           <div className="text-2xl font-medium">
@@ -51,9 +35,9 @@ const OnBoardingPage = () => {
         </div>
         <div className="items-end">
           {!login ? (
-              <Button variant="kakao" onClick={() => setLogin(true)}>
-                카카오 로그인
-              </Button>
+            <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
+              구글 로그인
+            </Button>
           ) : (
             <div className="mb-8">
               <Link href={nickname ? "/userId/post" : "/userId/nickname"}>
