@@ -13,6 +13,7 @@ import Link from "next/link";
 import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import Mailing from "@/components/pages/letter/mailing";
+import { userStore } from "@/store/user";
 const formState = z.object({
   catType: z.enum(["cat1", "cat2", "cat3"]),
   letterContent: z.string().min(1).max(100),
@@ -23,6 +24,7 @@ const formState = z.object({
 export type LetterFormValues = z.infer<typeof formState>;
 
 const LetterPage = () => {
+  const { userInfo } = userStore();
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
     resolver: zodResolver(formState),
@@ -30,7 +32,7 @@ const LetterPage = () => {
       catType: "cat1",
       letterContent: "",
       to: "",
-      from: "",
+      from: userInfo.nickname!,
     },
   });
   const onValid = (values: LetterFormValues) => {
@@ -41,7 +43,7 @@ const LetterPage = () => {
       <BaseLayout
         as="form"
         onSubmit={form.handleSubmit(onValid)}
-        className='"flex flex-col h-full p-6"'
+        className='"flex p-6" h-full flex-col'
       >
         {router.hash ? (
           <ArrowLeft onClick={() => router.back()} />

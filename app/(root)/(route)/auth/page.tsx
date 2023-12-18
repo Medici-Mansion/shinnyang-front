@@ -1,23 +1,34 @@
-"use client";
-import { useSearchParams } from "next/navigation";
-import React, { useCallback, useEffect } from "react";
-import axios from "axios";
-const Page = () => {
-  const searchParam = useSearchParams();
+import React from "react";
+import { notFound } from "next/navigation";
+import APIs from "@/apis";
+import UserProvider from "@/components/provider/user-provider";
 
-  const getUser = useCallback(async () => {
-    const user = await axios.get("http://localhost:4000/oauth/google/user", {
-      params: {
-        code: searchParam.get("code"),
-      },
-    });
-    console.log(user, "<<");
-  }, [searchParam]);
+interface GoogleSearchParams {
+  code: string;
+  scope: string;
+  authuser: string;
+  prompt: string;
+}
 
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
-  return <div></div>;
+interface AuthPageProps {
+  searchParams: Partial<GoogleSearchParams>;
+}
+
+const Page = async ({ searchParams }: AuthPageProps) => {
+  if (!searchParams.code) {
+    notFound();
+  }
+  try {
+    const { user, token } = await APIs.getUser(searchParams.code);
+    if (!user) {
+      notFound();
+    }
+
+    return <UserProvider user={user} token={token} />;
+  } catch (error: any) {
+    console.error(`[AUTH ERROR] : ${error?.message}`);
+    notFound();
+  }
 };
 
 export default Page;
