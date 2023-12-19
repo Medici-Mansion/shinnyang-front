@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { LetterFormValues } from "./app/(root)/(home)/[userId]/letter/page";
+import { LetterFormValues } from "./form-state";
 
 export interface Cat {
   code: LetterFormValues["catType"];
