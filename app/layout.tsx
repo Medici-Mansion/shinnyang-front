@@ -5,9 +5,10 @@ import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import QueryProvider from "@/components/provider/query-provider";
 import { cookies } from "next/headers";
-import { getMe } from "@/apis";
+
 import { Session } from "@/type";
 import { SessionProvider } from "@/components/provider/session-provider";
+import { getMe } from "@/apis";
 
 const fontSans = Roboto({
   weight: ["300", "400", "500", "700"],
