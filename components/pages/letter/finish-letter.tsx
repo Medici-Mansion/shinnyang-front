@@ -17,9 +17,9 @@ const FinishLetter = ({ control, router }: FinishLetterProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative flex flex-col grow space-y-4 pt-2"
+      className="relative flex grow flex-col space-y-4 pt-2"
     >
-      <h1 className="font-semibold text-2xl mb-4">
+      <h1 className="mb-4 text-2xl font-semibold">
         편지가 완성되었어요!
         <br />
         닉네임 님의
@@ -27,21 +27,25 @@ const FinishLetter = ({ control, router }: FinishLetterProps) => {
         우체국에 편지가 배달됩니다.
       </h1>
 
-      <div className="grow relative overflow-hidden rounded-2xl py-4 pl-8 pr-4">
+      <div className="relative grow overflow-hidden rounded-2xl py-4 pl-8 pr-4">
         <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
         <h1 className="text-2xl">수해니 에게</h1>
         <TextArea
           value="냥이 1은 귀여운 글씨체와
           편지 디자인 설명?"
           disabled
-          className="bg-transparent w-2/3 px-0 border-none outline-none"
+          className="w-2/3 border-none bg-transparent px-0 outline-none"
           maxLength={100}
           maxRows={6}
         />
-        <h1 className="absolute text-2xl bottom-4 right-[15%]">닉네임 씀</h1>
+        <h1 className="absolute bottom-4 right-[15%] text-2xl">닉네임 씀</h1>
       </div>
 
-      <Button onClick={() => router.replace("/letter")} className="w-full py-6">
+      <Button
+        variant="secondary"
+        onClick={() => router.replace("/letter")}
+        className="w-full py-6"
+      >
         다시 쓰기
       </Button>
       <Button onClick={() => router.push("mailing")} className="w-full py-6">

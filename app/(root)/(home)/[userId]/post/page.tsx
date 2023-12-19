@@ -49,7 +49,7 @@ const PostPage = () => {
       </div>
       <div className="flex w-full grow items-end">
         <div className="relative flex h-full w-full grow flex-col items-end">
-          <div className="relative -z-10 mx-auto aspect-[31/32] h-[60%]">
+          <div className="relative z-10 mx-auto aspect-[31/32] h-[60%]">
             <Image src="/cat.png" alt="cat" fill />
           </div>
           <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>

@@ -25,6 +25,9 @@ module.exports = {
         gookie: ["gookie", ...fontFamily.sans],
       },
       colors: {
+        red: "#B20000",
+        sub: "#F1E5D1",
+        background: "#FFF9EF",
         black: "#111111",
         kakao: "white",
         gray: {
@@ -39,7 +42,7 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        // background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
