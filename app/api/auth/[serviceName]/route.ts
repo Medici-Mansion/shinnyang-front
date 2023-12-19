@@ -23,9 +23,8 @@ export async function GET(
           "Content-Type": "application/json",
         },
       });
-
       const token = (await fetcher.json()) as Session["token"];
-      if (fetcher.status > 400) {
+      if (fetcher.status >= 400) {
         throw new Error("invalid request - " + JSON.stringify(token));
       }
       response.cookies.set({

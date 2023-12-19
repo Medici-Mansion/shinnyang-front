@@ -34,7 +34,7 @@ export default async function RootLayout({
     },
     user: null,
   };
-  if (access) {
+  if (access?.value) {
     const user = await getMe(access.value);
     session.user = user;
   }
