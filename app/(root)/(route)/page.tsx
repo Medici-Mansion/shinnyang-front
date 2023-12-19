@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import Link from 'next/link';
+import Link from "next/link";
 
 const OnBoardingPage = () => {
   const router = useRouter();
@@ -51,9 +51,9 @@ const OnBoardingPage = () => {
         </div>
         <div className="items-end">
           {!login ? (
-              <Button variant="kakao" onClick={() => setLogin(true)}>
-                카카오 로그인
-              </Button>
+            <Button variant="kakao" onClick={() => setLogin(true)}>
+              카카오 로그인
+            </Button>
           ) : (
             <div className="mb-8">
               <Link href={nickname ? "/userId/post" : "/userId/nickname"}>
@@ -66,5 +66,3 @@ const OnBoardingPage = () => {
     </div>
   );
 };
-
-export default OnBoardingPage;
