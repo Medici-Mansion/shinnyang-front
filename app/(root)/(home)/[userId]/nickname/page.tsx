@@ -3,10 +3,11 @@
 import React from "react";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
-
-import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
+
+import { userStore } from "@/store/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useSetNickName from "@/hooks/use-set-nickname";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { ArrowLeft } from "lucide-react";
 
 const formSchema = z.object({
   nickname: z.string().min(1, {
@@ -28,6 +30,16 @@ const formSchema = z.object({
 const NicknamePage = () => {
   const router = useRouter();
 
+  const { mutate } = useSetNickName({
+    onSuccess(data, variables) {
+      if (data) {
+        router.replace(`/${id}/post`);
+      }
+    },
+  });
+  const { userInfo } = userStore();
+  const { id } = userInfo || {};
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +48,7 @@ const NicknamePage = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    router.push("/userId/post");
+    mutate(values);
   };
 
   const isNicknameEntered = !!form.getValues("nickname");
