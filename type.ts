@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { LetterFormValues } from "./app/(root)/(home)/letter/page";
+import { LetterFormValues } from "./app/(root)/(home)/[userId]/letter/page";
 
 export interface Cat {
   code: LetterFormValues["catType"];
@@ -25,7 +25,7 @@ export interface Token {
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   nickname: string;
 }

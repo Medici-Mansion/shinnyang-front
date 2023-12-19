@@ -3,34 +3,27 @@ import { HashContext } from "@/hooks/use-hash-router";
 import BaseLayout from "@/layout/base-layout";
 import { ArrowLeft } from "lucide-react";
 import React, { Suspense, useContext } from "react";
-import SelectPad from "../../../../components/pages/letter/select-pad";
+import SelectPad from "../../../../../components/pages/letter/select-pad";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import Mailing from "@/components/pages/letter/mailing";
-const formState = z.object({
-  catType: z.enum(["cheezu", "gookie", "umu"]),
-  letterContent: z.string().min(1).max(100),
-  to: z.string().min(1),
-  from: z.string().min(1),
-});
-
-export type LetterFormValues = z.infer<typeof formState>;
+import { useSession } from "@/components/provider/session-provider";
+import { LetterFormValues, letterFormState } from "@/form-state";
 
 const LetterPage = () => {
+  const { data } = useSession();
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
-    resolver: zodResolver(formState),
+    resolver: zodResolver(letterFormState),
     defaultValues: {
-      catType: "cheezu",
+      catType: "umu",
       letterContent: "",
       to: "",
-      from: "",
+      // from: data?.user?.nickname,
     },
   });
   const onValid = (values: LetterFormValues) => {
@@ -43,13 +36,14 @@ const LetterPage = () => {
         onSubmit={form.handleSubmit(onValid)}
         className='"flex p-6" h-full flex-col'
       >
-        {router.hash ? (
-          <ArrowLeft onClick={() => router.back()} />
-        ) : (
-          <Link href="/userId/post">
-            <ArrowLeft />
-          </Link>
-        )}
+        <ArrowLeft
+          onClick={() =>
+            router.hash
+              ? router.back()
+              : router.replace(`/${data?.user?.id}/post`, { native: true })
+          }
+        />
+
         <Suspense fallback={<>Loading....</>}>
           <AnimatePresence mode="wait">
             {!router.hash ? (

@@ -9,9 +9,10 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 import { Control } from "react-hook-form";
 import { motion } from "framer-motion";
-import { LetterFormValues } from "@/app/(root)/(home)/letter/page";
 import { Cat } from "@/type";
 import { cn } from "@/lib/utils";
+import { LetterFormValues } from "@/form-state";
+
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;

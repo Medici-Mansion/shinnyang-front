@@ -18,19 +18,19 @@ type HashAppRouterInstance = {
     href: string,
     options?: Parameters<AppRouterInstance["push"]>[1] & {
       native: boolean;
-    }
+    },
   ) => void;
   prefetch: (
     href: string,
     options?: Parameters<AppRouterInstance["push"]>[1] & {
       native: boolean;
-    }
+    },
   ) => void;
   replace: (
     href: string,
     options?: Parameters<AppRouterInstance["push"]>[1] & {
       native: boolean;
-    }
+    },
   ) => void;
 };
 
@@ -56,7 +56,7 @@ const useHashRouter = (): IHashContext => {
       ? window.location.hash
         ? [window.location.hash]
         : []
-      : []
+      : [],
   );
 
   const handleListener = useCallback(
@@ -79,12 +79,12 @@ const useHashRouter = (): IHashContext => {
           setHashStack(newHash ? [newHash] : []);
       }
     },
-    [hashStack]
+    [hashStack],
   );
 
   const push: IHashContext["push"] = (
     href,
-    { native, ...options } = { native: false }
+    { native, ...options } = { native: false },
   ) => {
     if (native) {
       nativeRouter.push(href, options);
@@ -96,7 +96,7 @@ const useHashRouter = (): IHashContext => {
       window.dispatchEvent(
         new PopStateEvent("popstate", {
           state: { ...window.history.state, type: "push" },
-        })
+        }),
       );
     }
   };
@@ -115,11 +115,15 @@ const useHashRouter = (): IHashContext => {
     throw new Error("Not Implement");
   };
   const replace: IHashContext["replace"] = (href, options) => {
+    if (options?.native) {
+      nativeRouter.replace(href);
+      return;
+    }
     window.history.replaceState({ ...window.history.state }, "", href);
     window.dispatchEvent(
       new PopStateEvent("popstate", {
         state: { ...window.history.state, type: "replace" },
-      })
+      }),
     );
   };
 

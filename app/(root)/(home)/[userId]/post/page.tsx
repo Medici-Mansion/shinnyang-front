@@ -2,6 +2,7 @@
 
 import CatButtons from "@/components/pages/post/cat-buttons";
 import PostBox from "@/components/pages/post/post-box";
+import { useSession } from "@/components/provider/session-provider";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
@@ -12,6 +13,7 @@ import React, { Suspense } from "react";
 
 const PostPage = () => {
   const router = useRouter();
+  const { data } = useSession();
 
   return (
     <section className="theme-responsive p-0">
@@ -55,7 +57,7 @@ const PostPage = () => {
           <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>
         </div>
         <div className="absolute bottom-12 w-full px-4">
-          <Link href="/letter">
+          <Link href={`letter`}>
             <Button className="w-full py-6">편지쓰기</Button>
           </Link>
         </div>

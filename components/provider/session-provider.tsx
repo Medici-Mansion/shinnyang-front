@@ -113,11 +113,10 @@ export function SessionProvider(
         if (token?.access) {
           const newSession = {
             token,
-            user: await getMe(token?.access),
+            user: await getMe(token.access),
           };
           __SESSION__.lastSync = now();
           __SESSION__.session = newSession;
-          console.log(newSession, "<<newSession");
           setSession(newSession);
         }
       } catch (error: any) {
