@@ -1,19 +1,13 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-
-import { userStore } from "@/store/user";
-import useGetMe from "@/hooks/use-get-me";
 import APIs from "@/apis";
-
 import { Button } from "@/components/ui/button";
-import SignInButton from "@/components/sign-in-button";
+import { useSession } from "@/components/provider/session-provider";
 
 const OnBoardingPage = () => {
-  const { userInfo } = userStore();
-  const { data } = useGetMe();
-  const { isLogin } = userInfo || {};
-  const { nickname, id } = data || {};
+  const { data } = useSession();
+  const { user } = data || {};
 
   const backgroundStyle = {
     backgroundImage: `url('/bg-shinnyang.png')`,
@@ -34,14 +28,18 @@ const OnBoardingPage = () => {
           <span className="text-md mt-2">신년카드 대신 전달해드립니다.</span>
         </div>
         <div className="items-end">
-          {!isLogin ? (
-            // <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
-            //   구글 로그인
-            // </Button>
-            <SignInButton />
+          {!user ? (
+            <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
+              구글 로그인
+            </Button>
           ) : (
+            // <SignInButton />
             <div className="mb-8">
-              <Link href={nickname ? `/${id}/post` : `/${id}/nickname`}>
+              <Link
+                href={
+                  user.nickname ? `/${user.id}/post` : `/${user.id}/nickname`
+                }
+              >
                 <Button variant={"primary"}>우체국 방문하기</Button>
               </Link>
             </div>

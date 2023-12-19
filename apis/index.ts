@@ -1,4 +1,4 @@
-import { GetUserResponse, Me } from "@/type";
+import { Session, User } from "@/type";
 import axios from "axios";
 const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
@@ -8,11 +8,11 @@ export const getGoogleCode = () => {
 
   authUrl.searchParams.set(
     "client_id",
-    process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID || "",
+    process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID,
   );
   authUrl.searchParams.set(
     "redirect_uri",
-    process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL || "",
+    process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
   );
   authUrl.searchParams.set("response_type", "code");
   authUrl.searchParams.set(
@@ -20,12 +20,11 @@ export const getGoogleCode = () => {
     "https://www.googleapis.com/auth/userinfo.email",
   );
   authUrl.searchParams.set("access_type", "offline");
-
   window.location.href = authUrl.toString();
 };
 
 export const getUser = async (code: string) => {
-  const userResponse = await api.get<GetUserResponse>("/oauth/google/user", {
+  const userResponse = await api.get<Session["user"]>("/oauth/google/user", {
     params: {
       code,
     },
@@ -33,21 +32,32 @@ export const getUser = async (code: string) => {
   return userResponse.data;
 };
 
-export const getMe = async () => {
-  const res = await api.get<Me>(`/user/me`)
-  return res.data
-}
+export const getNewToken = async (refresh: string) => {
+  const newToken = await api.post<Session["token"]>("/auth/refresh", {
+    refresh,
+  });
+  return newToken.data;
+};
+
+export const getMe = async (access: string) => {
+  const res = await api.get<User>(`/user/me`, {
+    headers: {
+      Authorization: `Bearer ${access}`,
+    },
+  });
+  return res.data;
+};
 
 export const setNickName = async (param: { nickname: string }) => {
-  const res = await api.post<boolean>('/user/nickname', param)
-  return res.data
-}
+  const res = await api.post<boolean>("/user/nickname", param);
+  return res.data;
+};
 
 const APIs = {
   getGoogleCode,
   getUser,
   getMe,
-  setNickName
+  setNickName,
 };
 
 export default APIs;
