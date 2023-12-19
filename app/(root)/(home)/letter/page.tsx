@@ -2,7 +2,7 @@
 import { HashContext } from "@/hooks/use-hash-router";
 import BaseLayout from "@/layout/base-layout";
 import { ArrowLeft } from "lucide-react";
-import React, { useContext } from "react";
+import React, { Suspense, useContext } from "react";
 import SelectPad from "../../../../components/pages/letter/select-pad";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -50,18 +50,20 @@ const LetterPage = () => {
             <ArrowLeft />
           </Link>
         )}
-        <AnimatePresence mode="wait">
-          {!router.hash ? (
-            <SelectPad router={router} control={form.control} />
-          ) : null}
-          {router.hash === "#letter" ? (
-            <WriteLetter router={router} control={form.control} />
-          ) : null}
-          {router.hash === "#finish" ? (
-            <FinishLetter router={router} control={form.control} />
-          ) : null}
-          {router.hash === "#mailing" ? <Mailing router={router} /> : null}
-        </AnimatePresence>
+        <Suspense fallback={<>Loading....</>}>
+          <AnimatePresence mode="wait">
+            {!router.hash ? (
+              <SelectPad router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#letter" ? (
+              <WriteLetter router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#finish" ? (
+              <FinishLetter router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#mailing" ? <Mailing router={router} /> : null}
+          </AnimatePresence>
+        </Suspense>
       </BaseLayout>
     </Form>
   );

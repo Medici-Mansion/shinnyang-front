@@ -59,6 +59,8 @@ body {
   }
 
   :root {
+    --umu: umu;
+
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
 

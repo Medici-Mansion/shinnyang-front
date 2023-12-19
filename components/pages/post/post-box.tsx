@@ -2,8 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import React, { HTMLAttributes } from "react";
-import { motion } from "framer-motion";
-interface PostBoxProps extends HTMLAttributes<HTMLButtonElement> {
+import { HTMLMotionProps, motion } from "framer-motion";
+type ButtonProps = HTMLAttributes<HTMLElement> & HTMLMotionProps<"button">;
+interface PostBoxProps extends ButtonProps {
   text: string;
   font?: string;
 }
@@ -17,6 +18,7 @@ function PostBox({ text, font, className, onClick, ...props }: PostBoxProps) {
       size="sm"
       onClick={onClick}
       className={cn(font && font, className)}
+      {...props}
     >
       {text}
     </Btn>
