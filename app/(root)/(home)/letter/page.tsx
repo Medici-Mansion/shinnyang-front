@@ -2,7 +2,7 @@
 import { HashContext } from "@/hooks/use-hash-router";
 import BaseLayout from "@/layout/base-layout";
 import { ArrowLeft } from "lucide-react";
-import React, { useContext } from "react";
+import React, { Suspense, useContext } from "react";
 import SelectPad from "../../../../components/pages/letter/select-pad";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -14,7 +14,7 @@ import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import Mailing from "@/components/pages/letter/mailing";
 const formState = z.object({
-  catType: z.enum(["cat1", "cat2", "cat3"]),
+  catType: z.enum(["cheezu", "gookie", "umu"]),
   letterContent: z.string().min(1).max(100),
   to: z.string().min(1),
   from: z.string().min(1),
@@ -27,7 +27,7 @@ const LetterPage = () => {
   const form = useForm<LetterFormValues>({
     resolver: zodResolver(formState),
     defaultValues: {
-      catType: "cat1",
+      catType: "cheezu",
       letterContent: "",
       to: "",
       from: "",
@@ -41,7 +41,7 @@ const LetterPage = () => {
       <BaseLayout
         as="form"
         onSubmit={form.handleSubmit(onValid)}
-        className='"flex flex-col h-full p-6"'
+        className='"flex p-6" h-full flex-col'
       >
         {router.hash ? (
           <ArrowLeft onClick={() => router.back()} />
@@ -50,18 +50,20 @@ const LetterPage = () => {
             <ArrowLeft />
           </Link>
         )}
-        <AnimatePresence mode="wait">
-          {!router.hash ? (
-            <SelectPad router={router} control={form.control} />
-          ) : null}
-          {router.hash === "#letter" ? (
-            <WriteLetter router={router} control={form.control} />
-          ) : null}
-          {router.hash === "#finish" ? (
-            <FinishLetter router={router} control={form.control} />
-          ) : null}
-          {router.hash === "#mailing" ? <Mailing router={router} /> : null}
-        </AnimatePresence>
+        <Suspense fallback={<>Loading....</>}>
+          <AnimatePresence mode="wait">
+            {!router.hash ? (
+              <SelectPad router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#letter" ? (
+              <WriteLetter router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#finish" ? (
+              <FinishLetter router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#mailing" ? <Mailing router={router} /> : null}
+          </AnimatePresence>
+        </Suspense>
       </BaseLayout>
     </Form>
   );

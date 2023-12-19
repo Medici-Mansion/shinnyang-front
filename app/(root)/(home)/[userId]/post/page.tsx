@@ -1,12 +1,14 @@
 "use client";
 
+import CatButtons from "@/components/pages/post/cat-buttons";
+import PostBox from "@/components/pages/post/post-box";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import React from "react";
+import React, { Suspense } from "react";
 
 const PostPage = () => {
   const router = useRouter();
@@ -28,9 +30,9 @@ const PostPage = () => {
         </div>
         <div className="mt-6 flex w-full flex-col space-y-6">
           <div className="grid w-full grid-cols-3 justify-items-center gap-2">
-            <PostBox text="우무" font="font-umu" />
-            <PostBox text="체즈" font="font-cheezu" />
-            <PostBox text="구키" font="font-gookie" />
+            <Suspense fallback={<div>냥이들 불러오는중..</div>}>
+              <CatButtons />
+            </Suspense>
           </div>
           <div className="grid w-full grid-cols-3 justify-items-center gap-2">
             <PostBox text="#1" />
@@ -63,13 +65,3 @@ const PostPage = () => {
 };
 
 export default PostPage;
-
-function PostBox({ text, font }: { text: string; font?: string }) {
-  return (
-    <Link href={"post/" + text.replace("#", "")} className="w-full">
-      <Button variant="link" size="sm" className={`${font || ""}`}>
-        {text}
-      </Button>
-    </Link>
-  );
-}
