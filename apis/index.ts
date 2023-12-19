@@ -58,7 +58,6 @@ export const getCats = async () => {
 
   return response.data;
 };
-
 const APIs = {
   getGoogleCode,
   getUser,
