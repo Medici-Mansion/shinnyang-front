@@ -9,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-import Cookies from "js-cookie";
 import { getMe, getNewToken } from "@/apis";
 const __SESSION__: SessionController = {
   _getSession: () => {},
