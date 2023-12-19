@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import QueryProvider from "@/components/provider/query-provider";
+import SessionProvider from "@/components/provider/session-provider";
 
 const fontSans = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -28,10 +29,12 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        <QueryProvider>
-          {children}
-          <ReactQueryDevtools />
-        </QueryProvider>
+        <SessionProvider>
+          <QueryProvider>
+            {children}
+            <ReactQueryDevtools />
+          </QueryProvider>
+        </SessionProvider>
       </body>
     </html>
   );

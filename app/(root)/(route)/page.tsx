@@ -7,6 +7,7 @@ import useGetMe from "@/hooks/use-get-me";
 import APIs from "@/apis";
 
 import { Button } from "@/components/ui/button";
+import SignInButton from "@/components/sign-in-button";
 
 const OnBoardingPage = () => {
   const { userInfo } = userStore();
@@ -34,9 +35,10 @@ const OnBoardingPage = () => {
         </div>
         <div className="items-end">
           {!isLogin ? (
-            <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
-              구글 로그인
-            </Button>
+            // <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
+            //   구글 로그인
+            // </Button>
+            <SignInButton />
           ) : (
             <div className="mb-8">
               <Link href={nickname ? `/${id}/post` : `/${id}/nickname`}>
