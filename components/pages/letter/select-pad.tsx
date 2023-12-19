@@ -68,7 +68,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
 
                   <label
                     htmlFor={catType.code}
-                    className="relative mb-2 block aspect-square rounded-md bg-gray-200 duration-100 peer-checked:bg-gray-600"
+                    className="peer-checked:bg-sub peer-checked:border-red relative mb-2 block aspect-square rounded-md border border-gray-300 duration-100 peer-checked:border-2 "
                   >
                     <Image src={catType.image} alt={catType.name} fill />
                   </label>
@@ -79,7 +79,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
 
             <div
               className={cn(
-                "relative grow overflow-hidden rounded-2xl py-4 pl-8 pr-4",
+                "border-red relative grow overflow-hidden rounded-2xl border p-6",
               )}
               style={{ fontFamily: field.value }}
             >
@@ -105,9 +105,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
         )}
       />
 
-      <Button onClick={() => router.push("letter")} className="w-full py-6">
-        선택 완료
-      </Button>
+      <Button onClick={() => router.push("letter")}>선택 완료</Button>
     </motion.div>
   );
 };

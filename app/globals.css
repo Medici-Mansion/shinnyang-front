@@ -53,14 +53,13 @@ body {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    /* background-color: #fff9ef; */
   }
   .bg-snp {
-    background: linear-gradient(to top, #1a0a19, #351600);
+    background: linear-gradient(to top, #fff9ef, #fff9ef);
   }
 
   :root {
-    --umu: umu;
-
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
 
