@@ -59,6 +59,8 @@ body {
   }
 
   :root {
+    --umu: umu;
+
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
 
@@ -120,7 +122,6 @@ body {
     --ring: 212.7 26.8% 83.9%;
   }
 }
-
 @layer base {
   * {
     @apply border-border;

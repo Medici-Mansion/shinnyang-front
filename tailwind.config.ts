@@ -20,7 +20,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        umu: ["umu", ...fontFamily.sans],
+        umu: ["var(--umu)", ...fontFamily.sans],
         cheezu: ["cheezu", ...fontFamily.sans],
         gookie: ["gookie", ...fontFamily.sans],
       },

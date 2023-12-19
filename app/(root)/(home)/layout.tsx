@@ -1,8 +1,7 @@
-import { WithParam } from "@/type";
 import Layout from "@/components/layout";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-const UserLayout = ({ children, params: { userId } }: WithParam<"userId">) => {
+const UserLayout = ({ children }: PropsWithChildren) => {
   return <Layout>{children}</Layout>;
 };
 
