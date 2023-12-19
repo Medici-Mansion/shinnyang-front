@@ -1,16 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { cn } from "@/lib/utils";
-
+import React from "react";
+import Link from "next/link";
+import APIs from "@/apis";
 import { Button } from "@/components/ui/button";
-import Link from 'next/link';
+import { useSession } from "@/components/provider/session-provider";
 
 const OnBoardingPage = () => {
-  const router = useRouter();
-  const [login, setLogin] = useState(false);
-  const [nickname, setNickname] = useState("");
+  const { data } = useSession();
+  const { user } = data || {};
 
   const backgroundStyle = {
     backgroundImage: `url('/bg-shinnyang.png')`,
@@ -19,27 +16,8 @@ const OnBoardingPage = () => {
     backgroundRepeat: "no-repeat",
   };
 
-  const nicknameCheckHandler = () => {
-    nickname ? router.push("/userId/post") : router.push("userId/nickname");
-  };
-
   return (
     <div className="theme-responsive" style={backgroundStyle}>
-      {!login ? (
-        <Button
-          className="h-10 w-20 rounded-md bg-red-400 p-1 text-center text-white"
-          onClick={() => setLogin(true)}
-        >
-          비회원
-        </Button>
-      ) : (
-        <Button
-          className="h-10 w-20 rounded-md bg-blue-400 p-1 text-center text-white"
-          onClick={() => setLogin(false)}
-        >
-          회원
-        </Button>
-      )}
       <div className="flex h-full w-full flex-col">
         <div className="mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
           <div className="text-2xl font-medium">
@@ -50,13 +28,18 @@ const OnBoardingPage = () => {
           <span className="text-md mt-2">신년카드 대신 전달해드립니다.</span>
         </div>
         <div className="items-end">
-          {!login ? (
-              <Button variant="kakao" onClick={() => setLogin(true)}>
-                카카오 로그인
-              </Button>
+          {!user ? (
+            <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
+              구글 로그인
+            </Button>
           ) : (
+            // <SignInButton />
             <div className="mb-8">
-              <Link href={nickname ? "/userId/post" : "/userId/nickname"}>
+              <Link
+                href={
+                  user.nickname ? `/${user.id}/post` : `/${user.id}/nickname`
+                }
+              >
                 <Button variant={"primary"}>우체국 방문하기</Button>
               </Link>
             </div>

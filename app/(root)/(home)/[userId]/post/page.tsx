@@ -29,8 +29,8 @@ const PostPage = () => {
         <div className="mt-6 flex w-full flex-col space-y-6">
           <div className="grid w-full grid-cols-3 justify-items-center gap-2">
             <PostBox text="우무" font="font-umu" />
-            <PostBox text="체즈" font="font-chejeu" />
-            <PostBox text="구키" font="font-guki" />
+            <PostBox text="체즈" font="font-cheezu" />
+            <PostBox text="구키" font="font-gookie" />
           </div>
           <div className="grid w-full grid-cols-3 justify-items-center gap-2">
             <PostBox text="#1" />
@@ -52,7 +52,7 @@ const PostPage = () => {
           </div>
           <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>
         </div>
-        <div className="absolute bottom-10 w-full px-4">
+        <div className="absolute bottom-12 w-full px-4">
           <Link href="/letter">
             <Button className="w-full py-6">편지쓰기</Button>
           </Link>
