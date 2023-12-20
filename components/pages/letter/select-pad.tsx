@@ -44,7 +44,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
         </sub>
       </h1>
       <FormField
-        name="catType"
+        name="catName"
         control={control}
         render={({ field }) => (
           <>
@@ -61,7 +61,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                       field.onChange(catType.code);
                     }}
                     id={catType.code}
-                    name="catType"
+                    name="catName"
                     value={catType.code}
                     className="peer hidden"
                   />
