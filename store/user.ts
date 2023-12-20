@@ -1,26 +1,26 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface UserInfo {
   isLogin: boolean;
   email: string;
-  id: number;
-  nickname: string | null
+  id: string;
+  nickname: string | null;
 }
 
 export interface UserToken {
-  access: string
-  refresh: string
+  access: string;
+  refresh: string;
 }
 
 interface UserStore {
   userInfo: UserInfo;
   setUser: (user: UserInfo) => void;
-  removeUser: (id: number) => void;
+  removeUser: (id: string) => void;
 }
 
 interface TokenStore {
-  userToken: UserToken
+  userToken: UserToken;
   setToken: (user: UserToken) => void;
   removeToken: () => void;
 }
@@ -28,36 +28,39 @@ interface TokenStore {
 export const userStore = create<UserStore>((set) => ({
   userInfo: {
     isLogin: false,
-    email: '',
-    id: 0,
-    nickname: '',
+    email: "",
+    id: "",
+    nickname: "",
   },
   setUser: (userInfo: UserInfo) => {
     set((state) => ({
-      userInfo: { ...userInfo }
+      userInfo: { ...userInfo },
     }));
   },
   removeUser: () => {
-    set({ userInfo: { isLogin: false, email: '', id: 0, nickname: '' } });
+    set({ userInfo: { isLogin: false, email: "", id: "", nickname: "" } });
   },
 }));
 
 export const tokenStore = create(
-  persist<TokenStore>((set, get) => ({
-    userToken: {
-      access: '',
-      refresh: ''
+  persist<TokenStore>(
+    (set, get) => ({
+      userToken: {
+        access: "",
+        refresh: "",
+      },
+      setToken: (userToken: UserToken) => {
+        set((state) => ({
+          userToken: { ...userToken },
+        }));
+      },
+      removeToken: () => {
+        set({ userToken: { access: "", refresh: "" } });
+      },
+    }),
+    {
+      name: "shinnyang",
+      storage: createJSONStorage(() => localStorage),
     },
-    setToken: (userToken: UserToken) => {
-      set((state) => ({
-        userToken: { ...userToken }
-      }));
-    },
-    removeToken: () => {
-      set({ userToken: { access: '', refresh: '' } });
-    },
-  }), {
-    name: 'shinnyang',
-    storage: createJSONStorage(() => localStorage)
-  })
-)
+  ),
+);
