@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import { FormField } from "@/components/ui/form";
-import { IHashContext } from "@/hooks/use-hash-router";
 import { Control } from "react-hook-form";
+import { IHashContext } from "@/hooks/use-hash-router";
+
+import { FormField } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,7 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
 
       <FormField
         control={control}
-        name="to"
+        name="receiverNickname"
         render={({ field }) => (
           <div className="flex flex-col space-y-4">
             <Label>받는 사람</Label>
@@ -35,7 +36,7 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
       />
       <FormField
         control={control}
-        name="letterContent"
+        name="content"
         render={({ field }) => (
           <div className="flex grow flex-col space-y-4">
             <Label>편지 내용</Label>
@@ -76,7 +77,7 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
       />
       <Button
         type="submit"
-        onClick={() => router.push("finish")}
+        // onClick={() => router.push("finish")}
         className="w-full py-6"
       >
         선택 완료

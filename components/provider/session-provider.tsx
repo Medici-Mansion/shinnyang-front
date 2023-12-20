@@ -139,6 +139,9 @@ export function SessionProvider(
       try {
         const { access, refresh } = session?.token || {};
         let token: Session["token"] = { access, refresh };
+        if (access) {
+          api.defaults.headers["Authorization"] = `Bearer ${access}`;
+        }
         if (!access) {
           if (refresh) {
             token = await getNewToken(refresh);

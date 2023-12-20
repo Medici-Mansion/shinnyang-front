@@ -1,34 +1,44 @@
 "use client";
-import { HashContext } from "@/hooks/use-hash-router";
-import BaseLayout from "@/layout/base-layout";
-import { ArrowLeft } from "lucide-react";
+
 import React, { Suspense, useContext } from "react";
-import SelectPad from "../../../../../components/pages/letter/select-pad";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
 import { AnimatePresence } from "framer-motion";
+import { useForm } from "react-hook-form";
+
+import { LetterFormValues, letterFormState } from "@/form-state";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { HashContext } from "@/hooks/use-hash-router";
+import useSendLetter from "@/hooks/use-send-letter";
+
+import { ArrowLeft } from "lucide-react";
+import BaseLayout from "@/layout/base-layout";
+import SelectPad from "@/components/pages/letter/select-pad";
+import { Form } from "@/components/ui/form";
 import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import Mailing from "@/components/pages/letter/mailing";
 import { useSession } from "@/components/provider/session-provider";
-import { LetterFormValues, letterFormState } from "@/form-state";
+import { Letters } from "@/type";
 
 const LetterPage = () => {
+  const { mutate } = useSendLetter();
   const { data } = useSession();
+  const { user } = data || {};
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
     resolver: zodResolver(letterFormState),
     defaultValues: {
-      catType: "umu",
-      letterContent: "",
-      to: "",
-      // from: data?.user?.nickname,
+      catName: "umu",
+      content: "",
+      receiverNickname: "",
     },
   });
+
   const onValid = (values: LetterFormValues) => {
-    console.log(values, "<<values");
+    const param: Letters = { ...values, senderNickname: user?.nickname };
+
+    mutate(param);
   };
+
   return (
     <Form {...form}>
       <BaseLayout
@@ -43,7 +53,6 @@ const LetterPage = () => {
               : router.replace(`/${data?.user?.id}/post`, { native: true })
           }
         />
-
         <Suspense fallback={<>Loading....</>}>
           <AnimatePresence mode="wait">
             {!router.hash ? (

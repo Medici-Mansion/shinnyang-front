@@ -33,7 +33,6 @@ const OnBoardingPage = () => {
               구글 로그인
             </Button>
           ) : (
-            // <SignInButton />
             <div className="mb-8">
               <Link
                 href={
