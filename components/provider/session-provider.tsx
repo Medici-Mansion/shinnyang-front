@@ -3,13 +3,16 @@ import { Session, SessionController } from "@/type";
 import {
   PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { getMe, getNewToken } from "@/apis";
+import { api, getMe, getNewToken } from "@/apis";
+import { ServiceProviders } from "@/constants";
+import { z } from "zod";
 const __SESSION__: SessionController = {
   _getSession: () => {},
   lastSync: 0,
@@ -22,58 +25,72 @@ export function now() {
 
 type UpdateSession = (data?: any) => Promise<Session | null>;
 
-export type SessionContextValue<R extends boolean = false> = R extends true
-  ?
-      | { data: Session; status: "authenticated" }
-      | { data: null; status: "loading" }
-  :
-      | { data: Session; status: "authenticated" }
-      | {
-          data: null;
-          status: "unauthenticated" | "loading";
-        };
+export type SessionContextValue =
+  | { data: Session; status: "authenticated"; update: UpdateSession }
+  | {
+      data: null;
+      status: "unauthenticated" | "loading";
+      update: UpdateSession;
+    };
 export const SessionContext = createContext?.<SessionContextValue | undefined>(
   undefined,
 );
+type UseSessionOptions<R extends boolean> = R extends true
+  ? {
+      required: R;
+      serviceName: z.infer<typeof ServiceProviders>;
+      onUnauthenticated?: () => void;
+    }
+  : {
+      required: R;
+      serviceName?: z.infer<typeof ServiceProviders>;
+      onUnauthenticated?: () => void;
+    };
 
-export function useSession<R extends boolean>(
-  options?: any,
-): SessionContextValue<R> {
+type SessionHandler = {
+  signin: () => void;
+};
+export function useSession<T extends boolean>(
+  options?: UseSessionOptions<T>,
+): SessionContextValue & SessionHandler {
   if (!SessionContext) {
     throw new Error("React Context is unavailable in Server Components");
   }
 
-  // @ts-expect-error Satisfy TS if branch on line below
-  const value: SessionContextValue<R> = useContext(SessionContext);
+  const value = useContext(SessionContext);
   if (!value && process.env.NODE_ENV !== "production") {
     throw new Error(
       "[next-auth]: `useSession` must be wrapped in a <SessionProvider />",
     );
   }
 
-  const { required, onUnauthenticated } = options ?? {};
+  const { required, onUnauthenticated, serviceName = "google" } = options ?? {};
 
-  const requiredAndNotLoading = required && value.status === "unauthenticated";
+  const requiredAndNotLoading = required && value?.status === "unauthenticated";
+  const signin = useCallback(() => {
+    const url = `/api/auth/signin/${serviceName}?${new URLSearchParams({
+      callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
+    })}`;
+    if (onUnauthenticated) onUnauthenticated();
+    else window.location.href = url;
+  }, [onUnauthenticated, serviceName]);
 
-  // useEffect(() => {
-  //   if (requiredAndNotLoading) {
-  //     const url = `/api/auth/signin?${new URLSearchParams({
-  //       error: "SessionRequired",
-  //       callbackUrl: window.location.href,
-  //     })}`;
-  //     if (onUnauthenticated) onUnauthenticated();
-  //     else window.location.href = url;
-  //   }
-  // }, [requiredAndNotLoading, onUnauthenticated]);
+  useEffect(() => {
+    if (requiredAndNotLoading) {
+      signin();
+    }
+  }, [requiredAndNotLoading, onUnauthenticated, serviceName, signin]);
 
   if (requiredAndNotLoading) {
     return {
-      data: value.data,
+      data: null,
       status: "loading",
+      update: value.update,
+      signin,
     };
   }
 
-  return value;
+  return Object.assign(value!, { signin });
 }
 
 export function SessionProvider(
@@ -96,74 +113,110 @@ export function SessionProvider(
     if (hasInitialSession) __SESSION__.session = props.session;
     return props.session;
   });
+  const __SESSION = useMemo(() => {
+    if (typeof window !== "undefined") {
+      window.__SESSION__ = new Proxy(__SESSION__, {
+        get(obj, key, proxy) {
+          console.log(key);
+          if ("session" === key) return null;
+          return obj[key as keyof typeof obj];
+        },
+        set(target, p, newValue, receiver) {
+          return true;
+        },
+      });
+    }
+
+    return __SESSION__;
+  }, []);
+
   const { children, basePath, refetchOnWindowFocus = true } = props;
   // TODO: env 백앤드 && 리다이렉트 url 연동
   const apiUrl = basePath || process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    __SESSION__._getSession = async () => {
+    __SESSION._getSession = async (isFocus?: boolean) => {
       try {
         const { access, refresh } = session?.token || {};
         let token: Session["token"] = { access, refresh };
+        if (access) {
+          api.defaults.headers["Authorization"] = `Bearer ${access}`;
+        }
         if (!access) {
           if (refresh) {
             token = await getNewToken(refresh);
+            console.log(token);
+          } else {
+            __SESSION.lastSync = 0;
+            __SESSION.session = null;
           }
         }
         if (token?.access) {
           const newSession = {
             token,
-            user: await getMe(token?.access),
+            user: await getMe(token.access),
           };
           __SESSION__.lastSync = now();
           __SESSION__.session = newSession;
-          console.log(newSession, "<<newSession");
           setSession(newSession);
         }
       } catch (error: any) {
         console.error("[SESSION_PROVIDER]: getSession:", error?.message);
+        __SESSION.lastSync = 0;
+        __SESSION.session = null;
         setSession(null);
       } finally {
         setLoading(false);
       }
     };
     if (initial.current) {
-      __SESSION__._getSession();
+      __SESSION._getSession();
       initial.current = false;
     }
-    return () => {
-      __SESSION__.lastSync = 0;
-      __SESSION__.session = null;
-      __SESSION__._getSession = () => {};
-    };
-  }, [session]);
+  }, [__SESSION, session]);
+
   useEffect(() => {
+    /**
+     * 포커스 시 refetch 여부
+     */
     const visibilityHandler = () => {
-      console.log(document.cookie);
-      if (refetchOnWindowFocus && document.visibilityState === "visible")
-        __SESSION__._getSession();
+      if (refetchOnWindowFocus && document.visibilityState === "visible") {
+        __SESSION._getSession();
+      }
     };
     document.addEventListener("visibilitychange", visibilityHandler, false);
-    return () =>
+
+    return () => {
+      __SESSION.lastSync = 0;
+      __SESSION.session = null;
+      // __SESSION._getSession = () => {};
       document.removeEventListener(
         "visibilitychange",
         visibilityHandler,
         false,
       );
-  }, [refetchOnWindowFocus]);
+    };
+  }, [__SESSION, refetchOnWindowFocus]);
 
-  const value: any = useMemo(
-    () => ({
-      data: session,
-      status: loading
-        ? "loading"
-        : session
-          ? "authenticated"
-          : "unauthenticated",
-    }),
-    [loading, session],
-  );
+  const value = useMemo(() => {
+    const status = loading
+      ? "loading"
+      : session
+        ? "authenticated"
+        : "unauthenticated";
+    const data = status === "authenticated" ? session : null;
+    return {
+      status,
+      data,
+      update: async (callback?: () => void) => {
+        await __SESSION._getSession();
+        callback && callback();
+      },
+    };
+  }, [__SESSION, loading, session]);
   return (
-    <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
+    <SessionContext.Provider value={value as any}>
+      {children}
+    </SessionContext.Provider>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
-
+import CommonQuery from "@/lib/queries/common.query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import CatButtons from "@/components/pages/post/cat-buttons";
 import PostBox from "@/components/pages/post/post-box";
 import { Button } from "@/components/ui/button";
@@ -7,12 +8,21 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Acc } from "@/type";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useState, useMemo } from "react";
 
 const PostPage = () => {
   const router = useRouter();
-
+  const { data: accessories } = useSuspenseQuery(CommonQuery.getAcc);
+  const [isAccSelectBox, setAccSelectBox] = useState(false);
+  const accNameObj = useMemo(() => {
+    const nameOfCodes: { [key in Acc["code"]]?: string } = {};
+    accessories.forEach((acc) => {
+      nameOfCodes[acc.code] = acc.name;
+    });
+    return nameOfCodes;
+  }, [accessories]);
   return (
     <section className="theme-responsive p-0">
       <div className="px-4 pt-4">
@@ -47,9 +57,39 @@ const PostPage = () => {
           </div>
         </div>
       </div>
+      {isAccSelectBox && (
+        <div className="absolute top-[25%] grid w-full grid-cols-3 gap-x-2 bg-gray-300 ">
+          {accessories?.map((accType: Acc) => (
+            <div
+              key={accType.id}
+              className="mx-auto w-full p-3 text-center text-sm font-normal"
+            >
+              <input
+                type="radio"
+                id={accType.code}
+                name="accType"
+                value={accType.code}
+                className="peer hidden"
+              />
+
+              <label
+                htmlFor={accType.code}
+                className="relative mb-2 block aspect-square rounded-md bg-gray-200 duration-100 peer-checked:bg-gray-600"
+              >
+                <Image src={accType.iconImage} alt={accType.name} fill />
+              </label>
+              <span className="mt-2 text-base">{accType.name}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="flex w-full grow items-end">
         <div className="relative flex h-full w-full grow flex-col items-end">
-          <div className="relative -z-10 mx-auto aspect-[31/32] h-[60%]">
+          <div
+            className="relative z-10 mx-auto aspect-[31/32] h-[60%]"
+            onClick={() => setAccSelectBox(!isAccSelectBox)}
+          >
             <Image src="/cat.png" alt="cat" fill />
           </div>
           <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>

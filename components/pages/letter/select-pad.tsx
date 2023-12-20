@@ -1,6 +1,6 @@
 "use client";
 import CommonQuery from "@/lib/queries/common.query";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import TextArea from "@/components/textarea";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form";
@@ -9,9 +9,9 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 import { Control } from "react-hook-form";
 import { motion } from "framer-motion";
-import { LetterFormValues } from "@/app/(root)/(home)/letter/page";
 import { Cat } from "@/type";
 import { cn } from "@/lib/utils";
+import { LetterFormValues } from "@/form-state";
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
@@ -43,7 +43,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
         </sub>
       </h1>
       <FormField
-        name="catType"
+        name="catName"
         control={control}
         render={({ field }) => (
           <>

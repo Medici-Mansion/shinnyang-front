@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import axios from "axios";
 import "./globals.css";
+
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import QueryProvider from "@/components/provider/query-provider";
 import { cookies } from "next/headers";
 import { Session } from "@/type";
-import { SessionProvider } from "@/components/provider/session-provider";
 import { getMe } from "@/apis";
+
+import { SessionProvider } from "@/components/provider/session-provider";
+import QueryProvider from "@/components/provider/query-provider";
 
 const fontSans = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -34,9 +37,14 @@ export default async function RootLayout({
     },
     user: null,
   };
-  if (access?.value) {
-    const user = await getMe(access.value);
-    session.user = user;
+  try {
+    if (access?.value) {
+      const user = await getMe(access.value);
+      session.user = user;
+    }
+  } catch (error) {
+    // console.error(error);
+    session.token = null;
   }
 
   return (

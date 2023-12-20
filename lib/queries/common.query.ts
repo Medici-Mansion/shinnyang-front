@@ -1,14 +1,20 @@
-import { getCats } from "@/apis";
-import { Cat } from "@/type";
-import { UseQueryOptions } from "@tanstack/react-query";
+import { getCats, getAccessories } from '@/apis';
+import { Cat, Acc } from '@/type';
+import { UseQueryOptions } from '@tanstack/react-query';
 
 const getCat: UseQueryOptions<Cat[]> = {
-  queryKey: ["common", "cats"],
-  queryFn: getCats,
+    queryKey: ['common', 'cats'],
+    queryFn: getCats,
+};
+
+const getAcc: UseQueryOptions<Acc[]> = {
+    queryKey: ['common', 'accessories'],
+    queryFn: getAccessories,
 };
 
 const CommonQuery = {
-  getCat,
+    getCat,
+    getAcc,
 };
 
 export default CommonQuery;
