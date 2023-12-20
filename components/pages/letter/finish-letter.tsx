@@ -19,22 +19,20 @@ const FinishLetter = ({ control, router }: FinishLetterProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative flex grow flex-col space-y-4 pt-2"
+      className="relative mt-4 flex grow flex-col"
     >
-      <h1 className="mb-4 text-2xl font-semibold">
+      <h1 className="text-2xl font-semibold">
         편지가 완성되었어요!
         <br />
-        {data?.user?.nickname} 님의
-        <br />
-        우체국에 편지가 배달됩니다.
+        {data?.user?.nickname} 님의 편지를 배달하세요!
       </h1>
 
       <div
-        className="relative grow overflow-hidden rounded-2xl py-4 pl-8 pr-4"
+        className="border-red relative mb-12 mt-12 grow overflow-hidden rounded-2xl border py-4 pl-8 pr-4"
         style={{ fontFamily: control._formValues.catType }}
       >
-        <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
-        <h1 className="text-2xl">{control._formValues.to} 에게</h1>
+        <Image className="" src="/letter_sheet.png" alt="letter" fill />
+        <h1 className="absolute text-2xl">{control._formValues.to} 에게</h1>
         <textarea
           value={control._formValues.letterContent}
           disabled
@@ -44,15 +42,25 @@ const FinishLetter = ({ control, router }: FinishLetterProps) => {
           )}
           maxLength={100}
         />
-        <h1 className="absolute bottom-4 right-[15%] text-2xl">
+        <h1 className="absolute bottom-5 right-[10%] text-2xl">
           {data?.user?.nickname} 씀
         </h1>
       </div>
-
-      <Button onClick={() => router.replace("letter")} className="w-full py-6">
+      <Image
+        className="absolute bottom-32 right-0"
+        src="/postal_stamp.png"
+        alt="letter"
+        width={200}
+        height={100}
+      />
+      <Button variant="secondary" onClick={() => router.replace("letter")}>
         다시 쓰기
       </Button>
-      <Button type="submit" className="w-full py-6">
+      <Button
+        className="mt-4"
+        type="submit"
+        onClick={() => router.push("mailing")}
+      >
         답장 보내기
       </Button>
     </motion.div>

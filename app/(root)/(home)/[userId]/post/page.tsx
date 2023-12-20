@@ -95,7 +95,7 @@ const PostPage = () => {
           <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>
         </div>
         <div className="absolute bottom-12 w-full px-4">
-          <Link href="/letter">
+          <Link href="letter">
             <Button className="w-full py-6">편지쓰기</Button>
           </Link>
         </div>

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { Control } from "react-hook-form";
 import { IHashContext } from "@/hooks/use-hash-router";
-
+import Image from "next/image";
 import { FormField } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -20,17 +20,25 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative flex grow flex-col space-y-4 pt-2"
+      className="relative mt-4 flex grow flex-col space-y-10"
     >
-      <h1 className="mb-4 text-2xl font-semibold">편지를 작성해주세요!</h1>
-
+      <div className="">
+        <h1 className="text-2xl font-semibold">편지를 작성해 주세요!</h1>
+        <sub className="text-sm font-normal">
+          신냥이 편지로 2024년 새해인사를 나누세요
+        </sub>
+      </div>
       <FormField
         control={control}
         name="receiverNickname"
         render={({ field }) => (
           <div className="flex flex-col space-y-4">
-            <Label>받는 사람</Label>
-            <Input {...field} placeholder="받는 사람" />
+            <Label className="text-black">받는 사람</Label>
+            <Input
+              className="border-red rounded-lg border bg-background"
+              {...field}
+              placeholder="받는 사람"
+            />
           </div>
         )}
       />
@@ -39,12 +47,19 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
         name="content"
         render={({ field }) => (
           <div className="flex grow flex-col space-y-4">
+            <Image
+              className="absolute bottom-12 right-0"
+              src="/postal_stamp.png"
+              alt="letter"
+              width={200}
+              height={100}
+            />
             <Label>편지 내용</Label>
-            <div className="flex grow flex-col justify-between rounded-md bg-white p-3 px-7">
+            <div className="border-red flex grow flex-col justify-between rounded-lg border p-6">
               <textarea
                 className={cn(
                   "w-full rounded-none bg-transparent p-0",
-                  "z-10 h-full rounded-md border-none p-3 px-5 outline-none placeholder:text-muted-foreground",
+                  "z-10 h-full rounded-md border-none outline-none placeholder:text-muted-foreground",
                 )}
                 maxLength={100}
                 {...field}
@@ -75,12 +90,8 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
           </div>
         )}
       />
-      <Button
-        type="submit"
-        // onClick={() => router.push("finish")}
-        className="w-full py-6"
-      >
-        선택 완료
+      <Button type="submit" onClick={() => router.push("finish")}>
+        작성 완료
       </Button>
     </motion.div>
   );
