@@ -5,22 +5,24 @@ import React, { HTMLAttributes } from "react";
 import { HTMLMotionProps, motion } from "framer-motion";
 type ButtonProps = HTMLAttributes<HTMLElement> & HTMLMotionProps<"button">;
 interface PostBoxProps extends ButtonProps {
-  text: string;
   font?: string;
 }
 
 const Btn = motion(Button);
-
-function PostBox({ text, font, className, onClick, ...props }: PostBoxProps) {
+function PostBox({ font, className, onClick, ...props }: PostBoxProps) {
   return (
     <Btn
       variant="link"
       size="sm"
       onClick={onClick}
-      className={cn(font && font, className)}
+      className={cn(
+        "bg-wood aspect-[2/5]  rounded-sm border-4 border-black",
+        font && font,
+        className,
+      )}
       {...props}
     >
-      {text}
+      {props.children}
     </Btn>
   );
 }

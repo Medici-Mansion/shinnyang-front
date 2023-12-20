@@ -5,16 +5,15 @@ import PostBox from "./post-box";
 const CatButtons = () => {
   const { data } = useSuspenseQuery(CommonQuery.getCat);
 
-  return Promise.resolve(data).then((cats) =>
-    cats.map((cat) => (
-      <PostBox
-        key={cat.id}
-        text={cat.name}
-        className={`font-${cat.code}`}
-        style={{ fontFamily: cat.code }}
-      />
-    )),
-  );
+  return data.map((cat) => (
+    <PostBox
+      key={cat.id}
+      className={`font-${cat.code}`}
+      style={{ fontFamily: cat.code }}
+    >
+      {cat.name}
+    </PostBox>
+  ));
 };
 
 export default CatButtons;

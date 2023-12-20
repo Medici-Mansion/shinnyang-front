@@ -17,7 +17,11 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+
     extend: {
+      maxWidth: {
+        anchor: "var(--max-width)",
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         umu: ["var(--umu)", ...fontFamily.sans],
@@ -25,6 +29,10 @@ module.exports = {
         gookie: ["gookie", ...fontFamily.sans],
       },
       colors: {
+        wood: {
+          DEFAULT: "#603F37",
+          deep: "#300815",
+        },
         red: "#B20000",
         sub: "#F1E5D1",
         background: "#FFF9EF",

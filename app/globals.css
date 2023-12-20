@@ -60,6 +60,7 @@ body {
   }
 
   :root {
+    --max-width: 574px;
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
 
