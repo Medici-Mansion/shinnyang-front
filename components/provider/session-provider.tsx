@@ -11,6 +11,8 @@ import {
   useState,
 } from "react";
 import { getMe, getNewToken } from "@/apis";
+import { ServiceProviders } from "@/constants";
+import { z } from "zod";
 const __SESSION__: SessionController = {
   _getSession: () => {},
   lastSync: 0,
@@ -36,12 +38,12 @@ export const SessionContext = createContext?.<SessionContextValue | undefined>(
 type UseSessionOptions<R extends boolean> = R extends true
   ? {
       required: R;
-      serviceName: string;
+      serviceName: z.infer<typeof ServiceProviders>;
       onUnauthenticated?: () => void;
     }
   : {
       required: R;
-      serviceName?: string;
+      serviceName?: z.infer<typeof ServiceProviders>;
       onUnauthenticated?: () => void;
     };
 
@@ -62,7 +64,7 @@ export function useSession<T extends boolean>(
     );
   }
 
-  const { required, onUnauthenticated, serviceName } = options ?? {};
+  const { required, onUnauthenticated, serviceName = "google" } = options ?? {};
 
   const requiredAndNotLoading = required && value?.status === "unauthenticated";
   const signin = useCallback(() => {
