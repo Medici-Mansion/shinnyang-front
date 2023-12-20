@@ -8,33 +8,35 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Acc } from "@/type";
-
-import React, { Suspense, useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import React, { Suspense } from "react";
+import { useSession } from "@/components/provider/session-provider";
+import SelectAccessories from "@/components/pages/post/select-accessories";
 
 const PostPage = () => {
   const router = useRouter();
-  const { data: accessories } = useSuspenseQuery(CommonQuery.getAcc);
-  const [isAccSelectBox, setAccSelectBox] = useState(false);
-  const accNameObj = useMemo(() => {
-    const nameOfCodes: { [key in Acc["code"]]?: string } = {};
-    accessories.forEach((acc) => {
-      nameOfCodes[acc.code] = acc.name;
-    });
-    return nameOfCodes;
-  }, [accessories]);
+  const { data } = useSession();
+  const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
   return (
-    <section className="theme-responsive p-0">
+    <section
+      className="theme-responsive p-0"
+      style={{
+        backgroundImage: "url('/assets/post_bg.png')",
+        backgroundPosition: "top",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="px-4 pt-4">
-        <ArrowLeft onClick={() => router.back()} />
+        <ArrowLeft className="text-white" onClick={() => router.back()} />
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-black">
-            {"신냥이"}
+          <h1 className="text-2xl font-semibold text-white">
+            {data?.user?.nickname}의
             <br />
             신냥이 우체국
             <br />
           </h1>
-          <sub className="text-lg font-normal text-gray-500">
+          <sub className="text-base font-normal leading-6 text-gray-500">
             서랍을 누르면 편지를 확인할 수 있어요!
           </sub>
         </div>
@@ -45,57 +47,67 @@ const PostPage = () => {
             </Suspense>
           </div>
           <div className="grid w-full grid-cols-3 justify-items-center gap-2">
-            <PostBox text="#1" />
-            <PostBox text="#2" />
-            <PostBox text="#3" />
-            <PostBox text="#4" />
-            <PostBox text="#5" />
-            <PostBox text="#6" />
-            <PostBox text="#7" />
-            <PostBox text="#8" />
-            <PostBox text="#9" />
+            {Array(9)
+              .fill(0)
+              .map((_, index) => (
+                <PostBox key={index} className="px-8 py-2">
+                  <div className="bg-wood-deep h-full w-full">
+                    <motion.div
+                      initial={{
+                        rotateX: 50,
+                        rotateY: 0,
+                        rotateZ: 180,
+                        translateX: -20,
+                        translateY: -20,
+                        scale: 2,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        translateX: 0,
+                        translateY: 0,
+                        scale: 0.9,
+                        opacity: 1,
+                      }}
+                      transition={{
+                        type: "tween",
+                      }}
+                      className="scale-70 relative aspect-[2/1] w-full"
+                      style={{
+                        transform: "rotate3d(1, 0, 0, 135deg) scale(0.9)",
+                        transformStyle: "preserve-3d",
+                      }}
+                    >
+                      <Image src="/assets/envelope.png" fill alt="envelope" />
+                    </motion.div>
+                  </div>
+                </PostBox>
+              ))}
           </div>
         </div>
       </div>
-      {isAccSelectBox && (
-        <div className="absolute top-[25%] grid w-full grid-cols-3 gap-x-2 bg-gray-300 ">
-          {accessories?.map((accType: Acc) => (
-            <div
-              key={accType.id}
-              className="mx-auto w-full p-3 text-center text-sm font-normal"
-            >
-              <input
-                type="radio"
-                id={accType.code}
-                name="accType"
-                value={accType.code}
-                className="peer hidden"
-              />
-
-              <label
-                htmlFor={accType.code}
-                className="relative mb-2 block aspect-square rounded-md bg-gray-200 duration-100 peer-checked:bg-gray-600"
-              >
-                <Image src={accType.iconImage} alt={accType.name} fill />
-              </label>
-              <span className="mt-2 text-base">{accType.name}</span>
-            </div>
-          ))}
-        </div>
-      )}
-
       <div className="flex w-full grow items-end">
-        <div className="relative flex h-full w-full grow flex-col items-end">
+        <div className="relative flex h-full w-full grow flex-col items-end justify-end">
+          <SelectAccessories>
+            {(acc) => {
+              return (
+                <motion.div className="relative top-[calc(1.5dvw+1.5dvh)] mx-auto aspect-[375/329] h-[40%]">
+                  <Image src={cats[0].image} alt="cat" fill />
+                  {acc && <Image src={acc} alt="acc" fill />}
+                </motion.div>
+              );
+            }}
+          </SelectAccessories>
           <div
-            className="relative z-10 mx-auto aspect-[31/32] h-[60%]"
-            onClick={() => setAccSelectBox(!isAccSelectBox)}
-          >
-            <Image src="/cat.png" alt="cat" fill />
-          </div>
-          <div className="absolute bottom-0 h-[63%] w-full bg-foreground"></div>
+            className="z-[1] h-[50%] w-full bg-transparent"
+            style={{
+              backgroundImage: 'url("/assets/post_bottom.png")',
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
         </div>
-        <div className="absolute bottom-12 w-full px-4">
-          <Link href="/letter">
+        <div className="absolute bottom-12 z-[2] w-full px-4">
+          <Link href="letter">
             <Button className="w-full py-6">편지쓰기</Button>
           </Link>
         </div>
