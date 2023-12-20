@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react";
-import { LetterFormValues } from "./app/(root)/(home)/letter/page";
+import { LetterFormValues } from "./form-state";
 
 export interface Cat {
-  code: LetterFormValues["catType"];
+  code: LetterFormValues["catName"];
   id: string;
   image: string;
   name: string;
@@ -25,7 +25,7 @@ export interface Token {
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   nickname: string;
 }
@@ -34,4 +34,11 @@ export interface SessionController {
   session: Session | null;
   _getSession: () => void | Promise<Session | void>;
   lastSync: number;
+}
+
+export interface Letters {
+  senderNickname?: string;
+  receiverNickname: string;
+  content: string;
+  catName: string;
 }

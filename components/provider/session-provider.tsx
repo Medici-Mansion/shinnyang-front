@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { getMe, getNewToken } from "@/apis";
+import { api } from "@/apis";
 const __SESSION__: SessionController = {
   _getSession: () => {},
   lastSync: 0,
@@ -105,6 +106,9 @@ export function SessionProvider(
       try {
         const { access, refresh } = session?.token || {};
         let token: Session["token"] = { access, refresh };
+        if (access) {
+          api.defaults.headers["Authorization"] = `Bearer ${access}`;
+        }
         if (!access) {
           if (refresh) {
             token = await getNewToken(refresh);
@@ -113,11 +117,10 @@ export function SessionProvider(
         if (token?.access) {
           const newSession = {
             token,
-            user: await getMe(token?.access),
+            user: await getMe(token.access),
           };
           __SESSION__.lastSync = now();
           __SESSION__.session = newSession;
-          console.log(newSession, "<<newSession");
           setSession(newSession);
         }
       } catch (error: any) {
