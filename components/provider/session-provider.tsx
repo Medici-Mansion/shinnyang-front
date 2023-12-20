@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { getMe, getNewToken } from "@/apis";
+import { api, getMe, getNewToken } from "@/apis";
 import { ServiceProviders } from "@/constants";
 import { z } from "zod";
 const __SESSION__: SessionController = {
