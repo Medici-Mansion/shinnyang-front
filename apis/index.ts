@@ -49,7 +49,7 @@ export const getMe = async (access: string) => {
 };
 
 export const setNickName = async (param: { nickname: string }) => {
-  axios.defaults.headers.common["Authorization"]
+  axios.defaults.headers.common["Authorization"];
   const res = await api.post<boolean>("/user/nickname", param);
   return res.data;
 };
@@ -61,9 +61,9 @@ export const getCats = async () => {
 };
 
 export const sendLetter = async (param: Letters) => {
-  const res = await api.post('/letters', param)
-  console.log(res.data)
-}
+  const res = await api.post("/letters", param);
+  console.log(res.data);
+};
 
 const APIs = {
   getGoogleCode,
@@ -71,7 +71,7 @@ const APIs = {
   getMe,
   setNickName,
   getCats,
-  sendLetter
+  sendLetter,
 };
 
 export default APIs;

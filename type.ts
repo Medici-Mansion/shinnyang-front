@@ -37,8 +37,8 @@ export interface SessionController {
 }
 
 export interface Letters {
-  senderNickname?: string
-  receiverNickname: string
-  content: string
-  catName: string
+  senderNickname?: string;
+  receiverNickname: string;
+  content: string;
+  catName: string;
 }
