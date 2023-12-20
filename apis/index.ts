@@ -1,4 +1,4 @@
-import { Cat, Letters, Session, User } from "@/type";
+import { Acc, Cat, Letters, Session, User } from "@/type";
 import axios from "axios";
 export const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
@@ -49,15 +49,20 @@ export const getMe = async (access: string) => {
 };
 
 export const setNickName = async (param: { nickname: string }) => {
-  axios.defaults.headers.common["Authorization"];
   const res = await api.post<boolean>("/user/nickname", param);
   return res.data;
 };
 
 export const getCats = async () => {
-  const res = await api.get<Cat[]>("/common/cats");
+  const response = await api.get<Cat[]>("/common/cats");
 
-  return res.data;
+  return response.data;
+};
+
+export const getAccessories = async () => {
+  const response = await api.get<Acc[]>("/common/accessories");
+
+  return response.data;
 };
 
 export const sendLetter = async (param: Letters) => {
@@ -71,7 +76,7 @@ const APIs = {
   getMe,
   setNickName,
   getCats,
-  sendLetter,
+  getAccessories,
 };
 
 export default APIs;

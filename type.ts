@@ -1,6 +1,14 @@
 import { PropsWithChildren } from "react";
 import { LetterFormValues } from "./form-state";
 
+export interface Acc {
+  id: string;
+  name: string;
+  code: string;
+  fullImage: string;
+  iconImage: string;
+}
+
 export interface Cat {
   code: LetterFormValues["catName"];
   id: string;
