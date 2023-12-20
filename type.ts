@@ -33,7 +33,7 @@ export interface Token {
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   nickname: string;
 }
