@@ -53,7 +53,6 @@ export const getAccessories = async () => {
 
     return response.data;
 };
-
 const APIs = {
     getGoogleCode,
     getUser,
