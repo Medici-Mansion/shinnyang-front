@@ -2,7 +2,8 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // const {} = cookies()
+  const cookieStore = cookies();
+  // console.log(cookieStore, "<<cookieStore");
 
   return NextResponse.next();
 }

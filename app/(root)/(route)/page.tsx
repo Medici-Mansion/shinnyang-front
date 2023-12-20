@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "@/components/provider/session-provider";
 
 const OnBoardingPage = () => {
-  const { data } = useSession();
+  const { data, signin } = useSession();
   const { user } = data || {};
 
   const backgroundStyle = {
@@ -29,7 +29,7 @@ const OnBoardingPage = () => {
         </div>
         <div className="items-end">
           {!user ? (
-            <Button variant="kakao" onClick={() => APIs.getGoogleCode()}>
+            <Button variant="kakao" onClick={() => signin()}>
               구글 로그인
             </Button>
           ) : (

@@ -32,6 +32,6 @@ export interface User {
 
 export interface SessionController {
   session: Session | null;
-  _getSession: () => void | Promise<Session | void>;
+  _getSession: (isFocus?: boolean) => void | Promise<Session | void>;
   lastSync: number;
 }
