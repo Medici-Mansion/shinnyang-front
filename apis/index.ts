@@ -77,6 +77,7 @@ const APIs = {
   setNickName,
   getCats,
   getAccessories,
+  sendLetter,
 };
 
 export default APIs;
