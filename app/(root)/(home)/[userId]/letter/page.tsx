@@ -3,11 +3,13 @@
 import React, { Suspense, useContext } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import { LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HashContext } from "@/hooks/use-hash-router";
-import useSendLetter from "@/hooks/use-send-letter";
+import { letterStore } from "@/store/user";
+import { Letters } from "@/type";
 
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
@@ -17,10 +19,24 @@ import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import Mailing from "@/components/pages/letter/mailing";
 import { useSession } from "@/components/provider/session-provider";
-import { Letters } from "@/type";
+
+export interface LetterResponse {
+  data: {
+    catName: string;
+    content: string;
+    createdAt: Date;
+    deletedAt: Date | null;
+    id: string;
+    receiverNickname: string;
+    senderId: string;
+    senderNickname: string;
+    updatedAt: Date;
+  };
+  ok: boolean;
+}
 
 const LetterPage = () => {
-  const { mutate } = useSendLetter();
+  const { setLetterInfo } = letterStore();
   const { data } = useSession();
   const { user } = data || {};
   const router = useContext(HashContext);
@@ -35,8 +51,14 @@ const LetterPage = () => {
 
   const onValid = (values: LetterFormValues) => {
     const param: Letters = { ...values, senderNickname: user?.nickname };
-
-    mutate(param);
+    const { catName, content, receiverNickname, senderNickname } = param || {};
+    setLetterInfo({
+      catName,
+      content,
+      receiverNickname,
+      senderNickname: senderNickname ? senderNickname : "",
+    });
+    router.push("finish");
   };
 
   return (

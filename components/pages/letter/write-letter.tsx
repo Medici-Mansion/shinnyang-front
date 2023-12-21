@@ -75,12 +75,8 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
           </div>
         )}
       />
-      <Button
-        type="submit"
-        // onClick={() => router.push("finish")}
-        className="w-full py-6"
-      >
-        선택 완료
+      <Button type="submit" className="w-full py-6">
+        편지보내기
       </Button>
     </motion.div>
   );
