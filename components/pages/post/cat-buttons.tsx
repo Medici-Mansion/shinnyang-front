@@ -1,3 +1,4 @@
+"use client";
 import CommonQuery from "@/lib/queries/common.query";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import PostBox from "./post-box";
