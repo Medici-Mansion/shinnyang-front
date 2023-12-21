@@ -16,13 +16,13 @@ const PostPage = () => {
       <div className="px-4 pt-4">
         <BackButton href="/" />
         <PostHeader />
-        <div className="mt-6 flex w-full flex-col space-y-6">
-          <div className="grid w-full grid-cols-3 justify-items-center gap-2">
+        <div className="mt-6 flex w-full flex-col space-y-4">
+          <div className="grid w-full grid-cols-3 justify-items-center gap-2 gap-x-4">
             <Suspense fallback={<div>냥이들 불러오는중..</div>}>
               <CatButtons />
             </Suspense>
           </div>
-          <div className="grid w-full grid-cols-3 justify-items-center gap-2">
+          <div className="grid w-full grid-cols-3 justify-items-center gap-2 gap-x-4">
             <PostMails />
           </div>
         </div>
@@ -48,7 +48,7 @@ const PostPage = () => {
             />
           </div>
         </div>
-        <div className="absolute bottom-12 z-[2] w-full px-4">
+        <div className="absolute bottom-8 z-[2] w-full px-4">
           <Link href="letter">
             <Button className="w-full py-6">편지쓰기</Button>
           </Link>

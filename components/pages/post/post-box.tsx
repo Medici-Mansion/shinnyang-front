@@ -16,7 +16,7 @@ function PostBox({ font, className, onClick, ...props }: PostBoxProps) {
       size="sm"
       onClick={onClick}
       className={cn(
-        "bg-wood aspect-[2/5]  rounded-sm border-4 border-black",
+        "aspect-[2/5] h-8  rounded-sm border-4 border-black bg-wood",
         font && font,
         className,
       )}

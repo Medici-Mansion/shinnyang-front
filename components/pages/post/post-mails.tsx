@@ -8,7 +8,7 @@ const PostMails = () => {
   return Array(9)
     .fill(0)
     .map((_, index) => (
-      <PostBox key={index} className="px-8 py-2">
+      <PostBox key={index} className="px-2 py-2">
         <div className="h-full w-full bg-wood-deep">
           <LazyMotion features={domAnimation}>
             <m.div
