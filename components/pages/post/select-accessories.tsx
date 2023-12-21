@@ -30,7 +30,7 @@ const SelectAccessories = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="relative top-[calc(1.5dvw+1.5dvh)] mx-auto aspect-[375/329] h-[40%]">
+        <div className="relative top-[calc(1.5dvw+1.5dvh)] mx-auto aspect-[375/329] h-1/2">
           <Image
             // blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
             // placeholder="blur"
