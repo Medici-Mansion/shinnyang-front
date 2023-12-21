@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import axios from "axios";
 import "./globals.css";
-
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { cookies } from "next/headers";
@@ -12,8 +10,44 @@ import { getMe } from "@/apis";
 import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
 
+import localFont from "next/font/local";
+
+const umu = localFont({
+  adjustFontFallback: "Arial",
+  display: "swap",
+  variable: "--font-umu",
+  src: [
+    {
+      path: "fonts/UhBeepuding.woff",
+      weight: "normal",
+    },
+  ],
+});
+const cheezu = localFont({
+  adjustFontFallback: "Arial",
+  display: "swap",
+  variable: "--font-cheezu",
+  src: [
+    {
+      path: "fonts/UhBeeJJIBBABBA.woff",
+      weight: "normal",
+    },
+  ],
+});
+const gookie = localFont({
+  adjustFontFallback: "Arial",
+  display: "swap",
+  variable: "--font-gookie",
+  src: [
+    {
+      path: "fonts/UhBeeGENWOO.woff",
+      weight: "normal",
+    },
+  ],
+});
+
 const fontSans = Roboto({
-  weight: ["300", "400", "500", "700"],
+  weight: ["500"],
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -48,7 +82,11 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={cn(umu.variable, cheezu.variable, gookie.variable)}
+      suppressHydrationWarning
+    >
       <body
         className={cn(
           "relative h-[100dvh] bg-background font-sans antialiased",

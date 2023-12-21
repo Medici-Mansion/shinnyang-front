@@ -6,46 +6,6 @@ body {
   margin: 0 auto;
 }
 @layer base {
-  @font-face {
-    font-family: "umu";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeepuding.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-size: "36px";
-  }
-
-  @font-face {
-    font-family: "cheezu";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeJJIBBABBA.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: "gookie";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeGENWOO.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  .font-umu {
-    font-family: "umu", sans-serif;
-    font-size: 20px;
-  }
-
-  .font-cheezu {
-    font-family: "cheezu", sans-serif;
-    font-size: 20px;
-  }
-
-  .font-gookie {
-    font-family: "gookie", sans-serif;
-    font-size: 20px;
-  }
-
   .theme-responsive {
     max-width: 574px;
     height: 100dvh;
@@ -55,11 +15,16 @@ body {
     flex-direction: column;
     /* background-color: #fff9ef; */
   }
+
+  .theme-responsive :not(img) {
+    z-index: 1;
+  }
   .bg-snp {
     background: linear-gradient(to top, #fff9ef, #fff9ef);
   }
 
   :root {
+    --max-width: 574px;
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
 
