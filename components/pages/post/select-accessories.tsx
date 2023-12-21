@@ -1,5 +1,5 @@
 "use client";
-import { Form, FormControl, FormField } from "@/components/ui/form";
+import { FormField } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
@@ -8,18 +8,15 @@ import {
 import CommonQuery from "@/lib/queries/common.query";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const SelectAccessories = ({
-  children,
-}: {
-  children: (accImage: string) => ReactNode;
-}) => {
+const SelectAccessories = () => {
   const [selectedAccessoryCode, setSelectedAccessoryCode] = useState("");
   const form = useForm({
     mode: "onChange",
   });
+  const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
   const { data: accessories } = useSuspenseQuery(CommonQuery.getAcc);
   const accMap = useMemo(
     () =>
@@ -28,11 +25,21 @@ const SelectAccessories = ({
       }, {}),
     [accessories],
   );
+  const selectedCatImage = accMap[selectedAccessoryCode as keyof typeof accMap];
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        {children(accMap[selectedAccessoryCode as keyof typeof accMap] || "")}
+        <div className="relative top-[calc(1.5dvw+1.5dvh)] mx-auto aspect-[375/329] h-[40%]">
+          <Image
+            // blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
+            // placeholder="blur"
+            src={cats[0].image}
+            alt="cat"
+            fill
+          />
+          {selectedCatImage && <Image src={selectedCatImage} alt="acc" fill />}
+        </div>
       </PopoverTrigger>
 
       <FormField

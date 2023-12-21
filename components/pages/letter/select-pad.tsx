@@ -69,11 +69,11 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
 
                   <label
                     htmlFor={catType.code}
-                    className="peer-checked:border-red bg-sub relative mb-2 block aspect-square rounded-xl opacity-50 duration-100 peer-checked:border-2 peer-checked:opacity-100"
+                    className="relative mb-2 block aspect-square rounded-xl bg-sub opacity-50 duration-100 peer-checked:border-2 peer-checked:border-red peer-checked:opacity-100"
                   >
                     <Image src={catType.image} alt={catType.name} fill />
                   </label>
-                  <span className="peer-checked:bg-red mt-2 rounded-full px-4 py-1 text-base peer-checked:text-white">
+                  <span className="mt-2 rounded-full px-4 py-1 text-base peer-checked:bg-red peer-checked:text-white">
                     {catType.name}
                   </span>
                 </div>
@@ -82,9 +82,9 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
 
             <div
               className={cn(
-                "border-red sh-full relative grow overflow-hidden rounded-2xl border p-6",
+                "relative grow overflow-hidden rounded-2xl border border-red p-6",
+                `font-${field.value}`,
               )}
-              style={{ fontFamily: field.value }}
             >
               <Image className="" src="/letter_sheet.png" alt="letter" fill />
               <h1 className="absolute text-2xl">{`${

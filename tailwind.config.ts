@@ -23,10 +23,10 @@ module.exports = {
         anchor: "var(--max-width)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        umu: ["var(--umu)", ...fontFamily.sans],
-        cheezu: ["cheezu", ...fontFamily.sans],
-        gookie: ["gookie", ...fontFamily.sans],
+        sans: ["var(--font-sans)"],
+        umu: ["var(--font-umu)"],
+        cheezu: ["var(--font-cheezu)"],
+        gookie: ["var(--font-gookie)"],
       },
       colors: {
         wood: {

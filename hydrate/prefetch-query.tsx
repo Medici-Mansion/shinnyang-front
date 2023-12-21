@@ -12,16 +12,21 @@ interface HydrateQueryProps<
   TQueryFnData,
   TError,
   TData,
-  TQueryKey extends QueryKey
+  TQueryKey extends QueryKey,
 > {
-  queries: FetchQueryOptions<TQueryFnData, TError, TData, TQueryKey>[];
+  queries: FetchQueryOptions<
+    TQueryFnData | any,
+    TError | any,
+    TData | any,
+    TQueryKey
+  >[];
 }
 
 const PrefetchQuery = async <
-  TQueryFnData,
+  TQueryFnData extends any,
   TError,
-  TData,
-  TQueryKey extends QueryKey
+  TData extends any,
+  TQueryKey extends QueryKey,
 >({
   children,
   queries,
@@ -31,7 +36,7 @@ const PrefetchQuery = async <
   try {
     const queryClient = getQueryClient();
     const queriesList = queries.map((query) =>
-      queryClient.prefetchQuery(query)
+      queryClient.prefetchQuery(query),
     );
     await Promise.all(queriesList);
     const dehydratedState = dehydrate(queryClient);
