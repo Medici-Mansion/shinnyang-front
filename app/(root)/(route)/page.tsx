@@ -9,23 +9,18 @@ const OnBoardingPage = () => {
   const { data, signin } = useSession();
   const { user } = data || {};
 
-  const backgroundStyle = {
-    backgroundImage: `url('/bg-shinnyang.png')`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
   return (
-    <div className="theme-responsive" style={backgroundStyle}>
-      <div className="flex h-full w-full flex-col">
+    <div className="theme-responsive relative">
+      <div className="z-10 flex h-full w-full flex-col">
         <div className="mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
-          <div className="text-2xl font-medium">
+          <div className="font-cheezu text-3xl font-medium leading-[50px]">
             새해를 알리는
             <br />
             2024 신냥이 우체국
           </div>
-          <span className="text-md mt-2">신년카드 대신 전달해드립니다.</span>
+          <span className="title-regular mt-2">
+            신년편지 냥이가 대신 전달해드립니다
+          </span>
         </div>
         <div className="items-end">
           {!user ? (

@@ -94,11 +94,11 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
               key={field.value}
             >
               <Image
+                className=""
                 src="/letter_sheet.png"
                 alt="letter"
-                layout="fill"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KG..."
+                priority
+                fill
               />
               <h1 className="absolute text-2xl">{`${
                 catNameObj[field.value]

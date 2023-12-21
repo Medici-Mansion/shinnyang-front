@@ -16,6 +16,7 @@ const umu = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
   variable: "--font-umu",
+  preload: true,
   src: [
     {
       path: "fonts/UhBeepuding.woff",
@@ -27,6 +28,7 @@ const cheezu = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
   variable: "--font-cheezu",
+  preload: true,
   src: [
     {
       path: "fonts/UhBeeJJIBBABBA.woff",
@@ -38,6 +40,7 @@ const gookie = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
   variable: "--font-gookie",
+  preload: true,
   src: [
     {
       path: "fonts/UhBeeGENWOO.woff",
@@ -84,7 +87,12 @@ export default async function RootLayout({
   return (
     <html
       lang="ko"
-      className={cn(umu.variable, cheezu.variable, gookie.variable)}
+      className={cn(
+        umu.variable,
+        cheezu.variable,
+        gookie.variable,
+        "bg-[#26040D] font-cheezu font-gookie font-umu",
+      )}
       suppressHydrationWarning
     >
       <body
