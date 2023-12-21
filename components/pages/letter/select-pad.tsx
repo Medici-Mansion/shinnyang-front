@@ -86,7 +86,13 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                 `font-${field.value}`,
               )}
             >
-              <Image className="" src="/letter_sheet.png" alt="letter" fill />
+              <Image
+                className=""
+                src="/letter_sheet.png"
+                alt="letter"
+                priority
+                fill
+              />
               <h1 className="absolute text-2xl">{`${
                 catNameObj[field.value]
               } 에게`}</h1>
