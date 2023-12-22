@@ -1,8 +1,7 @@
 import APIs from "@/apis";
 import { useMutation } from "@tanstack/react-query";
 
-import { Letters } from "@/type";
-import { LetterResponse } from "@/app/(root)/(home)/[userId]/letter/page";
+import { LetterResponse, Letters } from "@/type";
 
 interface UseSendLetterOptions {
   onSuccess?: (data: LetterResponse, variables: Letters) => void;

@@ -5,7 +5,6 @@ import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { userStore } from "@/store/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSetNickName from "@/hooks/use-set-nickname";
 
@@ -20,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
+import { useSession } from "@/components/provider/session-provider";
 
 const formSchema = z.object({
   nickname: z.string().min(1, {
@@ -28,17 +28,16 @@ const formSchema = z.object({
 });
 
 const NicknamePage = () => {
+  const { data: userData } = useSession();
   const router = useRouter();
 
   const { mutate } = useSetNickName({
     onSuccess(data, variables) {
       if (data) {
-        router.replace(`/${id}/post`);
+        router.replace(`/${userData?.user?.id}/post`);
       }
     },
   });
-  const { userInfo } = userStore();
-  const { id } = userInfo || {};
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
