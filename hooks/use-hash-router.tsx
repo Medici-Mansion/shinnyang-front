@@ -59,6 +59,7 @@ const useHashRouter = (): IHashContext => {
       : [],
   );
 
+  console.log(hashStack);
   const handleListener = useCallback(
     (event: PopStateEvent) => {
       event.preventDefault();

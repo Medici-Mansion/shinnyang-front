@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 import { LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HashContext } from "@/hooks/use-hash-router";
-import useSendLetter from "@/hooks/use-send-letter";
+import { letterStore } from "@/store/user";
+import { Letters } from "@/type";
 
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
@@ -25,8 +26,9 @@ const FinishLetter = dynamic(
 const Mailing = dynamic(() => import("@/components/pages/letter/mailing"));
 const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
 
+
 const LetterPage = () => {
-  const { mutate } = useSendLetter();
+  const { setLetterInfo } = letterStore();
   const { data } = useSession();
   const { user } = data || {};
   const router = useContext(HashContext);
@@ -41,8 +43,14 @@ const LetterPage = () => {
 
   const onValid = (values: LetterFormValues) => {
     const param: Letters = { ...values, senderNickname: user?.nickname };
-
-    mutate(param);
+    const { catName, content, receiverNickname, senderNickname } = param || {};
+    setLetterInfo({
+      catName,
+      content,
+      receiverNickname,
+      senderNickname: senderNickname ? senderNickname : "",
+    });
+    router.push("finish");
   };
 
   return (

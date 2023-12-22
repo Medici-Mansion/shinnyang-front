@@ -17,6 +17,7 @@ const SelectAccessories = dynamic(
   () => import("@/components/pages/post/select-accessories"),
 );
 
+
 const PostPage = () => {
   return (
     <section className="theme-responsive p-0">

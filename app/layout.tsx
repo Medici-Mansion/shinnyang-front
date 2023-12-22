@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
 
@@ -84,6 +84,7 @@ export default async function RootLayout({
           <QueryProvider>
             {children}
             <ReactQueryDevtools />
+            <Toaster />
           </QueryProvider>
         </SessionProvider>
       </body>
