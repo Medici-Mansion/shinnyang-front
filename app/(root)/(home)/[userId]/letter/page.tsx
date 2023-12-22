@@ -8,8 +8,6 @@ import { LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HashContext } from "@/hooks/use-hash-router";
 import { letterStore } from "@/store/user";
-import { Letters } from "@/type";
-
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
 import { Form } from "@/components/ui/form";
@@ -25,7 +23,6 @@ const FinishLetter = dynamic(
 );
 const Mailing = dynamic(() => import("@/components/pages/letter/mailing"));
 const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
-
 
 const LetterPage = () => {
   const { setLetterInfo } = letterStore();
