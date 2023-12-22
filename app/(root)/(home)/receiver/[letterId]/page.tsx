@@ -1,19 +1,20 @@
 "use client";
 
-import React, { Suspense, useContext } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { HashContext } from "@/hooks/use-hash-router";
 import { AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 import BaseLayout from "@/layout/base-layout";
 import { LetterFormValues, letterFormState } from "@/form-state";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useGetLetter from "@/hooks/use-get-letter";
 
 import AnswerLetter from "@/components/pages/letter/answer-letter";
 import AnswerWrite from "@/components/pages/letter/answer-write";
 import Answer from "@/components/pages/letter/answer";
+import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
 
 const ReceiverPage = () => {
@@ -34,6 +35,12 @@ const ReceiverPage = () => {
   const onValid = (values: LetterFormValues) => {
     console.log(values, "<<<<<<");
   };
+
+  useEffect(() => {
+    if (data && data?.data.senderNickname) {
+      form.setValue("receiverNickname", data.data.senderNickname);
+    }
+  }, [data, form]);
 
   return (
     <Form {...form}>

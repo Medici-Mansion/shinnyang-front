@@ -13,8 +13,8 @@ const BaseLayout = ({ children, as, ...rest }: PropsWithChildren<P>) => {
     <Tag
       {...rest}
       className={cn(
-        "flex flex-col h-full p-6",
-        rest.className?.replaceAll('"', "")
+        "flex h-full flex-col p-6",
+        rest.className?.replaceAll('"', ""),
       )}
     >
       {children}
