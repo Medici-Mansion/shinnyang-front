@@ -1,23 +1,14 @@
-"use client";
 import React from "react";
-import Link from "next/link";
-import APIs from "@/apis";
-import { Button } from "@/components/ui/button";
-import { useSession } from "@/components/provider/session-provider";
+import lazy from "next/dynamic";
+
+const LoginButton = lazy(() => import("@/components/pages/login-button"));
+
+// export const revalidate = "force-cache"; // revalidate at most every hour
+// export const dynamic = "auto";
 
 const OnBoardingPage = () => {
-  const { data, signin } = useSession();
-  const { user } = data || {};
-
-  const backgroundStyle = {
-    backgroundImage: `url('/bg-shinnyang.png')`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
   return (
-    <div className="theme-responsive" style={backgroundStyle}>
+    <div className="theme-responsive">
       <div className="flex h-full w-full flex-col">
         <div className="mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
           <div className="text-2xl font-medium">
@@ -28,21 +19,7 @@ const OnBoardingPage = () => {
           <span className="text-md mt-2">신년카드 대신 전달해드립니다.</span>
         </div>
         <div className="items-end">
-          {!user ? (
-            <Button variant="kakao" onClick={() => signin()}>
-              구글 로그인
-            </Button>
-          ) : (
-            <div className="mb-8">
-              <Link
-                href={
-                  user.nickname ? `/${user.id}/post` : `/${user.id}/nickname`
-                }
-              >
-                <Button variant={"primary"}>우체국 방문하기</Button>
-              </Link>
-            </div>
-          )}
+          <LoginButton />
         </div>
       </div>
     </div>

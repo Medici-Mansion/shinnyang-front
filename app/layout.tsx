@@ -11,7 +11,6 @@ import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
 
 import localFont from "next/font/local";
-
 const umu = localFont({
   adjustFontFallback: "Arial",
   display: "swap",

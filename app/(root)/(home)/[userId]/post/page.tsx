@@ -1,14 +1,20 @@
-import CatButtons from "@/components/pages/post/cat-buttons";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense } from "react";
-import BackButton from "@/components/back-button";
-import PostHeader from "@/components/pages/post/post-header";
-import PostMails from "@/components/pages/post/post-mails";
-import SelectAccessories from "@/components/pages/post/select-accessories";
 import PrefetchQuery from "@/hydrate/prefetch-query";
 import CommonQuery from "@/lib/queries/common.query";
+import dynamic from "next/dynamic";
+
+const CatButtons = dynamic(() => import("@/components/pages/post/cat-buttons"));
+const Button = dynamic(() =>
+  import("@/components/ui/button").then((ui) => ui.Button),
+);
+const BackButton = dynamic(() => import("@/components/back-button"));
+const PostHeader = dynamic(() => import("@/components/pages/post/post-header"));
+const PostMails = dynamic(() => import("@/components/pages/post/post-mails"));
+const SelectAccessories = dynamic(
+  () => import("@/components/pages/post/select-accessories"),
+);
 
 const PostPage = () => {
   return (
