@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { Cat } from "@/type";
 import { cn } from "@/lib/utils";
 import { LetterFormValues } from "@/form-state";
+import { Suspense } from "react";
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
@@ -33,12 +34,11 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
       exit={{ opacity: 0 }}
       className="mt-4 flex h-full flex-col space-y-4"
     >
-      <div className="">
+      <div>
         <h1 className="text-2xl font-semibold">
           편지를 배달할 냥이를
           <br />
           선택해주세요!
-          <br />
         </h1>
         <sub className="text-sm font-normal">
           냥이마다 편지 디자인이 달라요.
@@ -71,7 +71,13 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                     htmlFor={catType.code}
                     className="relative mb-2 block aspect-square rounded-xl bg-sub opacity-50 duration-100 peer-checked:border-2 peer-checked:border-red peer-checked:opacity-100"
                   >
-                    <Image src={catType.image} alt={catType.name} fill />
+                    <Image
+                      src={catType.image}
+                      alt={catType.name}
+                      layout="fill"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KG..."
+                    />
                   </label>
                   <span className="mt-2 rounded-full px-4 py-1 text-base peer-checked:bg-red peer-checked:text-white">
                     {catType.name}
@@ -83,17 +89,24 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
             <div
               className={cn(
                 "relative grow overflow-hidden rounded-2xl border border-red p-6",
-                `font-${field.value}`,
               )}
+              style={{ fontFamily: field.value }}
+              key={field.value}
             >
-              <Image className="" src="/letter_sheet.png" alt="letter" fill />
+              <Image
+                className=""
+                src="/letter_sheet.png"
+                alt="letter"
+                priority
+                fill
+              />
               <h1 className="absolute text-2xl">{`${
                 catNameObj[field.value]
               } 에게`}</h1>
               <TextArea
                 value={`냥이 ${field.value} 귀여운 글씨체야 이글씨 어때 귀엽냥?`}
                 disabled
-                className="absolute top-14 w-2/3 border-none bg-transparent px-0 outline-none"
+                className="absolute top-14 w-2/3 bg-transparent px-0 "
                 maxLength={100}
                 maxRows={6}
               />
