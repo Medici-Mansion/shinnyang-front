@@ -3,7 +3,6 @@
 import React, { Suspense, useContext } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 import { LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,21 +18,6 @@ import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import Mailing from "@/components/pages/letter/mailing";
 import { useSession } from "@/components/provider/session-provider";
-
-export interface LetterResponse {
-  data: {
-    catName: string;
-    content: string;
-    createdAt: Date;
-    deletedAt: Date | null;
-    id: string;
-    receiverNickname: string;
-    senderId: string;
-    senderNickname: string;
-    updatedAt: Date;
-  };
-  ok: boolean;
-}
 
 const LetterPage = () => {
   const { setLetterInfo } = letterStore();

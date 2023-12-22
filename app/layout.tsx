@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { cookies } from "next/headers";
 import { Session } from "@/type";
 import { getMe } from "@/apis";
-
+import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
 
@@ -97,6 +97,7 @@ export default async function RootLayout({
           <QueryProvider>
             {children}
             <ReactQueryDevtools />
+            <Toaster />
           </QueryProvider>
         </SessionProvider>
       </body>

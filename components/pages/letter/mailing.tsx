@@ -14,7 +14,6 @@ interface MailingProps {
 
 const Mailing = ({ router }: MailingProps) => {
   const { letterInfo } = letterStore();
-  console.log(letterInfo, "<<<<");
   return (
     <motion.div
       initial={{ opacity: 0 }}

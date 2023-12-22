@@ -1,5 +1,4 @@
-import { LetterResponse } from "@/app/(root)/(home)/[userId]/letter/page";
-import { Acc, Cat, Letters, Session, User } from "@/type";
+import { Acc, Cat, LetterResponse, Letters, Session, User } from "@/type";
 import axios from "axios";
 export const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
