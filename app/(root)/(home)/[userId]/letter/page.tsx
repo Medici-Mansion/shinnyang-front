@@ -12,12 +12,20 @@ import { Letters } from "@/type";
 
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
-import SelectPad from "@/components/pages/letter/select-pad";
 import { Form } from "@/components/ui/form";
-import WriteLetter from "@/components/pages/letter/write-letter";
-import FinishLetter from "@/components/pages/letter/finish-letter";
-import Mailing from "@/components/pages/letter/mailing";
 import { useSession } from "@/components/provider/session-provider";
+import { Letters } from "@/type";
+import dynamic from "next/dynamic";
+
+const WriteLetter = dynamic(
+  () => import("@/components/pages/letter/write-letter"),
+);
+const FinishLetter = dynamic(
+  () => import("@/components/pages/letter/finish-letter"),
+);
+const Mailing = dynamic(() => import("@/components/pages/letter/mailing"));
+const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
+
 
 const LetterPage = () => {
   const { setLetterInfo } = letterStore();

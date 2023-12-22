@@ -84,7 +84,7 @@ export function useSession<T extends boolean>(
   if (requiredAndNotLoading) {
     return {
       data: null,
-      status: "loading",
+      status: value.status,
       update: value.update,
       signin,
     };
@@ -137,20 +137,19 @@ export function SessionProvider(
   useEffect(() => {
     __SESSION._getSession = async (isFocus?: boolean) => {
       try {
-        const { access, refresh } = session?.token || {};
-        let token: Session["token"] = { access, refresh };
-        if (access) {
-          api.defaults.headers["Authorization"] = `Bearer ${access}`;
-        }
-        if (!access) {
-          if (refresh) {
-            token = await getNewToken(refresh);
-            console.log(token);
+        let { token } = session || {};
+
+        if (token?.access) {
+          api.defaults.headers["Authorization"] = `Bearer ${token.access}`;
+        } else {
+          if (token?.refresh) {
+            token = await getNewToken(token.refresh);
           } else {
             __SESSION.lastSync = 0;
             __SESSION.session = null;
           }
         }
+
         if (token?.access) {
           const newSession = {
             token,
@@ -174,7 +173,6 @@ export function SessionProvider(
       initial.current = false;
     }
   }, [__SESSION, session]);
-
   useEffect(() => {
     /**
      * 포커스 시 refetch 여부
@@ -197,11 +195,10 @@ export function SessionProvider(
       );
     };
   }, [__SESSION, refetchOnWindowFocus]);
-
   const value = useMemo(() => {
     const status = loading
       ? "loading"
-      : session
+      : session?.user
         ? "authenticated"
         : "unauthenticated";
     const data = status === "authenticated" ? session : null;

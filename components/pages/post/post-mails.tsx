@@ -1,16 +1,18 @@
 "use client";
 import React from "react";
 import PostBox from "./post-box";
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { LazyMotion, m } from "framer-motion";
 import Image from "next/image";
 
 const PostMails = () => {
+  const loadDomFeature = () =>
+    import("@/animation/motion-features").then((res) => res.default);
   return Array(9)
     .fill(0)
     .map((_, index) => (
-      <PostBox key={index} className="px-8 py-2">
+      <PostBox key={index} className="px-2 py-2">
         <div className="h-full w-full bg-wood-deep">
-          <LazyMotion features={domAnimation}>
+          <LazyMotion features={loadDomFeature}>
             <m.div
               initial={{
                 rotateX: 50,
