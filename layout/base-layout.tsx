@@ -2,10 +2,14 @@ import { cn } from "@/lib/utils";
 import React, { HTMLAttributes, PropsWithChildren } from "react";
 
 interface BaseLayoutProps {
-  as: keyof HTMLElementTagNameMap | "section";
+  as?: keyof HTMLElementTagNameMap | "section";
 }
 type P = BaseLayoutProps &
-  HTMLAttributes<HTMLElementTagNameMap[BaseLayoutProps["as"]]>;
+  HTMLAttributes<
+    HTMLElementTagNameMap[BaseLayoutProps["as"] extends string
+      ? BaseLayoutProps["as"]
+      : "section"]
+  >;
 
 const BaseLayout = ({ children, as, ...rest }: PropsWithChildren<P>) => {
   const Tag = as ?? "section";
