@@ -1,66 +1,34 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 
-export interface UserInfo {
-  isLogin: boolean;
-  email: string;
-  id: string;
-  nickname: string | null;
-}
-
-export interface UserToken {
-  access: string;
-  refresh: string;
+export interface LetterInfo {
+  catName: string
+  receiverNickname: string
+  senderNickname: string
+  content: string
+  letterId?: string;
 }
 
 interface UserStore {
-  userInfo: UserInfo;
-  setUser: (user: UserInfo) => void;
-  removeUser: (id: string) => void;
+  letterInfo: LetterInfo;
+  setLetterInfo: (letter: LetterInfo) => void;
+  removeLetterInfo: (id: string) => void;
 }
 
-interface TokenStore {
-  userToken: UserToken;
-  setToken: (user: UserToken) => void;
-  removeToken: () => void;
-}
 
-export const userStore = create<UserStore>((set) => ({
-  userInfo: {
-    isLogin: false,
-    email: "",
-    id: "",
-    nickname: "",
+export const letterStore = create<UserStore>((set) => ({
+  letterInfo: {
+    letterId: "",
+    catName: "",
+    content: "",
+    senderNickname: "",
+    receiverNickname: ""
   },
-  setUser: (userInfo: UserInfo) => {
+  setLetterInfo: (letterInfo: LetterInfo) => {
     set((state) => ({
-      userInfo: { ...userInfo },
+      letterInfo: { ...letterInfo },
     }));
   },
-  removeUser: () => {
-    set({ userInfo: { isLogin: false, email: "", id: "", nickname: "" } });
+  removeLetterInfo: () => {
+    set({ letterInfo: { catName: "", content: "", senderNickname: "", receiverNickname: "", letterId: "" } });
   },
 }));
-
-export const tokenStore = create(
-  persist<TokenStore>(
-    (set, get) => ({
-      userToken: {
-        access: "",
-        refresh: "",
-      },
-      setToken: (userToken: UserToken) => {
-        set((state) => ({
-          userToken: { ...userToken },
-        }));
-      },
-      removeToken: () => {
-        set({ userToken: { access: "", refresh: "" } });
-      },
-    }),
-    {
-      name: "shinnyang",
-      storage: createJSONStorage(() => localStorage),
-    },
-  ),
-);

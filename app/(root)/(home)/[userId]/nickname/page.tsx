@@ -1,16 +1,21 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { userStore } from "@/store/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSetNickName from "@/hooks/use-set-nickname";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+const Button = dynamic(() =>
+  import("@/components/ui/button").then((ui) => ui.Button),
+);
+const Input = dynamic(() =>
+  import("@/components/ui/input").then((ui) => ui.Input),
+);
+
 import {
   Form,
   FormControl,
@@ -20,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
+import { useSession } from "@/components/provider/session-provider";
 
 const formSchema = z.object({
   nickname: z.string().min(1, {
@@ -28,17 +34,16 @@ const formSchema = z.object({
 });
 
 const NicknamePage = () => {
+  const { data: userData } = useSession();
   const router = useRouter();
 
   const { mutate } = useSetNickName({
     onSuccess(data, variables) {
       if (data) {
-        router.replace(`/${id}/post`);
+        router.replace(`/${userData?.user?.id}/post`);
       }
     },
   });
-  const { userInfo } = userStore();
-  const { id } = userInfo || {};
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,8 +55,6 @@ const NicknamePage = () => {
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     mutate(values);
   };
-
-  const isNicknameEntered = !!form.getValues("nickname");
 
   return (
     <Form {...form}>
@@ -70,23 +73,29 @@ const NicknamePage = () => {
           <FormField
             control={form.control}
             name="nickname"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>닉네임</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="닉네임을 작성해주세요." />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const isNicknameEntered = !!field.value;
+              return (
+                <>
+                  <FormItem>
+                    <FormLabel>닉네임</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="닉네임을 작성해주세요." />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+
+                  <Button
+                    variant={isNicknameEntered ? "primary" : "disable"}
+                    disabled={!isNicknameEntered}
+                    type="submit"
+                  >
+                    {isNicknameEntered ? "확인" : "닉네임을 설정해주세요."}
+                  </Button>
+                </>
+              );
+            }}
           />
-          {isNicknameEntered ? (
-            <Button variant={"primary"} type="submit">
-              확인
-            </Button>
-          ) : (
-            <Button variant={"disable"}>닉네임을 설정해주세요.</Button>
-          )}
         </div>
       </form>
     </Form>

@@ -50,3 +50,18 @@ export interface Letters {
   content: string;
   catName: string;
 }
+
+export interface LetterResponse {
+  data: {
+    catName: string;
+    content: string;
+    createdAt: Date;
+    deletedAt: Date | null;
+    id: string;
+    receiverNickname: string;
+    senderId: string;
+    senderNickname: string;
+    updatedAt: Date;
+  };
+  ok: boolean;
+}

@@ -17,14 +17,22 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+
     extend: {
+      maxWidth: {
+        anchor: "var(--max-width)",
+      },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        umu: ["var(--umu)", ...fontFamily.sans],
-        cheezu: ["cheezu", ...fontFamily.sans],
-        gookie: ["gookie", ...fontFamily.sans],
+        sans: ["var(--font-sans)"],
+        umu: ["var(--font-umu)"],
+        cheezu: ["var(--font-cheezu)"],
+        gookie: ["var(--font-gookie)"],
       },
       colors: {
+        wood: {
+          DEFAULT: "#603F37",
+          deep: "#300815",
+        },
         red: "#B20000",
         sub: "#F1E5D1",
         background: "#FFF9EF",

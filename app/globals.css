@@ -6,6 +6,87 @@ body {
   margin: 0 auto;
 }
 @layer base {
+  .theme-responsive {
+    max-width: 574px;
+    height: 100dvh;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    /* background-color: #fff9ef; */
+  }
+
+  .theme-responsive :not(img) {
+    z-index: 1;
+  }
+  .bg-snp {
+    background: linear-gradient(to top, #fff9ef, #fff9ef);
+  }
+
+  :root {
+    --max-width: 574px;
+    --background: 0 0% 96%;
+    --foreground: 0 0% 35%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 0 0% 74%;
+    --primary-foreground: 0 0% 0% 80%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+@layer base {
   @font-face {
     font-family: "umu";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeepuding.woff")
@@ -13,6 +94,7 @@ body {
     font-weight: normal;
     font-style: normal;
     font-size: "36px";
+    font-display: swap;
   }
 
   @font-face {
@@ -21,6 +103,7 @@ body {
       format("woff");
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
   }
 
   @font-face {
@@ -29,6 +112,7 @@ body {
       format("woff");
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
   }
 
   .font-umu {
@@ -60,6 +144,7 @@ body {
   }
 
   :root {
+    --max-width: 574px;
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
 
@@ -127,5 +212,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .title-regular {
+    @apply text-base leading-6;
   }
 }

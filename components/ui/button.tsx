@@ -16,7 +16,7 @@ const buttonVariants = cva(
         link: "bg-gray-400 text-black font-bold hover:bg-primary/90",
       },
       size: {
-        default: "w-full h-14 rounded-md",
+        default: "w-full h-11 rounded-md",
         sm: "w-full h-10 rounded-md px-3",
         lg: "w-full h-11 rounded-md px-8",
         icon: "w-full h-10 w-10",

@@ -6,7 +6,9 @@ const DefaultLayout = ({ children }: LayoutProps) => {
   return (
     <div className="h-[100dvh] sm:h-screen">
       <main className="divide-x-3 flex h-full">
-        <section className="pc-main-grid flex-[1] ">{children}</section>
+        <section className="pc-main-grid flex-[1] overflow-x-clip">
+          {children}
+        </section>
       </main>
     </div>
   );
