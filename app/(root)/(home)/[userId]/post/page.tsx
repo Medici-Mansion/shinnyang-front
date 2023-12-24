@@ -34,15 +34,13 @@ const PostPage = async () => {
               <SelectAccessories />
             </PrefetchQuery>
           </Suspense>
-          <div
-            className="relative z-[1] flex h-full w-full flex-col justify-between bg-transparent pb-5 pt-12"
-            style={{
-              backgroundImage: "url('/assets/테이블.png')",
-              objectFit: "cover",
-              objectPosition: "top",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
+          <div className="relative z-[1] flex h-full w-full flex-col justify-between bg-transparent pb-5 pt-12">
+            <Image
+              src="/assets/테이블.png"
+              fill
+              alt="테이블"
+              className="-z-[1]"
+            />
             <div className="flex w-full justify-center">
               <div className="flex flex-1 justify-center">
                 <button className="flex aspect-square h-8 w-fit items-center justify-center rounded-md border-4 border-[#DDA973] bg-[#ECD2B9] ring-4 ring-[#28100B]">
@@ -87,8 +85,9 @@ const PostPage = async () => {
                   </svg>
                 </button>
               </div>
+              I
             </div>
-            <Link href="letter" className="px-4">
+            <Link href="letter" className="mt-5 px-4">
               <Button className="w-full py-6">편지쓰기</Button>
             </Link>
           </div>
