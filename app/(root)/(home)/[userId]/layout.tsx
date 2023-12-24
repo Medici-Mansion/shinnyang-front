@@ -15,15 +15,7 @@ const UserLayout = async ({
   const user = await APIs.getMe(access?.value || "");
   if (user.id !== userId) return redirect("/");
   return (
-    <div className="h-[100dvh] bg-background sm:h-screen">
-      <main className="flex h-full divide-x-2">
-        <section className="pc-main-grid flex-[1]">
-          <PrefetchQuery queries={[CommonQuery.getCat]}>
-            {children}
-          </PrefetchQuery>
-        </section>
-      </main>
-    </div>
+    <PrefetchQuery queries={[CommonQuery.getCat]}>{children}</PrefetchQuery>
   );
 };
 

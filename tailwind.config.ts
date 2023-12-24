@@ -1,5 +1,7 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
-
+import plaiceholder from "@plaiceholder/tailwindcss";
+import fs from "node:fs";
+import path from "node:path";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -102,5 +104,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plaiceholder({
+      resolver: (src) => fs.readFileSync(path.join("./public", `${src}.png`)),
+    }),
+  ],
 };

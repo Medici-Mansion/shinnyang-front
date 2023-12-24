@@ -74,9 +74,15 @@ export default async function RootLayout({
       )}
       suppressHydrationWarning
     >
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0 , maximum-scale=1.0, user-scalable=no"
+        />
+      </head>
       <body
         className={cn(
-          "relative h-[100dvh] bg-background font-sans antialiased",
+          "relative h-[100dvh] font-sans antialiased",
           fontSans.variable,
         )}
       >
