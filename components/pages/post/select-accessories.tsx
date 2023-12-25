@@ -8,6 +8,7 @@ import {
 import CommonQuery from "@/lib/queries/common.query";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -25,16 +26,21 @@ const SelectAccessories = () => {
       }, {}),
     [accessories],
   );
-  const selectedCatImage = accMap[selectedAccessoryCode as keyof typeof accMap];
 
+  const searchParams = useSearchParams();
+
+  const type = searchParams.get("type");
+  const selectedCatImage = accMap[selectedAccessoryCode as keyof typeof accMap];
+  const currentCatIndex = useMemo(
+    () => cats.findIndex((cat) => cat.code === type),
+    [cats, type],
+  );
   return (
     <Popover>
       <PopoverTrigger asChild>
         <div className="relative top-[1dvh] mx-auto aspect-[219/156] h-2/3">
           <Image
-            // blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
-            // placeholder="blur"
-            src={cats[2].image}
+            src={cats[currentCatIndex].image}
             alt="cat"
             style={{
               objectFit: "contain",

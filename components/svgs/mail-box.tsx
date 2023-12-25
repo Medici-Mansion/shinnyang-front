@@ -1,10 +1,35 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { useSession } from "../provider/session-provider";
 import Image from "next/image";
+import Mail from "./mail";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import CommonQuery from "@/lib/queries/common.query";
+import { useSearchParams } from "next/navigation";
 
 const MailBox = () => {
   const { data } = useSession();
+  const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
+  const searchParams = useSearchParams();
+
+  const type = searchParams.get("type");
+
+  const currentCatIndex = useMemo(
+    () => cats.findIndex((cat) => cat.code === type),
+    [cats, type],
+  );
+  const startIndex = currentCatIndex * 9 + 1;
+  const dummy: ("notRead" | "empty" | "read")[] = [
+    "read",
+    "read",
+    "read",
+    "read",
+    "read",
+    "notRead",
+    "notRead",
+    "notRead",
+    "empty",
+  ];
   return (
     <div className="mx-auto w-2/3 max-w-[375px]">
       <div className="relative flex justify-center px-[13%]">
@@ -69,33 +94,9 @@ const MailBox = () => {
         <div className="relative h-full max-h-[223px] w-full max-w-[324px] border-x-4 border-x-[#28100B] bg-[#977C6A]">
           <div className="absolute h-1 w-full bg-[rgba(0,0,0,0.2)] mix-blend-multiply"></div>
           <div className="grid h-fit w-full grid-cols-3 gap-1 p-1">
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
-            <div className="relative aspect-[5/3] flex-1">
-              <Image src="/assets/빈우편함_9.png" alt="우편함" fill />
-            </div>
+            {dummy.map((type, index) => (
+              <Mail type={type} key={index} label={startIndex + index + ""} />
+            ))}
           </div>
         </div>
         <Image src="/assets/상단.png" alt="상단" height={18} width={353} />
