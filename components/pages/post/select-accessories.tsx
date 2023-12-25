@@ -30,15 +30,27 @@ const SelectAccessories = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="relative top-[1dvh] mx-auto aspect-[375/329] h-2/3">
+        <div className="relative top-[1dvh] mx-auto aspect-[219/156] h-2/3">
           <Image
             // blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
             // placeholder="blur"
-            src={cats[0].image}
+            src={cats[2].image}
             alt="cat"
+            style={{
+              objectFit: "contain",
+            }}
             fill
           />
-          {selectedCatImage && <Image src={selectedCatImage} alt="acc" fill />}
+          {selectedCatImage && (
+            <Image
+              src={selectedCatImage}
+              style={{
+                objectFit: "contain",
+              }}
+              alt="acc"
+              fill
+            />
+          )}
         </div>
       </PopoverTrigger>
 

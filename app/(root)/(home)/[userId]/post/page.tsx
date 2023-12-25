@@ -65,7 +65,7 @@ const PostPage = async () => {
                       "flex aspect-square h-8 w-full items-center justify-center rounded-md border-4 border-[#BA7032] bg-[#ECD2B9] font-umu font-bold ring-4 ring-[#28100B]",
                     )}
                   >
-                    담당자 우무
+                    담당자 구키
                   </button>
                 </div>
               </div>
