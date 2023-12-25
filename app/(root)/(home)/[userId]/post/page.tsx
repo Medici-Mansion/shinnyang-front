@@ -43,7 +43,11 @@ const PostPage = () => {
               alt="테이블"
               className="-z-[1]"
             />
-            <PostTypeSelect />
+            <Suspense
+              fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
+            >
+              <PostTypeSelect />
+            </Suspense>
             <Link href="letter" className="mt-5 px-4">
               <Button className="w-full py-6">편지쓰기</Button>
             </Link>
