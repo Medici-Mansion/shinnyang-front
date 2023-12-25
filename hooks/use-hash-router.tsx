@@ -18,6 +18,7 @@ type HashAppRouterInstance = {
     href: string,
     options?: Parameters<AppRouterInstance["push"]>[1] & {
       native: boolean;
+      state?: any;
     },
   ) => void;
   prefetch: (
@@ -37,6 +38,7 @@ type HashAppRouterInstance = {
 export interface IHashContext extends HashAppRouterInstance {
   hashStack: string[];
   hash: string;
+  state?: any;
 }
 const initialContext: IHashContext = {
   hashStack: [],
@@ -51,6 +53,7 @@ const initialContext: IHashContext = {
 export const HashContext = createContext<IHashContext>(initialContext);
 const useHashRouter = (): IHashContext => {
   const nativeRouter = useRouter();
+  const [state, setState] = useState<any>(null);
   const [hashStack, setHashStack] = useState<string[]>(
     typeof window !== "undefined"
       ? window.location.hash
@@ -59,12 +62,12 @@ const useHashRouter = (): IHashContext => {
       : [],
   );
 
-  console.log(hashStack);
   const handleListener = useCallback(
     (event: PopStateEvent) => {
       event.preventDefault();
       const type = event.state.type as keyof HashAppRouterInstance;
       const newHash = window.location.hash;
+      setState(event.state?.state);
       switch (type) {
         case "push":
           setHashStack([...hashStack, newHash]);
@@ -85,7 +88,7 @@ const useHashRouter = (): IHashContext => {
 
   const push: IHashContext["push"] = (
     href,
-    { native, ...options } = { native: false },
+    { native, state, ...options } = { native: false },
   ) => {
     if (native) {
       nativeRouter.push(href, options);
@@ -93,10 +96,10 @@ const useHashRouter = (): IHashContext => {
     }
     const newHash = `#${href}`;
     if (hashStack[hashStack.length - 1] !== newHash) {
-      window.history.pushState({ ...window.history.state }, "", newHash);
+      window.history.pushState({ ...window.history.state, state }, "", newHash);
       window.dispatchEvent(
         new PopStateEvent("popstate", {
-          state: { ...window.history.state, type: "push" },
+          state: { ...window.history.state, state, type: "push" },
         }),
       );
     }
@@ -141,6 +144,7 @@ const useHashRouter = (): IHashContext => {
     prefetch,
     refresh,
     replace,
+    state,
     hash: hashStack[hashStack.length - 1],
     hashStack,
   };
