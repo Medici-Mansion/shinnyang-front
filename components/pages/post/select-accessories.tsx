@@ -40,7 +40,7 @@ const SelectAccessories = () => {
       <PopoverTrigger asChild>
         <div className="relative top-[1dvh] mx-auto aspect-[219/156] h-2/3">
           <Image
-            src={cats[currentCatIndex].image}
+            src={cats[currentCatIndex]?.image}
             alt="cat"
             style={{
               objectFit: "contain",
