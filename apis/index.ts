@@ -70,6 +70,11 @@ export const sendLetter = async (param: Letters) => {
   return res.data
 };
 
+export const answerLetter = async (param: Letters) => {
+  const res = await api.post("/answers", param);
+  return res.data
+};
+
 export const getLetter = async (letterId: string) => {
   const res = await api.get<LetterResponse>(`/letters/${letterId}`);
   return res.data
@@ -83,7 +88,8 @@ const APIs = {
   getCats,
   getAccessories,
   sendLetter,
-  getLetter
+  getLetter,
+  answerLetter
 };
 
 export default APIs;

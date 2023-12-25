@@ -14,7 +14,6 @@ interface UserStore {
   removeLetterInfo: (id: string) => void;
 }
 
-
 export const letterStore = create<UserStore>((set) => ({
   letterInfo: {
     letterId: "",
