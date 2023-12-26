@@ -14,6 +14,7 @@ import { Form } from "@/components/ui/form";
 import { useSession } from "@/components/provider/session-provider";
 import { Letters } from "@/type";
 import dynamic from "next/dynamic";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 const WriteLetter = dynamic(
   () => import("@/components/pages/letter/write-letter"),
@@ -77,6 +78,15 @@ const LetterPage = () => {
             ) : null}
             {router.hash === "#mailing" ? <Mailing router={router} /> : null}
           </AnimatePresence>
+          <AlertModal
+            leftBtnTitle="아니오"
+            rightBtnTitle="내 우체국 만들기"
+            isOpen={true}
+            loading={false}
+            onClose={() => {}}
+            onConfirm={() => {}}
+            title={`내 우체국을 만들면\n받은 편지를 보관하고\n답장 할 수 있어요!`}
+          />
         </Suspense>
       </BaseLayout>
     </Form>
