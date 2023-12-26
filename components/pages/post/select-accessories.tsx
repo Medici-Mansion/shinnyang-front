@@ -38,7 +38,7 @@ const SelectAccessories = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="relative top-[1dvh] mx-auto aspect-[219/156] h-2/3">
+        <div className="relative top-0 mx-auto aspect-[219/156] h-2/5 w-4/5">
           <Image
             src={cats[currentCatIndex]?.image}
             alt="cat"

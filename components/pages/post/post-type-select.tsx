@@ -43,8 +43,8 @@ const PostTypeSelect = () => {
     }
   }, [data, onNextClick, pathname, router, searchParams, type]);
   return (
-    <div className="flex w-full justify-center">
-      <div className="flex flex-1 justify-center">
+    <div className="flex h-1/2 w-full items-center justify-center">
+      <div className="flex flex-1 justify-start">
         <button
           onClick={() => onNextClick(data[prevCatIndex].code)}
           className="flex aspect-square h-8 w-fit items-center justify-center rounded-md border-4 border-[#DDA973] bg-[#ECD2B9] ring-4 ring-[#28100B]"
@@ -74,7 +74,7 @@ const PostTypeSelect = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-1 justify-center">
+      <div className="flex flex-1 justify-end">
         <button
           onClick={() => onNextClick(data[nextCatIndex].code)}
           className="flex aspect-square h-8 w-fit items-center justify-center rounded-md border-4 border-[#DDA973] bg-[#ECD2B9] ring-4 ring-[#28100B]"

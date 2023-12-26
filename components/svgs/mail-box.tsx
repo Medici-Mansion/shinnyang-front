@@ -31,11 +31,9 @@ const MailBox = () => {
     "empty",
   ];
   return (
-    <div className="mx-auto w-2/3 max-w-[375px]">
-      <div className="relative flex justify-center px-[13%]">
+    <div className="mx-auto h-full max-w-[375px] px-4 pt-[10%]">
+      <div className="relative flex h-[35%] justify-center px-[1%]">
         <svg
-          // width="220"
-          // height="122"
           className="aspect-[220/122] h-full w-full"
           viewBox="0 0 220 122"
           fill="none"
@@ -83,15 +81,15 @@ const MailBox = () => {
             strokeWidth="3"
           />
         </svg>
-        <p className="absolute left-1/2 top-[15%] -translate-x-1/2 text-center font-umu text-xl font-bold text-black">
+        <p className="absolute left-1/2 top-[17%] -translate-x-1/2 text-center font-umu text-xl font-bold text-black">
           {data?.user?.nickname}의
           <br />
           신냥이 우체국
         </p>
       </div>
-      <div className="relative mx-auto flex h-fit max-h-[254px] w-full max-w-[375px] flex-col items-center">
+      <div className="relative flex h-[65%] max-h-[254px] w-full max-w-[375px] flex-col items-center">
         <Image src="/assets/상단.png" alt="상단" height={18} width={353} />
-        <div className="relative h-full max-h-[223px] w-full max-w-[324px] border-x-4 border-x-[#28100B] bg-[#977C6A]">
+        <div className="relative max-h-[223px] w-full max-w-[324px] flex-1 border-x-4 border-x-[#28100B] bg-[#977C6A]">
           <div className="absolute h-1 w-full bg-[rgba(0,0,0,0.2)] mix-blend-multiply"></div>
           <div className="grid h-fit w-full grid-cols-3 gap-1 p-1">
             {dummy.map((type, index) => (
