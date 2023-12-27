@@ -216,7 +216,31 @@ body {
 }
 
 @layer components {
+  /* 텍스트스타일 */
+  /* TITLE */
   .title-regular {
     @apply text-base leading-6;
+  }
+  .text-title-home {
+    @apply font-cheezu;
+  }
+  .text-title-umu {
+    @apply font-umu;
+  }
+  .text-title-cheezu {
+    @apply font-cheezu;
+  }
+  .text-title-gookie {
+    @apply font-gookie;
+  }
+  /* LETTER */
+  .text-letter-umu {
+    @apply font-umu;
+  }
+  .text-letter-cheezu {
+    @apply font-cheezu;
+  }
+  .text-letter-gookie {
+    @apply font-gookie;
   }
 }

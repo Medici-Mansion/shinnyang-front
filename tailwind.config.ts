@@ -1,4 +1,3 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
 import plaiceholder from "@plaiceholder/tailwindcss";
 import fs from "node:fs";
 import path from "node:path";
@@ -25,10 +24,43 @@ module.exports = {
         anchor: "var(--max-width)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
+        pretendard: ["var(--font-pretendard)"],
         umu: ["var(--font-umu)"],
         cheezu: ["var(--font-cheezu)"],
         gookie: ["var(--font-gookie)"],
+      },
+      fontSize: {
+        // 타이틀 시작
+        ["title-large"]: [
+          "1.3rem",
+          {
+            lineHeight: "1.8rem",
+            fontWeight: "600",
+            letterSpacing: "-0.1rem",
+          },
+        ],
+        ["title-home"]: [
+          "1.5rem",
+          {
+            lineHeight: "2.5rem",
+          },
+        ],
+        ["title-medium"]: [
+          "0.8rem",
+          {
+            fontWeight: "600",
+          },
+        ],
+        ["title-regular"]: ["0.8rem", "1.3rem"],
+        ["title-umu"]: ["1.1rem", "1.6rem"],
+        ["title-cheezu"]: ["1.1rem", "1.6rem"],
+        ["title-gookie"]: ["1.1rem", "1.6rem"],
+        // 타이틀 끝
+        // Letter 시작
+        ["letter-cheezu"]: ["1rem", "1.8rem"],
+        ["letter-umu"]: ["0.9rem", "1.8rem"],
+        ["letter-gookie"]: ["0.8rem", "1.8rem"],
+        // Letter 끝
       },
       colors: {
         wood: {
