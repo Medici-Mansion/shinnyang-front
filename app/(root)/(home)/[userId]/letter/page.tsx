@@ -51,7 +51,6 @@ const LetterPage = () => {
       },
     });
   };
-  console.log("!!!!");
 
   const onValid = (values: LetterFormValues) => {
     const param = { ...values, senderNickname: user?.nickname };
@@ -91,15 +90,6 @@ const LetterPage = () => {
               <Mailing router={router} letter={completedLetter} />
             ) : null}
           </AnimatePresence>
-          <AlertModal
-            leftBtnTitle="아니오"
-            rightBtnTitle="내 우체국 만들기"
-            isOpen={true}
-            loading={false}
-            onClose={() => {}}
-            onConfirm={() => {}}
-            title={`내 우체국을 만들면\n받은 편지를 보관하고\n답장 할 수 있어요!`}
-          />
         </Suspense>
       </BaseLayout>
     </Form>

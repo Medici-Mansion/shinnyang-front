@@ -35,16 +35,7 @@ const Mailing = ({ router, letter }: MailingProps) => {
       </div>
 
       <Button
-        variant="secondary"
-        onClick={async (event) => {
-          event.preventDefault();
-          copyURL(`/receiver/${letter?.id}`);
-        }}
-      >
-        편지 공유하기
-      </Button>
-      <Button
-        className="mt-4"
+        className="mt-4 bg-red"
         onClick={(event) => {
           event.preventDefault();
           router.push(`/${user?.user?.id}/post`, { native: true });

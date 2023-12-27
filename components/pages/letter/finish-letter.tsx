@@ -12,7 +12,7 @@ import { useSession } from "@/components/provider/session-provider";
 import { Letters } from "@/type";
 
 interface FinishLetterProps {
-  router: Pick<IHashContext, "push" | "back" | "replace">;
+  router: Pick<IHashContext, "push" | "back" | "replace" | "state">;
   control: Control<LetterFormValues, any>;
   isLoading: boolean;
 }
