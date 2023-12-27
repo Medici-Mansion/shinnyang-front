@@ -33,7 +33,15 @@ const Mailing = ({ router, letter }: MailingProps) => {
       <div className="relative flex grow items-center justify-center">
         <Image className="" src="/delivery_cat.png" alt="letter" fill />
       </div>
-
+      <Button
+        variant="secondary"
+        onClick={async (event) => {
+          event.preventDefault();
+          copyURL(`/receiver/${letter?.id}`);
+        }}
+      >
+        편지 공유하기
+      </Button>
       <Button
         className="mt-4 bg-red"
         onClick={(event) => {
