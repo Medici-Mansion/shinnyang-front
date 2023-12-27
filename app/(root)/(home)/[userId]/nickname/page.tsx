@@ -40,12 +40,13 @@ const formSchema = z.object({
 });
 
 const NicknamePage = () => {
-  const { data: userData } = useSession();
+  const { data: userData, update } = useSession();
   const router = useRouter();
 
   const { mutate } = useSetNickName({
-    onSuccess(data, variables) {
+    async onSuccess(data, variables) {
       if (data) {
+        update();
         router.replace(`/${userData?.user?.id}/post`);
       }
     },
@@ -73,7 +74,7 @@ const NicknamePage = () => {
       >
         <div>
           <ArrowLeft onClick={() => router.back()} />
-          <div className="text-title-large justify-start py-5 text-black">
+          <div className="justify-start py-5 text-title-large text-black">
             편지를 보낼 때<br />
             표시할 닉네임을 알려주세요.
           </div>
