@@ -92,7 +92,7 @@ export const getMails = async () => {
 
 export const getUserCat = async () => {
   const response =
-    await api.get<Partial<UserCatResponse>[]>("/common/user-cat");
+    await api.get<UserCatResponse[]>("/common/user-cat");
 
   return response.data;
 };
