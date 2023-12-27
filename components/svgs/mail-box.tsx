@@ -3,13 +3,15 @@ import React, { useMemo } from "react";
 import { useSession } from "../provider/session-provider";
 import Image from "next/image";
 import Mail from "./mail";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import CommonQuery from "@/lib/queries/common.query";
 import { useSearchParams } from "next/navigation";
+import MailQuery from "@/lib/queries/mails.query";
 
 const MailBox = () => {
   const { data } = useSession();
   const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
+  const { data: mails = [] } = useQuery(MailQuery.getMails);
   const searchParams = useSearchParams();
 
   const type = searchParams.get("type");
@@ -19,17 +21,17 @@ const MailBox = () => {
     [cats, type],
   );
   const startIndex = currentCatIndex * 9 + 1;
-  const dummy: ("notRead" | "empty" | "read")[] = [
-    "read",
-    "read",
-    "read",
-    "read",
-    "read",
-    "notRead",
-    "notRead",
-    "notRead",
-    "empty",
-  ];
+  const currentMails = useMemo(
+    () =>
+      Array(9)
+        .fill(0)
+        .map((_, index) => {
+          const mail = mails[index + startIndex - 1] ?? null;
+          return mail;
+        }),
+    [mails, startIndex],
+  );
+
   return (
     <div className="mx-auto h-full max-w-[375px] px-4 pt-[10%]">
       <div className="relative flex h-[35%] justify-center px-[1%]">
@@ -92,8 +94,12 @@ const MailBox = () => {
         <div className="relative max-h-[223px] w-full max-w-[324px] flex-1 border-x-4 border-x-[#28100B] bg-[#977C6A]">
           <div className="absolute h-1 w-full bg-[rgba(0,0,0,0.2)] mix-blend-multiply"></div>
           <div className="grid h-fit w-full grid-cols-3 gap-1 p-1">
-            {dummy.map((type, index) => (
-              <Mail type={type} key={index} label={startIndex + index + ""} />
+            {currentMails.map((mail, index) => (
+              <Mail
+                type={!mail ? "empty" : mail.isRead ? "read" : "notRead"}
+                key={index}
+                label={startIndex + index + ""}
+              />
             ))}
           </div>
         </div>

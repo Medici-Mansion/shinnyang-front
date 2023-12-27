@@ -1,4 +1,14 @@
-import { Acc, Cat, LetterResponse, Letters, Mail, Session, User } from "@/type";
+import {
+  Acc,
+  Cat,
+  LetterResponse,
+  Letters,
+  Mail,
+  PostCatAccessoryDTO,
+  Session,
+  User,
+  UserCatResponse,
+} from "@/type";
 import axios from "axios";
 export const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
@@ -80,6 +90,23 @@ export const getMails = async () => {
   return res.data;
 };
 
+export const getUserCat = async () => {
+  const response =
+    await api.get<Partial<UserCatResponse>[]>("/common/user-cat");
+
+  return response.data;
+};
+
+export const postCatAccessory = async (
+  postCatAccessoryDTO: PostCatAccessoryDTO,
+) => {
+  const response = await api.patch<UserCatResponse>(
+    "/common/accessory",
+    postCatAccessoryDTO,
+  );
+  return response.data;
+};
+
 const APIs = {
   getGoogleCode,
   getUser,
@@ -90,6 +117,8 @@ const APIs = {
   sendLetter,
   getLetter,
   getMails,
+  getUserCat,
+  postCatAccessory,
 };
 
 export default APIs;

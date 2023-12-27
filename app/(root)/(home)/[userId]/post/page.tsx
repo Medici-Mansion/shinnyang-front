@@ -33,9 +33,7 @@ const PostPage = () => {
           <Suspense
             fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
           >
-            <PrefetchQuery queries={[CommonQuery.getCat, CommonQuery.getAcc]}>
-              <SelectAccessories />
-            </PrefetchQuery>
+            <SelectAccessories />
           </Suspense>
           <div className="relative z-[1] flex h-3/5 w-full flex-col justify-between bg-transparent">
             <Image

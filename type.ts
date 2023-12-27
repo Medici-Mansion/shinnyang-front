@@ -71,15 +71,29 @@ export interface LetterResponse {
   ok: boolean;
 }
 
-export interface Mail{
-  id: string
-  createdAt: string
-  updatedAt: string
-  senderId: string
-  senderNickname: string
-  receiverNickname: string
-  content: string
-  catName: string
-  isRead: boolean
-  isRespond: boolean
+export interface Mail {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  senderId: string;
+  senderNickname: string;
+  receiverNickname: string;
+  content: string;
+  catName: string;
+  isRead: boolean;
+  isRespond: boolean;
+}
+
+export interface UserCatResponse {
+  catCode: string;
+  catId: string;
+  catName: string;
+  accessoryCode: string;
+  accessoryId: string;
+  accessoryName: string;
+}
+
+export interface PostCatAccessoryDTO {
+  catId: string;
+  accessoryId: string;
 }

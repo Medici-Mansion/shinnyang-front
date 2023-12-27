@@ -1,6 +1,7 @@
 import APIs from "@/apis";
 import PrefetchQuery from "@/hydrate/prefetch-query";
 import CommonQuery from "@/lib/queries/common.query";
+import MailQuery from "@/lib/queries/mails.query";
 import { WithParam } from "@/type";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -20,7 +21,11 @@ const UserLayout = async ({
   if (!user.nickname && !pathname.includes("nickname"))
     return redirect(`nickname`);
   return (
-    <PrefetchQuery queries={[CommonQuery.getCat]}>{children}</PrefetchQuery>
+    <PrefetchQuery
+      queries={[CommonQuery.getCat, CommonQuery.getAcc, MailQuery.getMails]}
+    >
+      {children}
+    </PrefetchQuery>
   );
 };
 

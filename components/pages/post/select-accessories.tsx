@@ -1,4 +1,5 @@
 "use client";
+import APIs from "@/apis";
 import { FormField } from "@/components/ui/form";
 import {
   Popover,
@@ -6,7 +7,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import CommonQuery from "@/lib/queries/common.query";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { Acc, UserCatResponse } from "@/type";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React, { useMemo, useState } from "react";
@@ -17,24 +24,59 @@ const SelectAccessories = () => {
   const form = useForm({
     mode: "onChange",
   });
+  const queryClient = useQueryClient();
   const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
   const { data: accessories } = useSuspenseQuery(CommonQuery.getAcc);
-  const accMap = useMemo(
+  const { data: userCat } = useQuery(CommonQuery.getUserCat);
+  const { mutate } = useMutation({
+    mutationKey: ["cats", "accessory"],
+    mutationFn: APIs.postCatAccessory,
+    onSuccess(data, variables, context) {
+      const cachedUserCat = queryClient.getQueryData(
+        CommonQuery.getUserCat.queryKey,
+      ) as UserCatResponse[];
+      cachedUserCat.forEach((userCat) => {
+        if (userCat.catId === data.catId) {
+          userCat.accessoryCode = data.accessoryCode;
+          userCat.accessoryId = data.accessoryId;
+          userCat.accessoryName = data.accessoryName;
+          userCat.catCode = data.catCode;
+          userCat.catId = data.catId;
+          userCat.catName = data.catName;
+        }
+      });
+      queryClient.setQueryData(CommonQuery.getUserCat.queryKey, cachedUserCat);
+    },
+  });
+
+  const searchParams = useSearchParams();
+
+  const type = searchParams.get("type");
+
+  const currentCatIndex = useMemo(
+    () => cats.findIndex((cat) => cat.code === type),
+    [cats, type],
+  );
+  const accMap: { [key in string]: any } = useMemo(
     () =>
       accessories.reduce((acc, cur) => {
         return { ...acc, [cur.code]: cur.fullImage };
       }, {}),
     [accessories],
   );
+  const selectedUserCat = useMemo(() => {
+    if (cats[currentCatIndex]) {
+      return userCat?.find((uc) => uc.catCode === cats[currentCatIndex].code);
+    }
+    return null;
+  }, [cats, currentCatIndex, userCat]);
+  const selectedAcc = useMemo(() => {
+    if (selectedUserCat?.accessoryCode) {
+      return accMap[selectedUserCat.accessoryCode];
+    }
+    return null;
+  }, [accMap, selectedUserCat?.accessoryCode]);
 
-  const searchParams = useSearchParams();
-
-  const type = searchParams.get("type");
-  const selectedCatImage = accMap[selectedAccessoryCode as keyof typeof accMap];
-  const currentCatIndex = useMemo(
-    () => cats.findIndex((cat) => cat.code === type),
-    [cats, type],
-  );
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -49,9 +91,9 @@ const SelectAccessories = () => {
               fill
             />
           )}
-          {selectedCatImage && (
+          {selectedAcc && (
             <Image
-              src={selectedCatImage}
+              src={selectedAcc}
               style={{
                 objectFit: "contain",
               }}
@@ -82,6 +124,10 @@ const SelectAccessories = () => {
                   value={accType.code}
                   className="hidden"
                   onChange={(event) => {
+                    mutate({
+                      accessoryId: accType.id,
+                      catId: cats[currentCatIndex].id,
+                    });
                     setSelectedAccessoryCode(accType.code);
                   }}
                 />

@@ -38,7 +38,8 @@ const PrefetchQuery = async <
     const queriesList = queries.map((query) =>
       queryClient.prefetchQuery(query),
     );
-    await Promise.all(queriesList);
+    await Promise.allSettled(queriesList);
+
     const dehydratedState = dehydrate(queryClient);
     return (
       <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>
