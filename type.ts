@@ -14,6 +14,9 @@ export interface Cat {
   id: string;
   image: string;
   name: string;
+  faceImage: string;
+  backImage: string;
+  yearImage: string;
 }
 
 export interface WithParam<T extends string> extends PropsWithChildren {
@@ -51,17 +54,18 @@ export interface Letters {
   catName: string;
 }
 
+export interface CompletedLetter {
+  id: string;
+  receiverNickname: string;
+  content: string;
+  senderId: string;
+  senderNickname: string;
+  catName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface LetterResponse {
-  data: {
-    catName: string;
-    content: string;
-    createdAt: Date;
-    deletedAt: Date | null;
-    id: string;
-    receiverNickname: string;
-    senderId: string;
-    senderNickname: string;
-    updatedAt: Date;
-  };
+  data: CompletedLetter;
   ok: boolean;
 }

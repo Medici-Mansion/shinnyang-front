@@ -35,7 +35,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
       className="mt-4 flex h-full flex-col space-y-4"
     >
       <div>
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-title-large tracking-normal">
           편지를 배달할 냥이를
           <br />
           선택해주세요!
@@ -50,7 +50,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
         render={({ field }) => (
           <>
             <div className="grid grid-cols-3 gap-x-2">
-              {cats?.map((catType: Cat) => (
+              {cats?.map((catType) => (
                 <div
                   key={catType.id}
                   className="mx-auto w-full text-center text-sm font-normal"
@@ -72,7 +72,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                     className="relative mb-2 block aspect-square rounded-xl bg-sub opacity-50 duration-100 peer-checked:border-2 peer-checked:border-red peer-checked:opacity-100"
                   >
                     <Image
-                      src={catType.image}
+                      src={catType.faceImage}
                       alt={catType.name}
                       layout="fill"
                       placeholder="blur"
@@ -106,7 +106,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
               <TextArea
                 value={`냥이 ${field.value} 귀여운 글씨체야 이글씨 어때 귀엽냥?`}
                 disabled
-                className="absolute top-14 w-2/3 bg-transparent px-0 "
+                className="absolute top-14 w-2/3 resize-none bg-transparent px-0"
                 maxLength={100}
                 maxRows={6}
               />
