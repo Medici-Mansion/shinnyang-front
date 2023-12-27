@@ -10,7 +10,6 @@ import { LetterFormValues, letterFormState } from "@/form-state";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useGetLetter from "@/hooks/use-get-letter";
-import useAnswerLetter from "@/hooks/use-answer-letter";
 
 import AnswerLetter from "@/components/pages/letter/answer-letter";
 import AnswerWrite from "@/components/pages/letter/answer-write";
@@ -18,9 +17,9 @@ import Answer from "@/components/pages/letter/answer";
 import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
 import AnswerFinish from "@/components/pages/letter/answer-finish";
+import Answermailing from "@/components/pages/letter/answer-mailing";
 
 const ReceiverPage = () => {
-  const { isPending, mutate } = useAnswerLetter();
   const router = useContext(HashContext);
   const pathname = usePathname();
   const letterId = pathname.split("/")[2];
@@ -38,7 +37,10 @@ const ReceiverPage = () => {
 
   const onValid = (values: LetterFormValues) => {
     const param = { ...values, receiverId: data?.data.id };
-    router.push("answerFinish");
+    router.push("answerFinish", {
+      state: param,
+      native: false,
+    });
   };
 
   useEffect(() => {
@@ -76,6 +78,9 @@ const ReceiverPage = () => {
             ) : null}
             {router.hash === "#answerFinish" ? (
               <AnswerFinish router={router} control={form.control} />
+            ) : null}
+            {router.hash === "#answerMailing" ? (
+              <Answermailing router={router} />
             ) : null}
           </AnimatePresence>
         </Suspense>

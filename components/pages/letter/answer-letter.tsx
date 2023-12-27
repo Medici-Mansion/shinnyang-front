@@ -60,13 +60,15 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         width={200}
         height={100}
       />
-      <Button
-        variant="secondary"
-        onClick={() => router.replace("#answerWrite")}
-      >
-        답장하기
-      </Button>
-      <Button className="w-full py-6">편지 보관하기</Button>
+      <div className="space-y-2">
+        <Button
+          variant="secondary"
+          onClick={() => router.replace("#answerWrite")}
+        >
+          답장하기
+        </Button>
+        <Button className="w-full bg-red py-6">편지 보관하기</Button>
+      </div>
     </motion.div>
   );
 };

@@ -95,7 +95,9 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
           </div>
         )}
       />
-      <Button type="submit">작성 완료</Button>
+      <Button type="submit" className="bg-red">
+        작성 완료
+      </Button>
     </motion.div>
   );
 };

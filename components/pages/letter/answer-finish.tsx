@@ -9,32 +9,27 @@ import { Control } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { LetterFormValues } from "@/form-state";
 import { IHashContext } from "@/hooks/use-hash-router";
-import useSendLetter from "@/hooks/use-send-letter";
 
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/components/provider/session-provider";
 import { letterStore } from "@/store/user";
-import { LetterResponse } from "@/type";
+import useAnswerLetter from "@/hooks/use-answer-letter";
 
 interface FinishLetterProps {
-  router: Pick<IHashContext, "push" | "back" | "replace">;
+  router: Pick<IHashContext, "push" | "back" | "replace" | "state">;
   control: Control<LetterFormValues, any>;
 }
 const AnswerFinish = ({ control, router }: FinishLetterProps) => {
-  const { mutate, isPending } = useSendLetter();
-  const { data } = useSession();
-  const { letterInfo, setLetterInfo } = letterStore();
+  const { mutate, isPending } = useAnswerLetter();
+  const { state } = router || {};
 
-  const sendLetter = () => {
-    mutate(letterInfo, {
-      onSuccess(data: LetterResponse) {
-        if (data && data.ok) {
-          setLetterInfo({
-            ...letterInfo,
-            letterId: data.data.id,
-          });
-          router.push(`mailing`);
-        }
+  const answerSubmit = () => {
+    mutate(state, {
+      onSuccess: () => {
+        router.push("answerMailing", {
+          state,
+          native: false,
+        });
       },
     });
   };
@@ -49,16 +44,16 @@ const AnswerFinish = ({ control, router }: FinishLetterProps) => {
       <h1 className="text-2xl font-semibold">
         편지가 완성되었어요!
         <br />
-        {data?.user?.nickname} 님의 편지를 배달하세요!
+        {state.senderNickname} 님의 편지를 배달하세요!
       </h1>
       <div
         className="relative mb-12 mt-12 grow overflow-hidden rounded-2xl border border-red py-4 pl-8 pr-4"
         style={{ fontFamily: control._formValues.catType }}
       >
         <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
-        <h1 className="text-2xl">{letterInfo.receiverNickname || ""} 에게</h1>
+        <h1 className="text-2xl">{state.receiverNickname || ""} 에게</h1>
         <textarea
-          value={letterInfo.content}
+          value={state.content}
           disabled
           className={cn(
             "w-full rounded-none bg-transparent p-0",
@@ -67,7 +62,7 @@ const AnswerFinish = ({ control, router }: FinishLetterProps) => {
           maxLength={100}
         />
         <h1 className="absolute bottom-4 right-[15%] text-2xl">
-          {letterInfo.senderNickname} 씀
+          {state.senderNickname} 씀
         </h1>
       </div>
       <Image
@@ -80,7 +75,11 @@ const AnswerFinish = ({ control, router }: FinishLetterProps) => {
       <Button variant="secondary" onClick={() => router.replace("letter")}>
         다시 쓰기
       </Button>
-      <Button className="w-full py-6" onClick={sendLetter} disabled={isPending}>
+      <Button
+        className="w-full py-6"
+        disabled={isPending}
+        onClick={answerSubmit}
+      >
         편지 보내기
       </Button>
     </motion.div>

@@ -120,7 +120,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
       <Button
         onClick={() => router.push("letter")}
         variant="primary"
-        className="mt-6"
+        className="mt-6 bg-red"
       >
         선택 완료
       </Button>

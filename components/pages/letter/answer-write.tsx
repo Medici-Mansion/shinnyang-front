@@ -110,7 +110,7 @@ const AnswerWrite = ({ control }: AnswerLetterProps) => {
           </div>
         )}
       />
-      <Button type="submit" className="w-full py-6">
+      <Button type="submit" className="w-full bg-red py-6">
         편지보내기
       </Button>
     </motion.div>

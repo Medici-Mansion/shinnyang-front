@@ -83,12 +83,19 @@ const FinishLetter = ({ control, router }: FinishLetterProps) => {
         width={200}
         height={100}
       />
-      <Button variant="secondary" onClick={() => router.replace("letter")}>
-        다시 쓰기
-      </Button>
-      <Button className="w-full py-6" onClick={sendLetter} disabled={isPending}>
-        편지 보내기
-      </Button>
+      <div className="space-y-2">
+        <Button variant="secondary" onClick={() => router.replace("letter")}>
+          다시 쓰기
+        </Button>
+        <Button
+          variant={"primary"}
+          className="w-full bg-red py-6"
+          onClick={sendLetter}
+          disabled={isPending}
+        >
+          편지 보내기
+        </Button>
+      </div>
     </motion.div>
   );
 };

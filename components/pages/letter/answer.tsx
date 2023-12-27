@@ -36,7 +36,7 @@ const Answer = ({ router, letter }: SelectPadProps) => {
         편지 보러가기
       </Button>
       <Button
-        className="mt-4"
+        className="mt-4 bg-red"
         onClick={() => router.push("/", { native: true })}
       >
         내 우체국 만들기

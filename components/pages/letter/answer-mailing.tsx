@@ -8,13 +8,12 @@ import { letterStore } from "@/store/user";
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { User } from "@/type";
 interface MailingProps {
-  router: Pick<IHashContext, "push" | "back" | "replace">;
-  userId: string | null | undefined;
+  router: Pick<IHashContext, "push" | "back" | "replace" | "state">;
 }
 
-const Mailing = ({ router, userId }: MailingProps) => {
+const Answermailing = ({ router }: MailingProps) => {
+  const { state } = router || {};
   const { letterInfo } = letterStore();
   return (
     <motion.div
@@ -24,7 +23,7 @@ const Mailing = ({ router, userId }: MailingProps) => {
       className="relative mt-4 flex grow flex-col"
     >
       <h1 className="mb-4 text-2xl font-semibold">
-        {letterInfo.receiverNickname} 님의
+        {state.receiverNickname} 님의
         <br />
         우체국에 편지를 보냈어요!
       </h1>
@@ -37,8 +36,8 @@ const Mailing = ({ router, userId }: MailingProps) => {
         편지 보관하기
       </Button>
       <Button
-        className="mt-4 bg-red"
-        onClick={() => router.replace(`/${userId}/post`, { native: true })}
+        className="mt-4"
+        onClick={() => router.push("/userId/post", { native: true })}
       >
         내 우체국 가기
       </Button>
@@ -46,4 +45,4 @@ const Mailing = ({ router, userId }: MailingProps) => {
   );
 };
 
-export default Mailing;
+export default Answermailing;

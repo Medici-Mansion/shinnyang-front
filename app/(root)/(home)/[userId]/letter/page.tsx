@@ -75,7 +75,9 @@ const LetterPage = () => {
             {router.hash === "#finish" ? (
               <FinishLetter router={router} control={form.control} />
             ) : null}
-            {router.hash === "#mailing" ? <Mailing router={router} /> : null}
+            {router.hash === "#mailing" ? (
+              <Mailing router={router} userId={data && user && user.id} />
+            ) : null}
           </AnimatePresence>
         </Suspense>
       </BaseLayout>
