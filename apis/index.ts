@@ -1,4 +1,4 @@
-import { Acc, Cat, LetterResponse, Letters, Session, User } from "@/type";
+import { Acc, Cat, LetterResponse, Letters, Mail, Session, User } from "@/type";
 import axios from "axios";
 export const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
@@ -67,13 +67,18 @@ export const getAccessories = async () => {
 
 export const sendLetter = async (param: Letters) => {
   const res = await api.post("/letters", param);
-  return res.data
+  return res.data;
 };
 
 export const getLetter = async (letterId: string) => {
   const res = await api.get<LetterResponse>(`/letters/${letterId}`);
-  return res.data
-}
+  return res.data;
+};
+
+export const getMails = async () => {
+  const res = await api.get<Mail[]>("/mails");
+  return res.data;
+};
 
 const APIs = {
   getGoogleCode,
@@ -83,7 +88,8 @@ const APIs = {
   getCats,
   getAccessories,
   sendLetter,
-  getLetter
+  getLetter,
+  getMails,
 };
 
 export default APIs;
