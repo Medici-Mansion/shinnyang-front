@@ -28,9 +28,14 @@ import { ArrowLeft } from "lucide-react";
 import { useSession } from "@/components/provider/session-provider";
 
 const formSchema = z.object({
-  nickname: z.string().min(1, {
-    message: "닉네임을 지정해주세요!",
-  }),
+  nickname: z
+    .string()
+    .min(1, {
+      message: "닉네임을 지정해주세요!",
+    })
+    .max(6, {
+      message: "닉네임은 6글자를 넘을 수 없어요.",
+    }),
 });
 
 const NicknamePage = () => {
@@ -60,11 +65,11 @@ const NicknamePage = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="theme-responsive"
+        className="theme-responsive w-full bg-background"
       >
         <div>
           <ArrowLeft onClick={() => router.back()} />
-          <div className="justify-start py-5 text-2xl text-black">
+          <div className="text-title-large justify-start py-5 text-black">
             편지를 보낼 때<br />
             표시할 닉네임을 알려주세요.
           </div>
@@ -73,6 +78,12 @@ const NicknamePage = () => {
           <FormField
             control={form.control}
             name="nickname"
+            rules={{
+              maxLength: {
+                value: 6,
+                message: "닉네임은 6글자를 넘을 수 없어요.",
+              },
+            }}
             render={({ field }) => {
               const isNicknameEntered = !!field.value;
               return (
@@ -80,7 +91,11 @@ const NicknamePage = () => {
                   <FormItem>
                     <FormLabel>닉네임</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="닉네임을 작성해주세요." />
+                      <Input
+                        maxLength={6}
+                        {...field}
+                        placeholder="닉네임을 작성해주세요."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
