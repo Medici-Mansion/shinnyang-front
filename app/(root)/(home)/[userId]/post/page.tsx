@@ -22,12 +22,14 @@ const SelectAccessories = dynamic(
 const PostPage = () => {
   return (
     <>
-      <div className="px-4 pt-4">
-        <BackButton href="/" />
-      </div>
-      <MailBox />
-      <div className="flex w-full grow items-end">
-        <div className="relative  flex h-full w-full grow flex-col justify-end">
+      <div className="flex h-full w-full grow flex-col items-end">
+        <div className="h-1/2 w-full">
+          <div className="absolute p-3">
+            <BackButton href="/" />
+          </div>
+          <MailBox />
+        </div>
+        <div className="relative  flex h-1/2 w-full grow flex-col justify-end">
           <Suspense
             fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
           >
@@ -35,7 +37,7 @@ const PostPage = () => {
               <SelectAccessories />
             </PrefetchQuery>
           </Suspense>
-          <div className="relative z-[1] flex h-full w-full flex-col justify-between bg-transparent pb-5 pt-12">
+          <div className="relative z-[1] flex h-3/5 w-full flex-col justify-between bg-transparent">
             <Image
               src="/assets/테이블.png"
               fill
@@ -43,14 +45,16 @@ const PostPage = () => {
               alt="테이블"
               className="-z-[1]"
             />
-            <Suspense
-              fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
-            >
-              <PostTypeSelect />
-            </Suspense>
-            <Link href="letter" className="mt-5 px-4">
-              <Button className="w-full py-6">편지쓰기</Button>
-            </Link>
+            <div className="h-full px-4">
+              <Suspense
+                fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
+              >
+                <PostTypeSelect />
+              </Suspense>
+              <Link href="letter" className="mt-5 h-1/2">
+                <Button className="w-full">편지쓰기</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
