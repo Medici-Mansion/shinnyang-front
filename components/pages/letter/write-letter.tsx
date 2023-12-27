@@ -26,9 +26,6 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
         <h1 className="text-title-large tracking-normal">
           편지를 작성해 주세요!
         </h1>
-        {/* <sub className="text-sm font-normal">
-          신냥이 편지로 2024년 새해인사를 나누세요
-        </sub> */}
       </div>
       <FormField
         control={control}
@@ -85,9 +82,7 @@ const WriteLetter = ({ control, router }: WriteLetterProps) => {
           </div>
         )}
       />
-      <Button type="submit" onClick={() => router.push("finish")}>
-        작성 완료
-      </Button>
+      <Button onClick={() => router.push("finish")}>작성 완료</Button>
     </motion.div>
   );
 };

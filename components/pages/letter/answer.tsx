@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 import { LetterFormValues } from "@/form-state";
@@ -7,6 +10,7 @@ import { Control } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { LetterResponse } from "@/type";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
@@ -15,6 +19,8 @@ interface SelectPadProps {
 }
 
 const Answer = ({ router, letter }: SelectPadProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -35,12 +41,18 @@ const Answer = ({ router, letter }: SelectPadProps) => {
       <Button variant="secondary" onClick={() => router.push(`answerLetter`)}>
         편지 보러가기
       </Button>
-      <Button
-        className="mt-4"
-        onClick={() => router.push("/", { native: true })}
-      >
+      <Button className="mt-4" onClick={() => setOpen(true)}>
         내 우체국 만들기
       </Button>
+      <AlertModal
+        leftBtnTitle="아니오"
+        rightBtnTitle="내 우체국 만들기"
+        isOpen={open}
+        loading={false}
+        onClose={() => setOpen(false)}
+        onConfirm={() => router.push("/", { native: true })}
+        title={`내 우체국을 만들면\n받은 편지를 보관하고\n답장 할 수 있어요!`}
+      />
     </motion.div>
   );
 };

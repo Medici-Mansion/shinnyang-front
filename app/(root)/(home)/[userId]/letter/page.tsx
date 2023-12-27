@@ -13,6 +13,7 @@ import { Form } from "@/components/ui/form";
 import { useSession } from "@/components/provider/session-provider";
 import { Letters } from "@/type";
 import dynamic from "next/dynamic";
+import { AlertModal } from "@/components/modals/alert-modal";
 import useSendLetter from "@/hooks/use-send-letter";
 import { copyURL } from "@/lib/utils";
 
@@ -50,7 +51,6 @@ const LetterPage = () => {
       },
     });
   };
-  console.log("!!!!");
 
   const onValid = (values: LetterFormValues) => {
     const param = { ...values, senderNickname: user?.nickname };
