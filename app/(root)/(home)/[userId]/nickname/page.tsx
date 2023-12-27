@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
 import { useSession } from "@/components/provider/session-provider";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   nickname: z
@@ -47,6 +48,9 @@ const NicknamePage = () => {
       if (data) {
         router.replace(`/${userData?.user?.id}/post`);
       }
+    },
+    onError(error, variables, context) {
+      toast.error("닉네임 설정에 실패했어요. 잠시 후 다시 시도해주세요.");
     },
   });
 
@@ -78,12 +82,6 @@ const NicknamePage = () => {
           <FormField
             control={form.control}
             name="nickname"
-            rules={{
-              maxLength: {
-                value: 6,
-                message: "닉네임은 6글자를 넘을 수 없어요.",
-              },
-            }}
             render={({ field }) => {
               const isNicknameEntered = !!field.value;
               return (
