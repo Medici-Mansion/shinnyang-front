@@ -9,7 +9,11 @@ interface UseSendLetterOptions {
 
 const useSendLetter = (options?: UseSendLetterOptions) => {
   const { onSuccess } = options || {};
-  const { mutate, isPending } = useMutation<LetterResponse, unknown, Letters>({
+  const { mutate, isPending, data } = useMutation<
+    LetterResponse,
+    unknown,
+    Letters
+  >({
     mutationKey: ["send-post"],
     mutationFn: (param: Letters) => APIs.sendLetter(param),
     onSuccess(data, variables) {
@@ -21,6 +25,7 @@ const useSendLetter = (options?: UseSendLetterOptions) => {
   return {
     mutate,
     isPending,
+    data: data?.data,
   };
 };
 

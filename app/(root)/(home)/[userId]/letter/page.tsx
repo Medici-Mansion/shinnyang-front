@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HashContext } from "@/hooks/use-hash-router";
-import { letterStore } from "@/store/user";
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
 import { Form } from "@/components/ui/form";
@@ -15,6 +14,8 @@ import { useSession } from "@/components/provider/session-provider";
 import { Letters } from "@/type";
 import dynamic from "next/dynamic";
 import { AlertModal } from "@/components/modals/alert-modal";
+import useSendLetter from "@/hooks/use-send-letter";
+import { copyURL } from "@/lib/utils";
 
 const WriteLetter = dynamic(
   () => import("@/components/pages/letter/write-letter"),
@@ -26,8 +27,8 @@ const Mailing = dynamic(() => import("@/components/pages/letter/mailing"));
 const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
 
 const LetterPage = () => {
-  const { setLetterInfo } = letterStore();
   const { data } = useSession();
+  const { mutate, isPending, data: completedLetter } = useSendLetter();
   const { user } = data || {};
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
@@ -39,16 +40,22 @@ const LetterPage = () => {
     },
   });
 
-  const onValid = (values: LetterFormValues) => {
-    const param: Letters = { ...values, senderNickname: user?.nickname };
-    const { catName, content, receiverNickname, senderNickname } = param || {};
-    setLetterInfo({
-      catName,
-      content,
-      receiverNickname,
-      senderNickname: senderNickname ? senderNickname : "",
+  const sendLetter = (letter: Letters) => {
+    mutate(letter, {
+      async onSuccess(data) {
+        copyURL(`/receiver/${data.data.id}`);
+
+        if (data && data.ok) {
+          router.push(`mailing`);
+        }
+      },
     });
-    router.push("finish");
+  };
+  console.log("!!!!");
+
+  const onValid = (values: LetterFormValues) => {
+    const param = { ...values, senderNickname: user?.nickname };
+    sendLetter(param);
   };
 
   return (
@@ -74,9 +81,15 @@ const LetterPage = () => {
               <WriteLetter router={router} control={form.control} />
             ) : null}
             {router.hash === "#finish" ? (
-              <FinishLetter router={router} control={form.control} />
+              <FinishLetter
+                router={router}
+                control={form.control}
+                isLoading={isPending}
+              />
             ) : null}
-            {router.hash === "#mailing" ? <Mailing router={router} /> : null}
+            {router.hash === "#mailing" ? (
+              <Mailing router={router} letter={completedLetter} />
+            ) : null}
           </AnimatePresence>
           <AlertModal
             leftBtnTitle="아니오"
