@@ -41,7 +41,7 @@
     "react-lottie-player": "^1.5.5",
     "react-snowfall": "^1.2.1",
     "react-textarea-autosize": "^8.5.3",
-    "sharp": "^0.33.1",
+    "sharp": "0.32.6",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
     "webpack-node-externals": "^3.0.0",
