@@ -1,7 +1,7 @@
 name: deploy-cluster
 on:
   push:
-    branches: ["develop"]
+    branches: ["k8s"]
 jobs:
   build:
     name: Build
