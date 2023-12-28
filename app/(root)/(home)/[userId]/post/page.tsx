@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense } from "react";
-import PrefetchQuery from "@/hydrate/prefetch-query";
-import CommonQuery from "@/lib/queries/common.query";
 import dynamic from "next/dynamic";
-import { cn } from "@/lib/utils";
 import PostTypeSelect from "@/components/pages/post/post-type-select";
+import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
+import getQueryClient from "@/hydrate/get-query-client";
 
 const Button = dynamic(() =>
   import("@/components/ui/button").then((ui) => ui.Button),
@@ -19,7 +18,23 @@ const SelectAccessories = dynamic(
   () => import("@/components/pages/post/select-accessories"),
 );
 
-const PostPage = () => {
+const getBackground = async () => {
+  const image = [
+    {
+      path: "/assets/우체국.png",
+      name: "post" as const,
+    },
+    {
+      path: "/assets/테이블.png",
+      name: "table" as const,
+    },
+  ];
+
+  return await generateBlurImageByImageList(image);
+};
+
+const PostPage = async () => {
+  const { post, table } = await getBackground();
   return (
     <>
       <div className="flex h-full w-full grow flex-col items-end">
@@ -37,9 +52,11 @@ const PostPage = () => {
           </Suspense>
           <div className="relative z-[1] flex h-3/5 w-full flex-col justify-between bg-transparent">
             <Image
-              src="/assets/테이블.png"
+              src={table.src}
               fill
               priority
+              placeholder="blur"
+              blurDataURL={table.placeholder.base64}
               alt="테이블"
               className="-z-[1]"
             />
@@ -56,7 +73,7 @@ const PostPage = () => {
           </div>
         </div>
       </div>
-      <Background />
+      <Background post={post} />
     </>
   );
 };

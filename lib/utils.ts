@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
-import { Control, FieldValue, FieldValues } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 

@@ -2,10 +2,10 @@
 import { HLContainer } from "@/lib/HLContainer";
 import React, { HTMLAttributes, useEffect, useRef } from "react";
 
-interface ParticlesProps extends HTMLAttributes<HTMLDivElement> {}
+interface ParticlesProps extends HTMLAttributes<HTMLCanvasElement> {}
 
 const Particles = ({ ...props }: ParticlesProps) => {
-  const container = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const fps = 60;
@@ -38,7 +38,7 @@ const Particles = ({ ...props }: ParticlesProps) => {
       cancelAnimationFrame(intervalId);
     };
   }, []);
-  return <div ref={container} {...props}></div>;
+  return <canvas ref={container} {...props}></canvas>;
 };
 
 export default Particles;

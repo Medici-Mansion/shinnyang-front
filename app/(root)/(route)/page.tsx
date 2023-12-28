@@ -1,14 +1,40 @@
 import React from "react";
 import lazy from "next/dynamic";
 import Image from "next/image";
+import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
 
 // export const dynamic = "force-static";
 const LoginButton = lazy(() => import("@/components/pages/login-button"));
-
 const Layout = lazy(() => import("@/components/layout"));
 const Particles = lazy(() => import("@/components/pages/particles"));
 const Snow = lazy(() => import("@/components/pages/snow"));
-const OnBoardingPage = () => {
+
+const getOnBoardImages = async () => {
+  const imageList = [
+    {
+      path: "/assets/home.png",
+      name: "home" as const,
+    },
+    {
+      path: "/assets/ct.png",
+      name: "ct" as const,
+    },
+    {
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/rholcy2vj2hyrgg2eg5k",
+      name: "cat" as const,
+    },
+    {
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703088832/vssqszbwfxtjbzuolltr.png",
+      name: "accessory" as const,
+    },
+  ];
+
+  return await generateBlurImageByImageList(imageList);
+};
+
+const OnBoardingPage = async () => {
+  const { accessory, cat, ct, home } = await getOnBoardImages();
+
   return (
     <Layout>
       <div className="theme-responsive relative">
@@ -31,15 +57,19 @@ const OnBoardingPage = () => {
       <div className="fixed left-1/2 top-1/2 h-[1080px] w-[575px] -translate-x-1/2 -translate-y-1/2 bg-black">
         <div className="relative -left-4">
           <Image
-            src="/assets/home.png"
+            src={home.src}
             alt="main_background"
             className="z-[1]"
             width={575}
             height={1080}
+            placeholder="blur"
+            blurDataURL={home.placeholder.base64}
           />
-          <div className="absolute top-1 z-10">
+          <div className="absolute top-1 z-[1]">
             <Image
-              src="/assets/ct.png"
+              src={ct.src}
+              blurDataURL={ct.placeholder.base64}
+              placeholder="blur"
               alt="main_background"
               className="z-[1]"
               width={575}
@@ -48,22 +78,22 @@ const OnBoardingPage = () => {
           </div>
           <div className="absolute left-1/2 top-[54%] z-0 aspect-[375/329] h-[15%] -translate-x-1/2">
             <Image
-              src={
-                "https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/rholcy2vj2hyrgg2eg5k"
-              }
+              src={cat.src}
+              placeholder="blur"
+              blurDataURL={cat.placeholder.base64}
               alt="cat"
               fill
             />
             <Image
-              src={
-                "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703088832/vssqszbwfxtjbzuolltr.png"
-              }
+              src={accessory.src}
+              placeholder="blur"
+              blurDataURL={accessory.placeholder.base64}
               alt="acc"
               fill
             />
           </div>
         </div>
-        <Particles className="absolute top-0 h-full w-full" />
+        <Particles className="absolute left-0 top-0 z-[2] h-full w-full" />
         <Snow />
       </div>
     </Layout>
