@@ -1,0 +1,42 @@
+import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import React, { PropsWithChildren, ReactNode, Suspense } from "react";
+
+const BackButton = dynamic(() => import("@/components/back-button"));
+const Background = dynamic(() => import("@/components/pages/post/background"));
+const MailBox = dynamic(() => import("@/components/svgs/mail-box"));
+
+const SelectAccessories = dynamic(
+  () => import("@/components/pages/post/select-accessories"),
+);
+
+const getBackground = async () => {
+  const image = [
+    {
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/szxnpt36qkq5tvnrt909.png",
+      name: "post" as const,
+    },
+    // {
+    //   path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/oeyygajwd4m0z6yyrkwr.png",
+    //   name: "table" as const,
+    // },
+  ];
+
+  return await generateBlurImageByImageList(image);
+};
+const PostLayout = async ({
+  children,
+  letter,
+}: PropsWithChildren<{ letter: ReactNode }>) => {
+  const { post } = await getBackground();
+  return (
+    <>
+      {children}
+      {letter}
+      <Background post={post} />
+    </>
+  );
+};
+
+export default PostLayout;

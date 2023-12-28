@@ -82,6 +82,7 @@ export interface Mail {
   catName: string;
   isRead: boolean;
   isRespond: boolean;
+  mailId: string;
 }
 
 export interface UserCatResponse {

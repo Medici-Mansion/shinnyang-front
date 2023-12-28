@@ -1,13 +1,14 @@
 "use client";
 import { ImageWithBlur } from "@/actions/blur-image-.action";
 import { BROWSER } from "@/constants";
+import { loadingStore } from "@/store/loading.store";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const Background = ({ post }: { post: ImageWithBlur }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const { setIsLoading } = loadingStore();
   const backgroundRef = useRef<HTMLDivElement>(null);
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     if (backgroundRef.current) {
       const boxRect = backgroundRef.current?.getBoundingClientRect();
       if (boxRect) {
@@ -27,7 +28,7 @@ const Background = ({ post }: { post: ImageWithBlur }) => {
         setIsLoading(false);
       }
     }
-  };
+  }, [setIsLoading]);
   useEffect(() => {
     window.addEventListener("resize", handleResize, false);
     handleResize();
@@ -40,17 +41,14 @@ const Background = ({ post }: { post: ImageWithBlur }) => {
       ref={backgroundRef}
       className="fixed top-0 -z-[1] h-full min-h-[1080px] w-[574px]"
     >
-      {isLoading ? (
-        <div>Loading</div>
-      ) : (
-        <Image
-          src={post.src}
-          placeholder="blur"
-          blurDataURL={post.placeholder.base64}
-          alt="background"
-          fill
-        />
-      )}
+      <Image
+        src={post.src}
+        placeholder="blur"
+        width={post.placeholder.metadata.width}
+        height={post.placeholder.metadata.height}
+        blurDataURL={post.placeholder.base64}
+        alt="background"
+      />
     </div>
   );
 };

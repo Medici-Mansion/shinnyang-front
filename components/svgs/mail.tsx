@@ -1,13 +1,48 @@
-import React, { PropsWithChildren } from "react";
+"use client";
+import APIs from "@/apis";
+import { Mail } from "@/type";
+import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { PropsWithChildren, useMemo } from "react";
 
 interface MailProps {
   type?: "notRead" | "empty" | "read";
   label?: string;
+  mail?: Mail & { index: number };
 }
 
-const Mail = ({ label, type = "empty" }: PropsWithChildren<MailProps>) => {
+const Mail = ({
+  label,
+  mail,
+  type = "empty",
+}: PropsWithChildren<MailProps>) => {
+  const { mutate } = useMutation({
+    mutationFn: APIs.readMail,
+  });
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const url = useMemo(() => {
+    const linkURL = `${pathname.trim()}/letter`;
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    if (mail?.id) {
+      newSearchParams.set("lead", mail.index + "");
+      newSearchParams.set("mailId", mail.mailId + "");
+    }
+    return `${linkURL.toString()}?${newSearchParams.toString()}`;
+  }, [mail?.id, mail?.index, mail?.mailId, pathname, searchParams]);
+  const handleClick = () => {
+    if (mail?.mailId) {
+      mutate(mail?.mailId);
+    }
+    router.push(url.toString());
+  };
   return (
-    <div className="relative flex aspect-[5/3] flex-1 flex-col items-center justify-center rounded-[3px] border-2 border-[#29110C] bg-[#ECD2B9] px-1 font-gookie text-base font-semibold leading-[6px]">
+    <button
+      onClick={handleClick}
+      className="relative flex aspect-[5/3] flex-1 flex-col items-center justify-center rounded-[3px] border-2 border-[#29110C] bg-[#ECD2B9] px-1 font-gookie text-base font-semibold leading-[6px]"
+    >
       <div className="flex w-full flex-[2] items-end pb-1">
         <div className="relative flex h-[12px] w-full justify-center rounded-md border-[2px] border-[#DDA973] bg-[#482609]">
           {type === "empty" ? (
@@ -100,7 +135,7 @@ const Mail = ({ label, type = "empty" }: PropsWithChildren<MailProps>) => {
       <div className="flex-1">
         <p>{label}</p>
       </div>
-    </div>
+    </button>
   );
 };
 

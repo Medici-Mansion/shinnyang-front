@@ -17,8 +17,13 @@ export async function getBlurImage(src: string) {
   "use server";
   if (!src.includes("http")) {
     const imagePath = src;
-    const buffer = await fs.readFile(path.join(process.cwd(), imagePath));
-    const placeholder = await getPlaiceholder(buffer);
+    const buffer = await fs.readFile(
+      path.join(process.cwd(), "public", imagePath),
+    );
+    const placeholder = await getPlaiceholder(buffer, {
+      saturation: 10,
+      size: 10,
+    });
     return {
       placeholder,
       src: imagePath,

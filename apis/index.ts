@@ -87,12 +87,17 @@ export const getLetter = async (letterId: string) => {
 
 export const getMails = async () => {
   const res = await api.get<Mail[]>("/mails");
+  return res.data.map((mail, index) => ({ ...mail, index: index }));
+};
+export const readMail = async (mailId: string) => {
+  const res = await api.post("/mails/read", {
+    mailId,
+  });
   return res.data;
 };
 
 export const getUserCat = async () => {
-  const response =
-    await api.get<UserCatResponse[]>("/common/user-cat");
+  const response = await api.get<UserCatResponse[]>("/common/user-cat");
 
   return response.data;
 };
@@ -117,6 +122,7 @@ const APIs = {
   sendLetter,
   getLetter,
   getMails,
+  readMail,
   getUserCat,
   postCatAccessory,
 };
