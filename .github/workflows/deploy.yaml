@@ -61,5 +61,6 @@ jobs:
           namespace: default
           manifests: |
             k8s/deployment.yaml
+            k8s/service.yaml
           images: |
             sjc.vultrcr.com/medici/shin-front:${{ github.sha }}
