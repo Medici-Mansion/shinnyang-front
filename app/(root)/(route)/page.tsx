@@ -20,11 +20,11 @@ const getOnBoardImages = async () => {
       name: "ct" as const,
     },
     {
-      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/f_auto,q_auto/rholcy2vj2hyrgg2eg5k",
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703511402/jz3ek5fcya8xqfru0u3h.png",
       name: "cat" as const,
     },
     {
-      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703088832/vssqszbwfxtjbzuolltr.png",
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703511402/pi7piy7sekpe48tzuszi.png",
       name: "accessory" as const,
     },
   ];
@@ -82,12 +82,18 @@ const OnBoardingPage = async () => {
               placeholder="blur"
               blurDataURL={cat.placeholder.base64}
               alt="cat"
+              style={{
+                objectFit: "contain",
+              }}
               fill
             />
             <Image
               src={accessory.src}
               placeholder="blur"
               blurDataURL={accessory.placeholder.base64}
+              style={{
+                objectFit: "contain",
+              }}
               alt="acc"
               fill
             />

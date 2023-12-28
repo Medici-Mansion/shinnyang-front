@@ -1,7 +1,7 @@
 "use server";
 import { getPlaiceholder } from "plaiceholder";
-import path from "path";
-const fs = require("fs").promises;
+import path from "node:path";
+import fs from "node:fs/promises";
 
 export interface ImageMetadata {
   path: string;
@@ -25,10 +25,10 @@ export async function getBlurImage(src: string) {
     };
   } else {
     const response = await fetch(src, {
-      cache: "force-cache",
+      cache: "reload",
     });
     const arrayBuffer = Buffer.from(await response.arrayBuffer());
-    const placeholder = await getPlaiceholder(arrayBuffer);
+    const placeholder = await getPlaiceholder(arrayBuffer, { size: 10 });
     return {
       placeholder,
       src: src,

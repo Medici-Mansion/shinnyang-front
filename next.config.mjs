@@ -1,10 +1,13 @@
 import withPlaiceHolder from "@plaiceholder/next";
 import bundleAnalyzer from "@next/bundle-analyzer";
+import withPlaiceholder from "@plaiceholder/next";
+import withImages from "next-images";
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withImages({
   experimental: {
     gzipSize: true,
   },
+
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
@@ -15,7 +18,9 @@ const nextConfig = {
       },
     ],
   },
-};
+  swcMinify: true,
+});
+
 const withBundleAnalyzer = bundleAnalyzer({
   enabled:
     process.env.NODE_ENV === "production" && process.env.ANALYZE === "true", // 환경변수 ANALYZE가 true일 때 실행
