@@ -7,7 +7,7 @@ const nextConfig = withImages({
   experimental: {
     gzipSize: true,
   },
-
+  output: "standalone",
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catsnewyear-front
+  labels:
+    env: production
+spec:
+  strategy:
+    type: "RollingUpdate"
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: catsnewyear-front
+      env: production
+  template:
+    metadata:
+      labels:
+        app: catsnewyear-front
+        env: production
+    spec:
+      containers:
+        - name: catsnewyear-front
+          image: sjc.vultrcr.com/medici/shin-front
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: catsnewyear-front-prod
+          env:
+            - name: KUBE_ENV
+              value: public
+          volumeMounts:
+            - name: tz-seoul
+              mountPath: /etc/localtime
+      volumes:
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul
+      imagePullSecrets:
+        - name: vultr-registry
