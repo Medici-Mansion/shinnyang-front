@@ -4,7 +4,6 @@ import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PostTypeSelect from "@/components/pages/post/post-type-select";
 import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
-import getQueryClient from "@/hydrate/get-query-client";
 
 const Button = dynamic(() =>
   import("@/components/ui/button").then((ui) => ui.Button),
