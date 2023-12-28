@@ -19,7 +19,7 @@ const LoadingSubscriber = ({ isPassive = false }: LoadingSubscriberProps) => {
       setIsLoading(true);
       isTriggerd.current = true;
     }
-  }, []);
+  }, [isPassive, setIsLoading]);
   return (
     <AnimatePresence>
       {isLoading ? (

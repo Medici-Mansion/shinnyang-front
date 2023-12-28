@@ -6,15 +6,18 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 import React, { useEffect, useMemo, useRef } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import MailQuery from "@/lib/queries/mails.query";
 import { dayToKorean } from "@/constants";
 import CommonQuery from "@/lib/queries/common.query";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import APIs from "@/apis";
 
-const LetterPage = ({ params: { userId } }: WithParam<"userId">) => {
+export default function LetterPage({
+  params: { userId },
+}: {
+  params: { userId: string };
+}) {
   const { data: mails = [] } = useQuery(MailQuery.getMails);
   const { data: cats = [] } = useQuery(CommonQuery.getCat);
 
@@ -130,6 +133,4 @@ const LetterPage = ({ params: { userId } }: WithParam<"userId">) => {
       </m.section>
     </LazyMotion>
   );
-};
-
-export default LetterPage;
+}
