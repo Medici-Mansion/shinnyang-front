@@ -14,7 +14,7 @@ RUN \
   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm &&  pnpm i --frozen-lockfile ; \
   else echo "Lockfile not found." && exit 1; \
   fi
-RUN if [ -f pnpm-lock.yaml ]; then pnpm i sharp --ignore-engines && pnpm i --force @img/sharp-linuxmusl-x64; fi
+RUN if [ -f pnpm-lock.yaml ]; then pnpm i --force @img/sharp-linuxmusl-x64; fi
 
 # Rebuild the source code only when needed
 FROM base AS builder
