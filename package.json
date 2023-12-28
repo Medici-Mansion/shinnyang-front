@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
+    "@img/sharp-linuxmusl-x64": "^0.33.1",
     "@plaiceholder/next": "^3.0.0",
     "@plaiceholder/tailwindcss": "^3.0.0",
     "@radix-ui/react-dialog": "^1.0.5",
