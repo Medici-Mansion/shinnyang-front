@@ -12,11 +12,11 @@ const Snow = lazy(() => import("@/components/pages/snow"));
 const getOnBoardImages = async () => {
   const imageList = [
     {
-      path: "/assets/home.png",
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753598/bwbfn8z9corqnfw0rcrj.png",
       name: "home" as const,
     },
     {
-      path: "/assets/ct.png",
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/jgaag0mb7khxxulwnzcr.png",
       name: "ct" as const,
     },
     {

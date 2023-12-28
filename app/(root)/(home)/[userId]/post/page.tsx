@@ -20,11 +20,11 @@ const SelectAccessories = dynamic(
 const getBackground = async () => {
   const image = [
     {
-      path: "/assets/우체국.png",
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/szxnpt36qkq5tvnrt909.png",
       name: "post" as const,
     },
     {
-      path: "/assets/테이블.png",
+      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/oeyygajwd4m0z6yyrkwr.png",
       name: "table" as const,
     },
   ];
