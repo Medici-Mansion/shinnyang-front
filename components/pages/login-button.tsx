@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useSession } from "../provider/session-provider";
@@ -8,7 +8,6 @@ const LoginButton = () => {
   const { data, signin, status } = useSession();
   const { user } = data || {};
   const [loading, setLoading] = useState(false);
-
   return !user ? (
     <Button
       disabled={loading}

@@ -23,7 +23,7 @@ interface FinishLetterProps {
 const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
   const [open, setOpen] = useState(false);
   const [openRequireLogin, setOpenRequireLogin] = useState(false);
-  const { status, data: session } = useSession();
+  const { status, data: session, signin } = useSession();
   const { mutate } = useMutation({
     mutationFn: (letterId: string) => APIs.saveMail(letterId),
     onSuccess(data, variables, context) {
@@ -96,12 +96,12 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       {/* TODO: 모달 재사용성 고려하여 재구성필요 */}
       <AlertModal
         leftBtnTitle="아니오"
-        rightBtnTitle="내 우체국 만들기"
+        rightBtnTitle="우체국 만들기"
         isOpen={open}
         loading={false}
         onClose={() => setOpen(false)}
-        onConfirm={() => router.push("/", { native: true })}
-        title={`내 우체국을 만들면\n받은 편지를 보관하고\n답장 할 수 있어요!`}
+        onConfirm={() => signin(window.location.href)}
+        title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
       />
       <AlertModal
         leftBtnTitle="확인했어요"
