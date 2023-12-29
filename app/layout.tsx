@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
-
 import localFont from "next/font/local";
 import { userAction } from "@/actions/user-action";
+
 const umu = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
@@ -45,12 +44,42 @@ const gookie = localFont({
     },
   ],
 });
-
-const fontSans = Roboto({
-  weight: ["500"],
-  subsets: ["latin"],
-  variable: "--font-sans",
+const pretendard = localFont({
+  adjustFontFallback: "Arial",
+  display: "swap",
+  variable: "--font-pretendard",
+  preload: true,
+  src: [
+    {
+      path: "fonts/PretendardVariable.woff2",
+    },
+    {
+      path: "fonts/Pretendard-SemiBold.woff2",
+      weight: "600",
+    },
+    {
+      path: "fonts/Pretendard-Bold.woff2",
+      weight: "700",
+    },
+  ],
+  fallback: [
+    "Pretendard",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "system-ui",
+    "Roboto",
+    "Helvetica Neue",
+    "Segoe UI",
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "sans-serif",
+  ],
 });
+
 export const metadata: Metadata = {
   title: "신냥이우체국",
   description: "",
@@ -70,14 +99,22 @@ export default async function RootLayout({
         umu.variable,
         cheezu.variable,
         gookie.variable,
+        pretendard.variable,
+        pretendard.className,
         "bg-[#26040D] font-cheezu font-gookie font-umu",
       )}
       suppressHydrationWarning
     >
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0 , maximum-scale=1.0, user-scalable=no"
+        />
+      </head>
       <body
         className={cn(
-          "relative h-[100dvh] bg-background font-sans antialiased",
-          fontSans.variable,
+          "relative h-[100dvh] font-sans antialiased",
+          pretendard.className,
         )}
       >
         <SessionProvider session={session}>

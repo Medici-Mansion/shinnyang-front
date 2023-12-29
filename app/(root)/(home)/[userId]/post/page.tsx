@@ -1,77 +1,75 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
 import React, { Suspense } from "react";
-import PrefetchQuery from "@/hydrate/prefetch-query";
-import CommonQuery from "@/lib/queries/common.query";
 import dynamic from "next/dynamic";
+import PostTypeSelect from "@/components/pages/post/post-type-select";
+import { AnimatePresence, domAnimation } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { m, LazyMotion } from "framer-motion";
+import BackButton from "@/components/back-button";
+import MailBox from "@/components/svgs/mail-box";
+import SelectAccessories from "@/components/pages/post/select-accessories";
+import Image from "next/image";
 
 const Button = dynamic(() =>
   import("@/components/ui/button").then((ui) => ui.Button),
 );
 
-const CatButtons = dynamic(() => import("@/components/pages/post/cat-buttons"));
-const BackButton = dynamic(() => import("@/components/back-button"));
-const PostHeader = dynamic(() => import("@/components/pages/post/post-header"));
-const PostMails = dynamic(() => import("@/components/pages/post/post-mails"));
-const SelectAccessories = dynamic(
-  () => import("@/components/pages/post/select-accessories"),
-);
-
-
 const PostPage = () => {
+  const pathname = usePathname();
+  const isLetterShow = pathname.includes("letter");
   return (
-    <section className="theme-responsive p-0">
-      <div className="px-4 pt-4">
-        <BackButton href="/" />
-        <PostHeader />
-        <div className="mt-6 flex w-full flex-col space-y-4">
-          <div className="grid w-full grid-cols-3 justify-items-center gap-2 gap-x-4">
-            <Suspense fallback={<div>냥이들 불러오는중..</div>}>
-              <CatButtons />
-            </Suspense>
-          </div>
-          <div className="grid w-full grid-cols-3 justify-items-center gap-2 gap-x-4">
-            <PostMails />
-          </div>
-        </div>
-      </div>
-      <div className="flex w-full grow items-end">
-        <div className="relative flex h-full w-full grow flex-col items-end justify-end">
-          <Suspense
-            fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
+    <AnimatePresence>
+      {isLetterShow ? null : (
+        <LazyMotion features={domAnimation}>
+          <m.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex h-full w-full grow flex-col items-end"
           >
-            <PrefetchQuery queries={[CommonQuery.getCat, CommonQuery.getAcc]}>
-              <SelectAccessories />
-            </PrefetchQuery>
-          </Suspense>
-          <div className="relative z-[1] h-[50%] w-full bg-transparent">
-            <Image
-              src="/assets/post_bottom.png"
-              alt="button"
-              fill
-              style={{
-                objectFit: "cover",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
-          </div>
-        </div>
-        <div className="absolute bottom-8 z-[2] w-full px-4">
-          <Link href="letter">
-            <Button className="w-full py-6">편지쓰기</Button>
-          </Link>
-        </div>
-      </div>
-      <Image
-        src="/assets/post_bg.png"
-        alt="post_background"
-        fill
-        style={{
-          objectFit: "cover",
-          objectPosition: "top",
-        }}
-      />
-    </section>
+            <div className="h-1/2 w-full">
+              <div className="absolute p-3">
+                <BackButton href="/" />
+              </div>
+              <MailBox />
+            </div>
+            <div className="relative  flex h-1/2 w-full grow flex-col justify-end">
+              <Suspense
+                fallback={<div className="mx-auto">냥이들 불러오는중..</div>}
+              >
+                <SelectAccessories />
+              </Suspense>
+              <div className="relative z-[1] flex h-3/5 w-full flex-col justify-between bg-transparent">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/oeyygajwd4m0z6yyrkwr.png"
+                  }
+                  fill
+                  priority
+                  //  placeholder="blur"
+                  //  blurDataURL={table.placeholder.base64}
+                  alt="테이블"
+                  className="-z-[1]"
+                />
+                <div className="h-full px-4">
+                  <Suspense
+                    fallback={
+                      <div className="mx-auto">냥이들 불러오는중..</div>
+                    }
+                  >
+                    <PostTypeSelect />
+                  </Suspense>
+                  <Link href="letter" className="mt-5 h-1/2">
+                    <Button className="w-full">편지쓰기</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </m.div>
+        </LazyMotion>
+      )}
+    </AnimatePresence>
   );
 };
 

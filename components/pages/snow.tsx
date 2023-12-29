@@ -9,7 +9,7 @@ const Snow = () => {
       radius={[1, 5]}
       wind={[-10.5, 10.0]}
       rotationSpeed={[-1.0, 10.0]}
-      style={{ backgroundColor: "transparent", zIndex: 0 }}
+      style={{ backgroundColor: "transparent", zIndex: 2 }}
       snowflakeCount={120}
     />
   );

@@ -1,4 +1,14 @@
-import { Acc, Cat, LetterResponse, Letters, Session, User } from "@/type";
+import {
+  Acc,
+  Cat,
+  LetterResponse,
+  Letters,
+  Mail,
+  PostCatAccessoryDTO,
+  Session,
+  User,
+  UserCatResponse,
+} from "@/type";
 import axios from "axios";
 export const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export const getGoogleCode = () => {
@@ -67,13 +77,52 @@ export const getAccessories = async () => {
 
 export const sendLetter = async (param: Letters) => {
   const res = await api.post("/letters", param);
-  return res.data
+  return res.data;
 };
 
 export const getLetter = async (letterId: string) => {
   const res = await api.get<LetterResponse>(`/letters/${letterId}`);
-  return res.data
-}
+  return res.data;
+};
+
+export const getMails = async () => {
+  const res = await api.get<Mail[]>("/mails");
+  return res.data.map((mail, index) => ({ ...mail, index: index }));
+};
+
+export const getMailById = async (mailId: string) => {
+  const res = await api.get<Mail>(`/mails/${mailId}`);
+  return res.data;
+};
+export const readMail = async (mailId: string) => {
+  const res = await api.post("/mails/read", {
+    mailId,
+  });
+  return res.data;
+};
+
+export const saveMail = async (letterId: string) => {
+  const res = await api.put<boolean>("/mails", {
+    letterId,
+  });
+  return res.data;
+};
+
+export const getUserCat = async () => {
+  const response = await api.get<UserCatResponse[]>("/common/user-cat");
+
+  return response.data;
+};
+
+export const postCatAccessory = async (
+  postCatAccessoryDTO: PostCatAccessoryDTO,
+) => {
+  const response = await api.patch<UserCatResponse>(
+    "/common/accessory",
+    postCatAccessoryDTO,
+  );
+  return response.data;
+};
 
 const APIs = {
   getGoogleCode,
@@ -83,7 +132,13 @@ const APIs = {
   getCats,
   getAccessories,
   sendLetter,
-  getLetter
+  getLetter,
+  getMails,
+  readMail,
+  saveMail,
+  getMailById,
+  getUserCat,
+  postCatAccessory,
 };
 
 export default APIs;

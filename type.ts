@@ -14,6 +14,9 @@ export interface Cat {
   id: string;
   image: string;
   name: string;
+  faceImage: string;
+  backImage: string;
+  yearImage: string;
 }
 
 export interface WithParam<T extends string> extends PropsWithChildren {
@@ -45,23 +48,53 @@ export interface SessionController {
 }
 
 export interface Letters {
+  senderId?: string;
   senderNickname?: string;
   receiverNickname: string;
   content: string;
   catName: string;
 }
 
+export interface CompletedLetter {
+  id: string;
+  receiverNickname: string;
+  content: string;
+  senderId: string;
+  senderNickname: string;
+  catName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface LetterResponse {
-  data: {
-    catName: string;
-    content: string;
-    createdAt: Date;
-    deletedAt: Date | null;
-    id: string;
-    receiverNickname: string;
-    senderId: string;
-    senderNickname: string;
-    updatedAt: Date;
-  };
+  data: CompletedLetter;
   ok: boolean;
+}
+
+export interface Mail {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  senderId: string;
+  senderNickname: string;
+  receiverNickname: string;
+  content: string;
+  catName: string;
+  isRead: boolean;
+  isRespond: boolean;
+  mailId: string;
+}
+
+export interface UserCatResponse {
+  catCode: string;
+  catId: string;
+  catName: string;
+  accessoryCode: string;
+  accessoryId: string;
+  accessoryName: string;
+}
+
+export interface PostCatAccessoryDTO {
+  catId: string;
+  accessoryId: string;
 }
