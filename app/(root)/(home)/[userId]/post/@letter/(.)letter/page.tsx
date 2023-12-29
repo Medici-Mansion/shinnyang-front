@@ -7,38 +7,40 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import MailQuery from "@/lib/queries/mails.query";
 import { dayToKorean } from "@/constants";
 import CommonQuery from "@/lib/queries/common.query";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import APIs from "@/apis";
 
 export default function LetterPage({
   params: { userId },
 }: {
   params: { userId: string };
 }) {
-  const { data: mails = [] } = useQuery(MailQuery.getMails);
+  const searchParams = useSearchParams();
+  const mailId = searchParams.get("mailId");
+  const { data: mail } = useQuery({
+    queryKey: ["mail", mailId],
+    queryFn: (props) => APIs.getMailById(props.queryKey[1]!),
+    enabled: !!mailId,
+    gcTime: Infinity,
+    staleTime: Infinity,
+  });
+
   const { data: cats = [] } = useQuery(CommonQuery.getCat);
 
   const imageRef = useRef<HTMLImageElement>(null);
   const letterWrapRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const index = searchParams.get("lead");
-  const mailId = searchParams.get("mailId");
-  const selectedMail = useMemo(() => {
-    const mail = mails.find((mail) => mail.mailId === mailId);
-    if (index && mail) {
-      return {
-        ...mail,
-        lead: dayToKorean[
-          (parseInt(index) + 1 + "") as keyof typeof dayToKorean
-        ],
-      };
-    }
-    return null;
-  }, [index, mailId, mails]);
+  const lead = useMemo(
+    () =>
+      index !== null
+        ? dayToKorean[(parseInt(index) + 1 + "") as keyof typeof dayToKorean]
+        : null,
+    [index],
+  );
 
   const selectedCat = useMemo(() => {
     const catCode = searchParams.get("type");
@@ -91,19 +93,19 @@ export default function LetterPage({
           <h1 className="mb-4 mt-8 text-center text-title-umu font-semibold text-white">
             {selectedCat?.name}가 보관한
             <br />
-            {selectedMail?.lead} 편지
+            {lead} 편지
             <br />
           </h1>
           <div
             className={cn(
               "flex w-full grow flex-col",
-              selectedMail?.catName === "umu"
+              mail?.catName === "umu"
                 ? "text-letter-umu"
-                : selectedMail?.catName === "cheezu"
+                : mail?.catName === "cheezu"
                   ? "text-letter-cheezu"
                   : "text-letter-gookie",
             )}
-            style={{ fontFamily: selectedMail?.catName }}
+            style={{ fontFamily: mail?.catName }}
           >
             <div
               ref={letterWrapRef}
@@ -118,10 +120,10 @@ export default function LetterPage({
                 height={790}
                 style={{ objectFit: "cover" }}
               />
-              <h1>{selectedMail?.receiverNickname}에게</h1>
-              <p>{selectedMail?.content}</p>
+              <h1>{mail?.receiverNickname}에게</h1>
+              <p>{mail?.content}</p>
               <h1 className="absolute bottom-[2rem] right-[2.2rem]">
-                {selectedMail?.senderNickname}씀
+                {mail?.senderNickname}씀
               </h1>
             </div>
           </div>

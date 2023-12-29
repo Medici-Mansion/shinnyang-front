@@ -89,6 +89,11 @@ export const getMails = async () => {
   const res = await api.get<Mail[]>("/mails");
   return res.data.map((mail, index) => ({ ...mail, index: index }));
 };
+
+export const getMailById = async (mailId: string) => {
+  const res = await api.get<Mail>(`/mails/${mailId}`);
+  return res.data;
+};
 export const readMail = async (mailId: string) => {
   const res = await api.post("/mails/read", {
     mailId,
@@ -123,6 +128,7 @@ const APIs = {
   getLetter,
   getMails,
   readMail,
+  getMailById,
   getUserCat,
   postCatAccessory,
 };

@@ -2,7 +2,6 @@
 import APIs from "@/apis";
 import { Mail } from "@/type";
 import { useMutation } from "@tanstack/react-query";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { PropsWithChildren, useMemo } from "react";
 
@@ -35,8 +34,8 @@ const Mail = ({
   const handleClick = () => {
     if (mail?.mailId) {
       mutate(mail?.mailId);
+      router.push(url.toString());
     }
-    router.push(url.toString());
   };
   return (
     <button
