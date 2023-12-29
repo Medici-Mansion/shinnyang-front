@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { WithParam } from "@/type";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -27,13 +26,22 @@ export default function LetterPage({
     gcTime: Infinity,
     staleTime: Infinity,
   });
-
   const { data: cats = [] } = useQuery(CommonQuery.getCat);
 
   const imageRef = useRef<HTMLImageElement>(null);
   const letterWrapRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const index = searchParams.get("lead");
+
+  const replyURL = useMemo(() => {
+    if (mail?.id) {
+      const url = new URL(`/receiver/${mail.id}`);
+      url.searchParams.append("mailId", mail.mailId);
+      return url.toString();
+    }
+    return null;
+  }, [mail?.id, mail?.mailId]);
+
   const lead = useMemo(
     () =>
       index !== null
@@ -129,7 +137,7 @@ export default function LetterPage({
           </div>
         </div>
 
-        <Link href="/letter">
+        <Link href={replyURL || ""}>
           <Button variant={"primary"}>답장하기</Button>
         </Link>
       </m.section>

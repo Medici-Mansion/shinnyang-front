@@ -5,10 +5,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
-
 import localFont from "next/font/local";
 import { userAction } from "@/actions/user-action";
-import Loading from "./loading";
+
 const umu = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
