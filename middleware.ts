@@ -2,10 +2,15 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const cookieStore = cookies();
-  // console.log(cookieStore, "<<cookieStore");
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-url", request.nextUrl.pathname);
 
-  return NextResponse.next();
+  return NextResponse.next({
+    request: {
+      // Apply new request headers
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

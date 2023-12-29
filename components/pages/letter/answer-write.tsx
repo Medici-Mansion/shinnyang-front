@@ -11,21 +11,23 @@ import { IHashContext } from "@/hooks/use-hash-router";
 import { FormField } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { LetterResponse } from "@/type";
+import { CompletedLetter } from "@/type";
+import { Input } from "@/components/ui/input";
 
 interface AnswerLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
   control: Control<LetterFormValues, any>;
-  letter: LetterResponse | undefined;
+  letter?: CompletedLetter;
+  isLoading: boolean;
 }
 
-const AnswerWrite = ({ router, control }: AnswerLetterProps) => {
+const AnswerWrite = ({ control, isLoading }: AnswerLetterProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative mt-4 flex grow flex-col space-y-10"
+      className="relative mt-4 flex grow flex-col space-y-5"
     >
       <div className="">
         <h1 className="text-2xl font-semibold">편지를 작성해 주세요!</h1>
@@ -33,12 +35,26 @@ const AnswerWrite = ({ router, control }: AnswerLetterProps) => {
           신냥이 편지로 2024년 새해인사를 나누세요
         </sub>
       </div>
+      <FormField
+        control={control}
+        name="receiverNickname"
+        render={({ field }) => (
+          <div className="flex flex-col space-y-4">
+            <Label className="text-black">받는 사람</Label>
+            <Input
+              className="rounded-lg border border-red bg-background"
+              {...field}
+              placeholder="받는 사람"
+            />
+          </div>
+        )}
+      />
 
       <FormField
         control={control}
         name="content"
         render={({ field }) => (
-          <div className="flex grow flex-col space-y-4">
+          <div className="flex grow flex-col space-y-2">
             <Image
               className="absolute bottom-12 right-0"
               src="/postal_stamp.png"
@@ -82,7 +98,21 @@ const AnswerWrite = ({ router, control }: AnswerLetterProps) => {
           </div>
         )}
       />
-      <Button type="submit" className="w-full py-6">
+      <FormField
+        control={control}
+        name="senderNickname"
+        render={({ field }) => (
+          <div className="flex flex-col space-y-4">
+            <Label className="text-black">보내는 사람</Label>
+            <Input
+              className="rounded-lg border border-red bg-background"
+              {...field}
+              placeholder="보내는 사람"
+            />
+          </div>
+        )}
+      />
+      <Button type="submit" className="w-full py-6" disabled={isLoading}>
         편지보내기
       </Button>
     </motion.div>

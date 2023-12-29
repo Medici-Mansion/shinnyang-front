@@ -1,17 +1,16 @@
 import APIs from "@/apis";
-import { useMutation } from "@tanstack/react-query";
+import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 
-interface UseSetNickNameOptions {
-  onSuccess?: (data: boolean, variables: { nickname: string }) => void;
-}
-
-const useSetNickName = (options?: UseSetNickNameOptions) => {
-  const { onSuccess } = options || {};
+const useSetNickName = (
+  options?: UseMutationOptions<boolean, Error, { nickname: string }, unknown>,
+) => {
+  const { onSuccess, ...rest } = options || {};
   const { mutate } = useMutation({
     mutationFn: (param: { nickname: string }) => APIs.setNickName(param),
-    onSuccess(data, variables) {
-      onSuccess && onSuccess(data, variables);
+    onSuccess(data, variables, context) {
+      onSuccess && onSuccess(data, variables, context);
     },
+    ...rest,
   });
 
   return {

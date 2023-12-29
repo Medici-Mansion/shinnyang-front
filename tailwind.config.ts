@@ -1,5 +1,6 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-
+import plaiceholder from "@plaiceholder/tailwindcss";
+import fs from "node:fs";
+import path from "node:path";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -23,10 +24,43 @@ module.exports = {
         anchor: "var(--max-width)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
+        pretendard: ["var(--font-pretendard)"],
         umu: ["var(--font-umu)"],
         cheezu: ["var(--font-cheezu)"],
         gookie: ["var(--font-gookie)"],
+      },
+      fontSize: {
+        // 타이틀 시작
+        ["title-large"]: [
+          "1.3rem",
+          {
+            lineHeight: "1.8rem",
+            fontWeight: "600",
+            letterSpacing: "-0.1rem",
+          },
+        ],
+        ["title-home"]: [
+          "1.5rem",
+          {
+            lineHeight: "2.5rem",
+          },
+        ],
+        ["title-medium"]: [
+          "0.8rem",
+          {
+            fontWeight: "600",
+          },
+        ],
+        ["title-regular"]: ["0.8rem", "1.3rem"],
+        ["title-umu"]: ["1.1rem", "1.6rem"],
+        ["title-cheezu"]: ["1.1rem", "1.6rem"],
+        ["title-gookie"]: ["1.1rem", "1.6rem"],
+        // 타이틀 끝
+        // Letter 시작
+        ["letter-cheezu"]: ["1rem", "1.8rem"],
+        ["letter-umu"]: ["0.9rem", "1.8rem"],
+        ["letter-gookie"]: ["0.8rem", "1.8rem"],
+        // Letter 끝
       },
       colors: {
         wood: {
@@ -95,6 +129,11 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        pulse: {
+          "50%": {
+            opacity: "0.2",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -102,5 +141,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plaiceholder({
+      resolver: (src) => fs.readFileSync(path.join("./public", `${src}.png`)),
+    }),
+  ],
 };

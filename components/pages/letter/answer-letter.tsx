@@ -1,25 +1,54 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-
 import { Control } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { LetterFormValues } from "@/form-state";
 import { IHashContext } from "@/hooks/use-hash-router";
-
 import { Button } from "@/components/ui/button";
-
-import { LetterResponse } from "@/type";
+import { CompletedLetter } from "@/type";
+import { useMutation } from "@tanstack/react-query";
+import APIs from "@/apis";
+import { useSession } from "@/components/provider/session-provider";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
   control: Control<LetterFormValues, any>;
-  letter: LetterResponse | undefined;
+  letter?: CompletedLetter;
 }
 
 const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
+  const [open, setOpen] = useState(false);
+  const [openRequireLogin, setOpenRequireLogin] = useState(false);
+  const { status, data: session } = useSession();
+  const { mutate } = useMutation({
+    mutationFn: (letterId: string) => APIs.saveMail(letterId),
+    onSuccess(data, variables, context) {
+      if (session?.user) {
+        router.replace(`/${session.user.id}/post`, { native: true });
+      }
+    },
+  });
+
+  const handleWriteReply = useCallback(() => {
+    if (session?.user && session?.user.id === letter?.senderId) {
+      setOpenRequireLogin(true);
+    } else {
+      router.replace("#answerWrite");
+    }
+  }, [letter?.senderId, router, session?.user]);
+
+  const handleSaveLetter = useCallback(() => {
+    if (status === "authenticated" && letter?.id) {
+      mutate(letter.id);
+    } else {
+      setOpen(true);
+    }
+  }, [letter?.id, mutate, status]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -27,21 +56,19 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       exit={{ opacity: 0 }}
       className="relative mt-4 flex grow flex-col"
     >
-      <h1 className="text-2xl font-semibold">
-        친구에게 답장을 하고
+      <h1 className="text-title-large tracking-normal">
+        편지에 답장하고
         <br />
-        편지를 우체국에 보관해보세요!
+        우체국에 보관해보세요!
       </h1>
       <div
         className="relative mb-12 mt-12 grow overflow-hidden rounded-2xl border border-red py-4 pl-8 pr-4"
         style={{ fontFamily: control._formValues.catType }}
       >
         <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
-        <h1 className="text-2xl">
-          {letter?.data?.receiverNickname || ""} 에게
-        </h1>
+        <h1 className="text-2xl">{letter?.receiverNickname || ""} 에게</h1>
         <textarea
-          value={letter?.data?.content}
+          value={letter?.content}
           disabled
           className={cn(
             "w-full rounded-none bg-transparent p-0",
@@ -50,7 +77,7 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
           maxLength={100}
         />
         <h1 className="absolute bottom-4 right-[15%] text-2xl">
-          {letter?.data?.senderNickname} 씀
+          {letter?.senderNickname} 씀
         </h1>
       </div>
       <Image
@@ -60,13 +87,29 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         width={200}
         height={100}
       />
-      <Button
-        variant="secondary"
-        onClick={() => router.replace("#answerWrite")}
-      >
+      <Button variant="secondary" onClick={handleWriteReply}>
         답장하기
       </Button>
-      <Button className="w-full py-6">편지 보관하기</Button>
+      <Button className="mt-4" onClick={handleSaveLetter}>
+        편지 보관하기
+      </Button>
+      {/* TODO: 모달 재사용성 고려하여 재구성필요 */}
+      <AlertModal
+        leftBtnTitle="아니오"
+        rightBtnTitle="내 우체국 만들기"
+        isOpen={open}
+        loading={false}
+        onClose={() => setOpen(false)}
+        onConfirm={() => router.push("/", { native: true })}
+        title={`내 우체국을 만들면\n받은 편지를 보관하고\n답장 할 수 있어요!`}
+      />
+      <AlertModal
+        leftBtnTitle="확인했어요"
+        isOpen={openRequireLogin}
+        loading={false}
+        onClose={() => setOpenRequireLogin(false)}
+        title={`내가 보낸 편지는 답장할 수 없어요!`}
+      />
     </motion.div>
   );
 };

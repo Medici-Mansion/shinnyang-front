@@ -22,8 +22,6 @@ export const userAction = async () => {
       };
     }
   } catch (error) {
-    cookie.delete("access");
-    cookie.delete("refresh");
     session.token = null;
   }
   return session;

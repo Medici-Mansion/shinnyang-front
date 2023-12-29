@@ -21,13 +21,14 @@ const LoginButton = () => {
       구글 로그인
     </Button>
   ) : (
-    <div className="mb-8">
-      <Link href={user.nickname ? `/${user.id}/post` : `/${user.id}/nickname`}>
-        <Button disabled={loading} variant={"primary"}>
-          우체국 방문하기
-        </Button>
-      </Link>
-    </div>
+    <Link
+      href={user.nickname ? `/${user.id}/post` : `/${user.id}/nickname`}
+      scroll={false}
+    >
+      <Button disabled={loading} variant={"primary"} className="bg-red">
+        우체국 방문하기
+      </Button>
+    </Link>
   );
 };
 

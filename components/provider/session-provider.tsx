@@ -67,13 +67,19 @@ export function useSession<T extends boolean>(
   const { required, onUnauthenticated, serviceName = "google" } = options ?? {};
 
   const requiredAndNotLoading = required && value?.status === "unauthenticated";
-  const signin = useCallback(() => {
-    const url = `/api/auth/signin/${serviceName}?${new URLSearchParams({
-      callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
-    })}`;
-    if (onUnauthenticated) onUnauthenticated();
-    else window.location.href = url;
-  }, [onUnauthenticated, serviceName]);
+  const signin = useCallback(
+    (callbackUrl?: string) => {
+      const url = `/api/auth/signin/${serviceName}?${new URLSearchParams({
+        callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
+      })}`;
+      if (callbackUrl) {
+        sessionStorage.setItem("callbackUrl", callbackUrl);
+      }
+      if (onUnauthenticated) onUnauthenticated();
+      else window.location.href = url;
+    },
+    [onUnauthenticated, serviceName],
+  );
 
   useEffect(() => {
     if (requiredAndNotLoading) {

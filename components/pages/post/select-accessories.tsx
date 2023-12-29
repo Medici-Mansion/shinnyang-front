@@ -1,4 +1,5 @@
 "use client";
+import APIs from "@/apis";
 import { FormField } from "@/components/ui/form";
 import {
   Popover,
@@ -6,8 +7,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import CommonQuery from "@/lib/queries/common.query";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { Acc, UserCatResponse } from "@/type";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -16,29 +24,83 @@ const SelectAccessories = () => {
   const form = useForm({
     mode: "onChange",
   });
+  const queryClient = useQueryClient();
   const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
   const { data: accessories } = useSuspenseQuery(CommonQuery.getAcc);
-  const accMap = useMemo(
+  const { data: userCat } = useQuery(CommonQuery.getUserCat);
+  const { mutate } = useMutation({
+    mutationKey: ["cats", "accessory"],
+    mutationFn: APIs.postCatAccessory,
+    onSuccess(data, variables, context) {
+      const cachedUserCat = queryClient.getQueryData(
+        CommonQuery.getUserCat.queryKey,
+      ) as UserCatResponse[];
+      cachedUserCat.forEach((userCat) => {
+        if (userCat.catId === data.catId) {
+          userCat.accessoryCode = data.accessoryCode;
+          userCat.accessoryId = data.accessoryId;
+          userCat.accessoryName = data.accessoryName;
+          userCat.catCode = data.catCode;
+          userCat.catId = data.catId;
+          userCat.catName = data.catName;
+        }
+      });
+      queryClient.setQueryData(CommonQuery.getUserCat.queryKey, cachedUserCat);
+    },
+  });
+
+  const searchParams = useSearchParams();
+
+  const type = searchParams.get("type");
+
+  const currentCatIndex = useMemo(
+    () => cats.findIndex((cat) => cat.code === type),
+    [cats, type],
+  );
+  const accMap: { [key in string]: any } = useMemo(
     () =>
       accessories.reduce((acc, cur) => {
         return { ...acc, [cur.code]: cur.fullImage };
       }, {}),
     [accessories],
   );
-  const selectedCatImage = accMap[selectedAccessoryCode as keyof typeof accMap];
+  const selectedUserCat = useMemo(() => {
+    if (cats[currentCatIndex]) {
+      return userCat?.find((uc) => uc.catCode === cats[currentCatIndex].code);
+    }
+    return null;
+  }, [cats, currentCatIndex, userCat]);
+  const selectedAcc = useMemo(() => {
+    if (selectedUserCat?.accessoryCode) {
+      return accMap[selectedUserCat.accessoryCode];
+    }
+    return null;
+  }, [accMap, selectedUserCat?.accessoryCode]);
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="relative top-[calc(1.5dvw+1.5dvh)] mx-auto aspect-[375/329] h-1/2">
-          <Image
-            // blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
-            // placeholder="blur"
-            src={cats[0].image}
-            alt="cat"
-            fill
-          />
-          {selectedCatImage && <Image src={selectedCatImage} alt="acc" fill />}
+        <div className="relative top-0 mx-auto aspect-[219/156] h-2/5 w-4/5">
+          {cats[currentCatIndex]?.image && (
+            <Image
+              src={cats[currentCatIndex]?.image}
+              alt="cat"
+              style={{
+                objectFit: "contain",
+              }}
+              fill
+            />
+          )}
+          {selectedAcc && (
+            <Image
+              src={selectedAcc}
+              style={{
+                objectFit: "contain",
+              }}
+              alt="acc"
+              fill
+            />
+          )}
         </div>
       </PopoverTrigger>
 
@@ -62,6 +124,10 @@ const SelectAccessories = () => {
                   value={accType.code}
                   className="hidden"
                   onChange={(event) => {
+                    mutate({
+                      accessoryId: accType.id,
+                      catId: cats[currentCatIndex].id,
+                    });
                     setSelectedAccessoryCode(accType.code);
                   }}
                 />
@@ -71,7 +137,7 @@ const SelectAccessories = () => {
                     <Image
                       src={accType.iconImage}
                       alt={accType.name}
-                      layout="fill"
+                      fill
                       placeholder="blur"
                       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
                     />
