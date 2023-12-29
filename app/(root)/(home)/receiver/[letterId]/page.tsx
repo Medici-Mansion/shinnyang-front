@@ -3,7 +3,6 @@
 import React, { Suspense, useContext, useEffect } from "react";
 import { HashContext } from "@/hooks/use-hash-router";
 import { AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
 
 import BaseLayout from "@/layout/base-layout";
 import { LetterFormValues, letterFormState } from "@/form-state";
@@ -19,21 +18,25 @@ import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
 import { Letters } from "@/type";
 import Mailing from "@/components/pages/letter/mailing";
+import { useSession } from "@/components/provider/session-provider";
 
-const ReceiverPage = () => {
+const ReceiverPage = ({
+  params: { letterId },
+}: {
+  params: { letterId: string };
+}) => {
   const { mutate, data: letterComplate, isPending } = useSendLetter();
   const router = useContext(HashContext);
-  const pathname = usePathname();
-  const letterId = pathname.split("/")[2];
-  const { data } = useGetLetter(letterId);
+  const { data = { user: null, session: null } } = useSession();
+  const { data: { data: letter } = {} } = useGetLetter(letterId);
 
   const form = useForm<LetterFormValues>({
     resolver: zodResolver(letterFormState),
     defaultValues: {
       catName: "umu",
       content: "",
-      receiverNickname: data?.data.senderNickname || "",
-      receiverId: data?.data.senderId || "",
+      receiverNickname: letter?.senderNickname || "",
+      receiverId: letter?.senderId || "",
       senderNickname: "",
     },
   });
@@ -53,11 +56,11 @@ const ReceiverPage = () => {
   };
 
   useEffect(() => {
-    if (data && data?.data.senderNickname) {
-      form.setValue("receiverNickname", data?.data.senderNickname);
-      form.setValue("receiverId", data?.data.senderId);
+    if (letter?.senderNickname) {
+      form.setValue("receiverNickname", letter.senderNickname);
+      form.setValue("receiverId", letter.senderId);
     }
-  }, [data, form]);
+  }, [form, letter?.senderId, letter?.senderNickname]);
 
   return (
     <Form {...form}>
@@ -66,24 +69,32 @@ const ReceiverPage = () => {
         onSubmit={form.handleSubmit(onValid)}
         className='"flex p-6" h-full flex-col'
       >
-        <ArrowLeft />
+        {data?.user || router.hash ? (
+          <ArrowLeft
+            onClick={() =>
+              router.hash
+                ? router.back()
+                : router.replace(`/${data?.user?.id}/post`, { native: true })
+            }
+          />
+        ) : null}
         <Suspense fallback={<>Loading....</>}>
           <AnimatePresence mode="wait">
             {!router.hash ? (
-              <Answer router={router} control={form.control} letter={data} />
+              <Answer router={router} control={form.control} letter={letter} />
             ) : null}
             {router.hash === "#answerLetter" ? (
               <AnswerLetter
                 router={router}
                 control={form.control}
-                letter={data}
+                letter={letter}
               />
             ) : null}
             {router.hash === "#answerWrite" ? (
               <AnswerWrite
                 router={router}
                 control={form.control}
-                letter={data}
+                letter={letter}
                 isLoading={isPending}
               />
             ) : null}

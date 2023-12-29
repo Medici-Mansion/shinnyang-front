@@ -97,7 +97,7 @@ const MailBox = () => {
             {currentMails.map((mail, index) => (
               <Mail
                 type={!mail ? "empty" : mail.isRead ? "read" : "notRead"}
-                key={mail?.id ?? index}
+                key={mail?.id ? mail?.id + index : index}
                 mail={mail}
                 label={startIndex + index + ""}
               />

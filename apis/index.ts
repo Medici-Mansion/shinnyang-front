@@ -101,6 +101,13 @@ export const readMail = async (mailId: string) => {
   return res.data;
 };
 
+export const saveMail = async (letterId: string) => {
+  const res = await api.put<boolean>("/mails", {
+    letterId,
+  });
+  return res.data;
+};
+
 export const getUserCat = async () => {
   const response = await api.get<UserCatResponse[]>("/common/user-cat");
 
@@ -128,6 +135,7 @@ const APIs = {
   getLetter,
   getMails,
   readMail,
+  saveMail,
   getMailById,
   getUserCat,
   postCatAccessory,

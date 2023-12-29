@@ -24,7 +24,7 @@ const Mailing = ({ router, letter }: MailingProps) => {
       exit={{ opacity: 0 }}
       className="relative mt-4 flex grow flex-col"
     >
-      <h1 className="mb-4 text-2xl font-semibold">
+      <h1 className="mb-4 text-title-large tracking-normal">
         {letter?.receiverNickname} 님의
         <br />
         우체국에 편지를 보냈어요!
@@ -43,7 +43,7 @@ const Mailing = ({ router, letter }: MailingProps) => {
         편지 공유하기
       </Button>
       <Button
-        className="mt-4 bg-red"
+        className="mt-4"
         onClick={(event) => {
           event.preventDefault();
           router.push(`/${user?.user?.id}/post`, { native: true });

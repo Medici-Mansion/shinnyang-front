@@ -2,6 +2,7 @@
 import APIs from "@/apis";
 import { Mail } from "@/type";
 import { useMutation } from "@tanstack/react-query";
+import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { PropsWithChildren, useMemo } from "react";
 
@@ -23,18 +24,18 @@ const Mail = ({
   const pathname = usePathname();
   const router = useRouter();
   const url = useMemo(() => {
-    const linkURL = `${pathname.trim()}/letter`;
+    const linkURL = `post/letter`;
     const newSearchParams = new URLSearchParams(searchParams.toString());
     if (mail?.id) {
       newSearchParams.set("lead", mail.index + "");
       newSearchParams.set("mailId", mail.mailId + "");
     }
     return `${linkURL.toString()}?${newSearchParams.toString()}`;
-  }, [mail?.id, mail?.index, mail?.mailId, pathname, searchParams]);
+  }, [mail?.id, mail?.index, mail?.mailId, searchParams]);
   const handleClick = () => {
     if (mail?.mailId) {
       mutate(mail?.mailId);
-      router.push(url.toString());
+      router.push(url.toString(), { scroll: false });
     }
   };
   return (

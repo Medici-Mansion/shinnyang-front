@@ -35,9 +35,10 @@ export default function LetterPage({
 
   const replyURL = useMemo(() => {
     if (mail?.id) {
-      const url = new URL(`/receiver/${mail.id}`);
-      url.searchParams.append("mailId", mail.mailId);
-      return url.toString();
+      const url = `/receiver/${mail.id}`;
+      const searchParams = new URLSearchParams();
+      searchParams.append("mailId", mail.mailId);
+      return `${url}?${searchParams.toString()}`;
     }
     return null;
   }, [mail?.id, mail?.mailId]);

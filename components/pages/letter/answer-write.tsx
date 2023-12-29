@@ -11,13 +11,13 @@ import { IHashContext } from "@/hooks/use-hash-router";
 import { FormField } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { LetterResponse } from "@/type";
+import { CompletedLetter } from "@/type";
 import { Input } from "@/components/ui/input";
 
 interface AnswerLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
   control: Control<LetterFormValues, any>;
-  letter: LetterResponse | undefined;
+  letter?: CompletedLetter;
   isLoading: boolean;
 }
 
