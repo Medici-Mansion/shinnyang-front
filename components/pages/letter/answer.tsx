@@ -25,9 +25,9 @@ const Answer = ({ router, letter }: SelectPadProps) => {
       className="mt-4 flex h-full flex-col space-y-4"
     >
       <h1 className="text-title-large tracking-normal">
-        {letter?.senderNickname}가 {letter?.receiverNickname} 님의
+        {letter?.senderNickname}님이 {letter?.receiverNickname}님에게
         <br />
-        우체국에 편지를 보냈어요!
+        2024년 신년인사 편지를 보냈어요!
       </h1>
 
       <div className="relative flex grow justify-center">
