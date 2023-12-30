@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Control } from "react-hook-form";
-import { cn } from "@/lib/utils";
 import { LetterFormValues } from "@/form-state";
 import { IHashContext } from "@/hooks/use-hash-router";
 import { Button } from "@/components/ui/button";
@@ -13,6 +11,8 @@ import { useMutation } from "@tanstack/react-query";
 import APIs from "@/apis";
 import { useSession } from "@/components/provider/session-provider";
 import { AlertModal } from "@/components/modals/alert-modal";
+import LetterWithSheet from "@/components/letter-with-sheet";
+import FinishBottomDeco from "./finish-bottom-deco";
 
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
@@ -37,7 +37,7 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
     if (session?.user && session?.user.id === letter?.senderId) {
       setOpenRequireLogin(true);
     } else {
-      router.replace("#answerWrite");
+      router.replace("cat");
     }
   }, [letter?.senderId, router, session?.user]);
 
@@ -54,45 +54,35 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative mt-4 flex grow flex-col"
+      className="flex grow flex-col"
     >
-      <h1 className="text-title-large tracking-normal">
-        편지에 답장하고
-        <br />
-        우체국에 보관해보세요!
-      </h1>
-      <div
-        className="relative mb-12 mt-12 grow overflow-hidden rounded-2xl border border-red py-4 pl-8 pr-4"
-        style={{ fontFamily: control._formValues.catType }}
-      >
-        <Image className="-z-10" src="/letter_sheet.png" alt="letter" fill />
-        <h1 className="text-2xl">{letter?.receiverNickname || ""} 에게</h1>
-        <textarea
-          value={letter?.content}
-          disabled
-          className={cn(
-            "w-full rounded-none bg-transparent p-0",
-            "z-10 h-full rounded-md border-none p-3 px-5 text-sm outline-none placeholder:text-muted-foreground",
-          )}
-          maxLength={100}
-        />
-        <h1 className="absolute bottom-4 right-[15%] text-2xl">
-          {letter?.senderNickname} 씀
+      <div className="relative z-0 mt-4 flex grow flex-col space-y-4">
+        <h1 className="text-title-large">
+          편지에 답장하고
+          <br />
+          우체국에 보관해보세요!
         </h1>
+        <div className="grow">
+          <LetterWithSheet
+            style={{ fontFamily: letter?.catName }}
+            to={letter?.receiverNickname ?? ""}
+            content={letter?.content ?? ""}
+            from={letter?.senderNickname ?? ""}
+          />
+          {letter?.catName ? (
+            <FinishBottomDeco catName={letter.catName} />
+          ) : null}
+        </div>
       </div>
-      <Image
-        className="absolute bottom-32 right-0"
-        src="/postal_stamp.png"
-        alt="letter"
-        width={200}
-        height={100}
-      />
-      <Button variant="secondary" onClick={handleWriteReply}>
-        답장하기
-      </Button>
-      <Button className="mt-4" onClick={handleSaveLetter}>
-        편지 보관하기
-      </Button>
+      <div className="z-[1]">
+        <Button variant="secondary" onClick={handleWriteReply}>
+          답장하기
+        </Button>
+        <Button className="mt-1" onClick={handleSaveLetter}>
+          편지 보관하기
+        </Button>
+      </div>
+
       {/* TODO: 모달 재사용성 고려하여 재구성필요 */}
       <AlertModal
         leftBtnTitle="아니오"

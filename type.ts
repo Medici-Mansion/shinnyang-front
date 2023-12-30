@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { LetterFormValues } from "./form-state";
+import { LETTER_TYPE, LetterFormValues } from "./form-state";
 
 export interface Acc {
   id: string;
@@ -64,6 +64,7 @@ export interface CompletedLetter {
   catName: string;
   createdAt: string;
   updatedAt: string;
+  letterType: LETTER_TYPE;
 }
 
 export interface LetterResponse {
@@ -89,12 +90,12 @@ export interface UserCatResponse {
   catCode: string;
   catId: string;
   catName: string;
-  accessoryCode: string;
-  accessoryId: string;
-  accessoryName: string;
+  accessoryCode?: string;
+  accessoryId?: string;
+  accessoryName?: string;
 }
 
 export interface PostCatAccessoryDTO {
   catId: string;
-  accessoryId: string;
+  accessoryId?: string;
 }

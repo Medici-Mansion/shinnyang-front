@@ -84,6 +84,10 @@ export const getLetter = async (letterId: string) => {
   const res = await api.get<LetterResponse>(`/letters/${letterId}`);
   return res.data;
 };
+export const updateLetterBySenderId = async (letterId: string) => {
+  const res = await api.patch<boolean>(`/letters/${letterId}`);
+  return res.data;
+};
 
 export const getMails = async () => {
   const res = await api.get<Mail[]>("/mails");
@@ -139,6 +143,7 @@ const APIs = {
   getMailById,
   getUserCat,
   postCatAccessory,
+  updateLetterBySenderId,
 };
 
 export default APIs;

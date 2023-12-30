@@ -23,7 +23,7 @@ const buttonVariants = cva(
         // link: "bg-gray-400 text-black font-bold hover:bg-primary/90",
       },
       size: {
-        default: "w-full h-11 max-h-[54px] rounded-md",
+        default: "w-full h-14 max-h-[54px] rounded-md",
         sm: "w-full h-11 max-h-[54px] rounded-md px-3",
         lg: "w-full h-11 max-h-[54px] rounded-md px-8",
         icon: "w-full h-10 w-10",

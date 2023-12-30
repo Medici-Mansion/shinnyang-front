@@ -11,7 +11,7 @@ import { FormField } from "@/components/ui/form";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import CommonQuery from "@/lib/queries/common.query";
 import { cn } from "@/lib/utils";
-import { UserCatResponse } from "@/type";
+import { Acc, UserCatResponse } from "@/type";
 import {
   useMutation,
   useQuery,
@@ -20,8 +20,7 @@ import {
 } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useMemo, useRef } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useMemo, useState } from "react";
 
 interface SelectAccessoriesProps {
   open: boolean;
@@ -38,36 +37,21 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
 
   const type = searchParams.get("type");
 
-  const currentCatIndex = useMemo(
-    () => cats.findIndex((cat) => cat.code === type),
+  const currentCat = useMemo(
+    () => cats.find((cat) => cat.code === type),
     [cats, type],
   );
-
-  const accMap: { [key in string]: any } = useMemo(
-    () =>
-      accessories.reduce((acc, cur) => {
-        return { ...acc, [cur.code]: cur.fullImage };
-      }, {}),
-    [accessories],
+  const currentUserCat = useMemo(
+    () => userCat?.find((uc) => uc.catId === currentCat?.id),
+    [currentCat?.id, userCat],
   );
-  const selectedUserCat = useMemo(() => {
-    if (cats[currentCatIndex]) {
-      return userCat?.find((uc) => uc.catCode === cats[currentCatIndex].code);
-    }
-    return null;
-  }, [cats, currentCatIndex, userCat]);
-  const selectedAcc = useMemo(() => {
-    if (selectedUserCat?.accessoryCode) {
-      return accMap[selectedUserCat.accessoryCode];
-    }
-    return null;
-  }, [accMap, selectedUserCat?.accessoryCode]);
 
-  const form = useForm({
-    defaultValues: {
-      accessory: selectedUserCat?.accessoryCode,
-    },
-  });
+  const currentAcc = useMemo(
+    () => accessories.find((acc) => acc.id === currentUserCat?.accessoryId),
+    [accessories, currentUserCat?.accessoryId],
+  );
+
+  const [selectedAcc, setSelectedAcc] = useState<Acc | undefined>(currentAcc);
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationKey: ["cats", "accessory"],
@@ -76,11 +60,10 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
       const selectedAcc = accessories.find((userCat) => {
         return userCat.id === data.accessoryId;
       });
+      const cachedUserCat = queryClient.getQueryData(
+        CommonQuery.getUserCat.queryKey,
+      ) as UserCatResponse[];
       if (selectedAcc) {
-        const cachedUserCat = queryClient.getQueryData(
-          CommonQuery.getUserCat.queryKey,
-        ) as UserCatResponse[];
-
         cachedUserCat.some((userCat) => {
           if (userCat.catId === data.catId) {
             userCat.accessoryCode = selectedAcc.code;
@@ -89,22 +72,39 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
           }
           return userCat.catId === data.catId;
         });
-
-        queryClient.setQueryData(
-          CommonQuery.getUserCat.queryKey,
-          cachedUserCat,
-        );
+      } else {
+        cachedUserCat.some((userCat) => {
+          if (userCat.catId === data.catId) {
+            userCat.accessoryCode = undefined;
+            userCat.accessoryId = undefined;
+            userCat.accessoryName = undefined;
+          }
+          return userCat.catId === data.catId;
+        });
       }
+      queryClient.setQueryData(CommonQuery.getUserCat.queryKey, cachedUserCat);
     },
   });
 
   useEffect(() => {
-    if (selectedUserCat?.accessoryCode) {
-      form.setValue("accessory", selectedUserCat?.accessoryCode);
-    }
-  }, [form, selectedUserCat?.accessoryCode]);
+    setSelectedAcc(currentAcc);
+  }, [currentAcc, type]);
   return (
-    <Dialog open={open} onOpenChange={setOpen} modal={false}>
+    <Dialog
+      open={open}
+      onOpenChange={(state) => {
+        if (!state) {
+          if (currentCat) {
+            mutate({
+              accessoryId: selectedAcc?.id,
+              catId: currentCat.id,
+            });
+          }
+        }
+        setOpen(state);
+      }}
+      modal={false}
+    >
       <DialogTrigger
         className={cn(
           "relative top-0 mx-auto aspect-[219/156] h-[30%] w-4/5",
@@ -112,9 +112,9 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
         )}
       >
         <div>
-          {cats[currentCatIndex]?.image && (
+          {currentCat?.image && (
             <Image
-              src={cats[currentCatIndex]?.image}
+              src={currentCat.image}
               alt="cat"
               style={{
                 objectFit: "contain",
@@ -124,7 +124,7 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
           )}
           {selectedAcc && (
             <Image
-              src={selectedAcc}
+              src={selectedAcc.fullImage}
               style={{
                 objectFit: "contain",
               }}
@@ -170,68 +170,56 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
                 strokeLinecap="round"
               />
             </svg>
-            {selectedUserCat?.catName}의 옷장
+            {currentCat?.name}의 옷장
           </DialogTitle>
           <div className="flex gap-x-2">
-            <FormField
-              control={form.control}
-              name="accessory"
-              render={({ field }) => {
-                return (
-                  <>
-                    {accessories.map((accType) => (
-                      <div
-                        key={accType.id}
-                        className="mx-auto w-full  text-center text-sm font-normal"
-                      >
-                        <input
-                          {...field}
-                          type="radio"
-                          id={accType.id}
-                          name="accType"
-                          value={accType.code}
-                          className="hidden"
-                          onChange={(event) => {
-                            mutate({
-                              accessoryId: accType.id,
-                              catId: cats[currentCatIndex].id,
-                            });
-                            field.onChange(event);
-                          }}
-                        />
+            {accessories.map((accType) => (
+              <div
+                key={accType.id}
+                className="mx-auto w-full  text-center text-sm font-normal"
+              >
+                <input
+                  type="radio"
+                  id={accType.id}
+                  name="accType"
+                  value={accType.id}
+                  className="hidden"
+                  onClick={() => {
+                    if (selectedAcc?.id === accType.id) {
+                      setSelectedAcc(undefined);
+                    } else {
+                      setSelectedAcc(accType);
+                    }
+                  }}
+                />
 
-                        <label
-                          htmlFor={accType.id}
-                          className={cn(
-                            "block h-full w-full font-pretendard text-xs leading-7",
-                            accType.code !== field.value &&
-                              "opacity-30 duration-100",
-                          )}
-                        >
-                          <div
-                            className={cn(
-                              "relative aspect-square w-full rounded-xl bg-gray-200 duration-100",
-                              accType.code === field.value
-                                ? "bg-modal-active-bg outline-modal-active-border outline outline-2"
-                                : "bg-gray-400",
-                            )}
-                          >
-                            <Image
-                              src={accType.iconImage}
-                              alt={accType.name}
-                              fill
-                              placeholder="blur"
-                              blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
-                            />
-                          </div>
-                          {accType.name.replace(" 모자", "")}
-                        </label>
-                      </div>
-                    ))}
-                  </>
-                );
-              }}
-            />
+                <label
+                  htmlFor={accType.id}
+                  className={cn(
+                    "block h-full w-full font-pretendard text-xs leading-7",
+                    accType.id !== selectedAcc?.id && "opacity-30 duration-100",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "relative aspect-square w-full rounded-xl bg-gray-200 duration-100",
+                      accType.id === selectedAcc?.id
+                        ? "bg-modal-active-bg outline-modal-active-border outline outline-2"
+                        : "bg-gray-400",
+                    )}
+                  >
+                    <Image
+                      src={accType.iconImage}
+                      alt={accType.name}
+                      fill
+                      placeholder="blur"
+                      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
+                    />
+                  </div>
+                  {accType.name.replace(" 모자", "")}
+                </label>
+              </div>
+            ))}
           </div>
         </DialogContent>
       </DialogPortal>
