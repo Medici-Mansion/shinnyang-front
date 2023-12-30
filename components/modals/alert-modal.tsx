@@ -32,21 +32,19 @@ export const AlertModal = ({
   if (!isMounted) return null;
 
   return (
-    <>
-      <Modal title={title} isOpen={isOpen} onClose={onClose}>
-        <div className="flex w-full items-center justify-end space-x-2 pt-2 text-[16px]">
-          {leftBtnTitle && (
-            <Button disabled={loading} variant={"secondary"} onClick={onClose}>
-              {leftBtnTitle}
-            </Button>
-          )}
-          {rightBtnTitle && (
-            <Button disabled={loading} onClick={onConfirm} className="bg-red">
-              {rightBtnTitle}
-            </Button>
-          )}
-        </div>
-      </Modal>
-    </>
+    <Modal title={title} isOpen={isOpen} onClose={onClose}>
+      <div className="flex w-full items-center justify-end space-x-2 pt-2 text-[16px]">
+        {leftBtnTitle && (
+          <Button disabled={loading} variant={"secondary"} onClick={onClose}>
+            {leftBtnTitle}
+          </Button>
+        )}
+        {rightBtnTitle && (
+          <Button disabled={loading} onClick={onConfirm} className="bg-red">
+            {rightBtnTitle}
+          </Button>
+        )}
+      </div>
+    </Modal>
   );
 };

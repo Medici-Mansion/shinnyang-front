@@ -10,9 +10,8 @@ import React, { useMemo } from "react";
 import { Control } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Cat } from "@/type";
-import { cn } from "@/lib/utils";
 import { LetterFormValues } from "@/form-state";
-import { Suspense } from "react";
+import LetterWithSheet from "@/components/letter-with-sheet";
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
@@ -20,6 +19,7 @@ interface SelectPadProps {
 
 const SelectPad = ({ router, control }: SelectPadProps) => {
   const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
+
   const catNameObj = useMemo(() => {
     const nameOfCodes: { [key in Cat["code"]]?: string } = {};
     cats.forEach((cat) => {
@@ -27,6 +27,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
     });
     return nameOfCodes;
   }, [cats]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -40,9 +41,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
           <br />
           선택해주세요!
         </h1>
-        <sub className="text-sm font-normal">
-          냥이마다 편지 디자인이 달라요.
-        </sub>
+        <sub className="text-sm font-normal">냥이마다 글씨체가 달라요.</sub>
       </div>
       <FormField
         name="catName"
@@ -74,7 +73,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                     <Image
                       src={catType.faceImage}
                       alt={catType.name}
-                      layout="fill"
+                      fill
                       placeholder="blur"
                       blurDataURL="data:image/png;base64,iVBORw0KG..."
                     />
@@ -85,34 +84,15 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                 </div>
               ))}
             </div>
-
-            <div
-              className={cn(
-                "relative grow overflow-hidden rounded-2xl border border-red p-6",
-              )}
-              style={{ fontFamily: field.value }}
-              key={field.value}
-            >
-              <Image
-                className=""
-                src="/letter_sheet.png"
-                alt="letter"
-                priority
-                fill
+            <div className="grow">
+              <LetterWithSheet
+                preview
+                className="font-bold"
+                style={{ fontFamily: field.value }}
+                to={catNameObj[field.value] ?? ""}
+                content={`냥이 ${field.value} 귀여운 글씨체야 이글씨 어때 귀엽냥?`}
+                from="닉네임"
               />
-              <h1 className="absolute text-2xl">{`${
-                catNameObj[field.value]
-              } 에게`}</h1>
-              <TextArea
-                value={`냥이 ${field.value} 귀여운 글씨체야 이글씨 어때 귀엽냥?`}
-                disabled
-                className="absolute top-14 w-2/3 resize-none bg-transparent px-0"
-                maxLength={100}
-                maxRows={6}
-              />
-              <h1 className="absolute bottom-5 right-[10%] text-2xl">
-                닉네임 씀
-              </h1>
             </div>
           </>
         )}

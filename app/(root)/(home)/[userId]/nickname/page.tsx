@@ -46,7 +46,7 @@ const NicknamePage = () => {
   const { mutate } = useSetNickName({
     async onSuccess(data, variables) {
       if (data) {
-        update();
+        await update();
         router.replace(`/${userData?.user?.id}/post`);
       }
     },

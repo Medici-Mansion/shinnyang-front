@@ -1,4 +1,5 @@
 import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
+import CheckNickname from "@/components/pages/post/check-nickname";
 import dynamic from "next/dynamic";
 import React, { PropsWithChildren, ReactNode, Suspense } from "react";
 
@@ -24,6 +25,7 @@ const PostLayout = async ({
       {children}
       {letter}
       <Background post={post} />
+      <CheckNickname />
     </>
   );
 };
