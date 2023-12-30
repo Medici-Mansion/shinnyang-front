@@ -78,6 +78,7 @@ const ReceiverPage = ({
             }
           />
         ) : null}
+
         <Suspense fallback={<>Loading....</>}>
           <AnimatePresence mode="wait">
             {!router.hash ? (

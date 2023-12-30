@@ -101,7 +101,7 @@ export default async function RootLayout({
         gookie.variable,
         pretendard.variable,
         pretendard.className,
-        "bg-[#26040D] font-cheezu font-gookie font-umu",
+        "bg-[#26040D]",
       )}
       suppressHydrationWarning
     >

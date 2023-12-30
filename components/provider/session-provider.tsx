@@ -50,6 +50,7 @@ type UseSessionOptions<R extends boolean> = R extends true
 
 type SessionHandler = {
   signin: (callbackUrl?: string) => void;
+  signout: () => Promise<void>;
 };
 export function useSession<T extends boolean>(
   options?: UseSessionOptions<T>,
@@ -84,6 +85,14 @@ export function useSession<T extends boolean>(
     [onUnauthenticated, serviceName],
   );
 
+  const signout: SessionHandler["signout"] = useCallback(async () => {
+    const url = `/api/auth/signout`;
+    await fetch(url, {
+      method: "POST",
+    });
+    window.location.href = window.location.origin;
+  }, []);
+
   useEffect(() => {
     const callbackUrl = sessionStorage.getItem("callbackUrl");
     if (callbackUrl) {
@@ -102,10 +111,11 @@ export function useSession<T extends boolean>(
       status: value.status,
       update: value.update,
       signin,
+      signout,
     };
   }
 
-  return Object.assign(value!, { signin });
+  return Object.assign(value!, { signin, signout });
 }
 
 export function SessionProvider(

@@ -39,8 +39,8 @@ const OnBoardingPage = async () => {
     <Layout>
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
-          <div className="mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
-            <div className="font-cheezu text-3xl font-medium leading-[50px]">
+          <div className="text-shadow z-10 mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
+            <div className=" mx-auto w-fit font-cheezu text-3xl font-medium leading-[50px]">
               새해를 알리는
               <br />
               2024 신냥이 우체국
