@@ -44,7 +44,7 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
       >
         <div className="relative z-0 mt-4 flex grow flex-col space-y-4">
           <h1 className="text-title-large">
-            {session?.user?.nickname}님의
+            {session?.user?.nickname ?? getValues().senderNickname}님의
             <br />
             편지가 완성되었어요!
           </h1>
