@@ -1,34 +1,36 @@
 "use client";
 
-import React, { Suspense, useContext } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
-
-import { LetterFormValues, letterFormState } from "@/form-state";
+import { motion } from "framer-motion";
+import { LETTER_TYPE, LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HashContext } from "@/hooks/use-hash-router";
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
 import { Form } from "@/components/ui/form";
 import { useSession } from "@/components/provider/session-provider";
-import { Letters } from "@/type";
 import dynamic from "next/dynamic";
+import Loading from "@/components/loading";
 import useSendLetter from "@/hooks/use-send-letter";
 import { copyURL } from "@/lib/utils";
 
+const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
 const WriteLetter = dynamic(
   () => import("@/components/pages/letter/write-letter"),
 );
 const FinishLetter = dynamic(
   () => import("@/components/pages/letter/finish-letter"),
 );
-const Mailing = dynamic(() => import("@/components/pages/letter/mailing"));
-const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
 
 const LetterPage = () => {
-  const { data } = useSession();
-  const { mutate, isPending, data: completedLetter } = useSendLetter();
-  const { user } = data || {};
+  const {
+    mutate,
+    isPending: isLoading,
+    data: completedLeetter,
+  } = useSendLetter();
+  const { data: session } = useSession();
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
     resolver: zodResolver(letterFormState),
@@ -36,57 +38,71 @@ const LetterPage = () => {
       catName: "umu",
       content: "",
       receiverNickname: "",
+      senderNickname: session?.user?.nickname ?? "",
+      letterType: LETTER_TYPE.LETTER,
     },
   });
 
-  const sendLetter = (letter: Letters) => {
-    mutate(letter, {
-      async onSuccess(data) {
-        copyURL(`/receiver/${data.data.id}`);
-
-        if (data && data.ok) {
-          router.push(`mailing`);
-        }
-      },
-    });
-  };
-
   const onValid = (values: LetterFormValues) => {
-    const param = { ...values, senderNickname: user?.nickname };
-    sendLetter(param);
+    router.push("finish");
   };
+
+  useEffect(() => {
+    if (session?.user?.nickname) {
+      form.setValue("senderNickname", session?.user?.nickname);
+    }
+  }, [form, session?.user?.nickname]);
 
   return (
     <Form {...form}>
       <BaseLayout
         as="form"
         onSubmit={form.handleSubmit(onValid)}
-        className='"flex p-6" h-full flex-col'
+        className='"flex p-6" h-full flex-col overflow-y-hidden'
       >
-        <ArrowLeft
-          onClick={() =>
-            router.hash
-              ? router.back()
-              : router.replace(`/${data?.user?.id}/post`, { native: true })
-          }
-        />
-        <Suspense fallback={<>Loading....</>}>
+        {router.hash !== "#mailing" && (
+          <ArrowLeft
+            onClick={() =>
+              router.hash
+                ? router.back()
+                : router.replace(`/${session?.user?.id}/post`, { native: true })
+            }
+          />
+        )}
+        <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
             {!router.hash ? (
               <SelectPad router={router} control={form.control} />
             ) : null}
             {router.hash === "#letter" ? (
-              <WriteLetter router={router} control={form.control} />
+              <WriteLetter
+                isSenderEditable={false}
+                router={router}
+                control={form.control}
+              />
             ) : null}
             {router.hash === "#finish" ? (
               <FinishLetter
                 router={router}
                 control={form.control}
-                isLoading={isPending}
+                onSendLetter={(values) => {
+                  mutate(
+                    {
+                      ...values,
+                    },
+                    {
+                      async onSuccess(data) {
+                        copyURL(`/receiver/${data.data.id}`);
+                        if (data && data.ok) {
+                          router.push(`/mailing/${data.data.id}`, {
+                            native: true,
+                          });
+                        }
+                      },
+                    },
+                  );
+                }}
               />
-            ) : null}
-            {router.hash === "#mailing" ? (
-              <Mailing router={router} letter={completedLetter} />
             ) : null}
           </AnimatePresence>
         </Suspense>

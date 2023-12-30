@@ -1,4 +1,5 @@
 import plaiceholder from "@plaiceholder/tailwindcss";
+import plugin from "tailwindcss/plugin";
 import fs from "node:fs";
 import path from "node:path";
 /** @type {import('tailwindcss').Config} */
@@ -46,7 +47,7 @@ module.exports = {
           },
         ],
         ["title-medium"]: [
-          "0.8rem",
+          "1rem",
           {
             fontWeight: "600",
           },
@@ -79,6 +80,14 @@ module.exports = {
           300: "#DDDDDD",
           200: "#EDEDED",
           100: "#F6F6F6",
+        },
+        modal: {
+          border: "#BA7032",
+          bg: "#FFF9EF",
+          active: {
+            bg: "#DDA973",
+            border: "#39221B",
+          },
         },
         activate: "hsl(var(--activate))",
         border: "hsl(var(--border))",
@@ -135,6 +144,12 @@ module.exports = {
           },
         },
       },
+      textShadow: {
+        sm: "0.1rem 0.1rem 0.1rem var(--tw-shadow-color)",
+        DEFAULT: "0.1rem 0.2rem 0.2rem var(--tw-shadow-color)",
+        md: "0.1rem 0.3rem 0.3rem var(--tw-shadow-color)",
+        lg: "0.1rem 0.4rem 0.4rem var(--tw-shadow-color)",
+      },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
@@ -145,6 +160,16 @@ module.exports = {
     require("tailwindcss-animate"),
     plaiceholder({
       resolver: (src) => fs.readFileSync(path.join("./public", `${src}.png`)),
+    }),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") },
+      );
     }),
   ],
 };

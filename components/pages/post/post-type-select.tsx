@@ -27,11 +27,10 @@ const PostTypeSelect = () => {
 
   const onNextClick = useCallback(
     (code: string) => {
-      const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
+      const current = new URLSearchParams(Array.from(searchParams.entries()));
       current.set("type", code);
       const search = current.toString();
       const query = search ? `?${search}` : "";
-
       router.push(`${pathname}${query}`);
     },
     [pathname, router, searchParams],

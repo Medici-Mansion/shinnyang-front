@@ -8,14 +8,14 @@ body {
 @layer base {
   .theme-responsive {
     max-width: 574px;
+    width: 100%;
     height: 100dvh;
     margin: auto;
-    padding: 1rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     /* background-color: #fff9ef; */
   }
-
   .theme-responsive :not(img) {
     z-index: 1;
   }
@@ -24,6 +24,8 @@ body {
   }
 
   :root {
+    --tw-shadow-color: rgb(128, 128, 128);
+
     --max-width: 574px;
     --background: 0 0% 96%;
     --foreground: 0 0% 35%;
@@ -130,15 +132,6 @@ body {
     font-size: 20px;
   }
 
-  .theme-responsive {
-    max-width: 574px;
-    height: 100dvh;
-    margin: auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    /* background-color: #fff9ef; */
-  }
   .bg-snp {
     background: linear-gradient(to top, #fff9ef, #fff9ef);
   }

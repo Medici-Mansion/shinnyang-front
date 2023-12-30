@@ -123,7 +123,8 @@ const useHashRouter = (): IHashContext => {
       nativeRouter.replace(href);
       return;
     }
-    window.history.replaceState({ ...window.history.state }, "", href);
+    const newHash = `#${href}`;
+    window.history.replaceState({ ...window.history.state }, "", newHash);
     window.dispatchEvent(
       new PopStateEvent("popstate", {
         state: { ...window.history.state, type: "replace" },

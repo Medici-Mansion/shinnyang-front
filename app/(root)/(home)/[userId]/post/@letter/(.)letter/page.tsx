@@ -11,6 +11,7 @@ import CommonQuery from "@/lib/queries/common.query";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import APIs from "@/apis";
+import LetterWithSheet from "@/components/letter-with-sheet";
 
 export default function LetterPage({
   params: { userId },
@@ -116,25 +117,12 @@ export default function LetterPage({
             )}
             style={{ fontFamily: mail?.catName }}
           >
-            <div
-              ref={letterWrapRef}
-              className="relative mt-8  w-full px-[2rem] py-[2rem] pr-[2.2rem]"
-            >
-              <Image
-                ref={imageRef}
-                className="absolute bottom-0 left-0 right-0 top-0 -z-[1]"
-                src="/assets/편지지.png"
-                alt="편지지"
-                width={750}
-                height={790}
-                style={{ objectFit: "cover" }}
-              />
-              <h1>{mail?.receiverNickname}에게</h1>
-              <p>{mail?.content}</p>
-              <h1 className="absolute bottom-[2rem] right-[2.2rem]">
-                {mail?.senderNickname}씀
-              </h1>
-            </div>
+            <LetterWithSheet
+              showStamp={false}
+              to={mail?.receiverNickname ?? ""}
+              content={mail?.content ?? ""}
+              from={mail?.senderNickname ?? ""}
+            />
           </div>
         </div>
 

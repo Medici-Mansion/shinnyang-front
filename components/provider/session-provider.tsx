@@ -13,6 +13,7 @@ import {
 import { api, getMe, getNewToken } from "@/apis";
 import { ServiceProviders } from "@/constants";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 const __SESSION__: SessionController = {
   _getSession: () => {},
   lastSync: 0,
@@ -48,7 +49,8 @@ type UseSessionOptions<R extends boolean> = R extends true
     };
 
 type SessionHandler = {
-  signin: () => void;
+  signin: (callbackUrl?: string) => void;
+  signout: () => Promise<void>;
 };
 export function useSession<T extends boolean>(
   options?: UseSessionOptions<T>,
@@ -56,6 +58,8 @@ export function useSession<T extends boolean>(
   if (!SessionContext) {
     throw new Error("React Context is unavailable in Server Components");
   }
+
+  const router = useRouter();
 
   const value = useContext(SessionContext);
   if (!value && process.env.NODE_ENV !== "production") {
@@ -67,8 +71,8 @@ export function useSession<T extends boolean>(
   const { required, onUnauthenticated, serviceName = "google" } = options ?? {};
 
   const requiredAndNotLoading = required && value?.status === "unauthenticated";
-  const signin = useCallback(
-    (callbackUrl?: string) => {
+  const signin: SessionHandler["signin"] = useCallback(
+    (callbackUrl) => {
       const url = `/api/auth/signin/${serviceName}?${new URLSearchParams({
         callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
       })}`;
@@ -81,11 +85,25 @@ export function useSession<T extends boolean>(
     [onUnauthenticated, serviceName],
   );
 
+  const signout: SessionHandler["signout"] = useCallback(async () => {
+    const url = `/api/auth/signout`;
+    await fetch(url, {
+      method: "POST",
+    });
+    window.location.href = window.location.origin;
+  }, []);
+
   useEffect(() => {
+    const callbackUrl = sessionStorage.getItem("callbackUrl");
+    if (callbackUrl) {
+      sessionStorage.removeItem("callbackUrl");
+      router.replace(callbackUrl);
+    }
+
     if (requiredAndNotLoading) {
       signin();
     }
-  }, [requiredAndNotLoading, onUnauthenticated, serviceName, signin]);
+  }, [requiredAndNotLoading, onUnauthenticated, serviceName, signin, router]);
 
   if (requiredAndNotLoading) {
     return {
@@ -93,10 +111,11 @@ export function useSession<T extends boolean>(
       status: value.status,
       update: value.update,
       signin,
+      signout,
     };
   }
 
-  return Object.assign(value!, { signin });
+  return Object.assign(value!, { signin, signout });
 }
 
 export function SessionProvider(
