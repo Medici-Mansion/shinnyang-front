@@ -49,24 +49,33 @@ const Mailing = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative mt-4 flex grow flex-col"
+      className="relative mt-4 flex grow flex-col text-secondary-white"
     >
-      {letter.letterType === LETTER_TYPE.ANSWER ? (
-        <h1 className="mb-4 text-title-large tracking-normal">
-          {letter?.senderNickname}가 {letter?.receiverNickname}님의
-          <br />
-          우체국에 답장을 보냈어요!
-        </h1>
-      ) : (
-        <h1 className="mb-4 text-title-large tracking-normal">
-          {letter?.receiverNickname}님의
-          <br />
-          우체국에 편지를 보냈어요!
-        </h1>
-      )}
+      <h1 className="mb-4 text-title-large tracking-normal ">
+        {letter?.senderNickname}가 {letter?.receiverNickname}님의
+        <br />
+        우체국에{" "}
+        {letter?.letterType === LETTER_TYPE.ANSWER ? "답장을" : "편지를"}{" "}
+        보냈어요!
+      </h1>
 
-      <div className="relative flex grow items-center justify-center">
-        <Image className="" src="/delivery_cat.png" alt="letter" fill />
+      <div className="flex grow flex-col p-8">
+        <div className="relative flex-[0.5]">
+          <Image
+            className="object-contain"
+            src="/assets/답장구름.png"
+            alt="letter"
+            fill
+          />
+        </div>
+        <div className="relative flex-1">
+          <Image
+            className="object-contain"
+            src="/assets/답장냥이.gif"
+            alt="letter"
+            fill
+          />
+        </div>
       </div>
       {letter.letterType === LETTER_TYPE.LETTER ? (
         <Button
@@ -79,7 +88,7 @@ const Mailing = ({
           편지 공유하기
         </Button>
       ) : null}
-      <Button disabled={isPending} className="mt-4" onClick={handlePostClick}>
+      <Button disabled={isPending} className="mt-1" onClick={handlePostClick}>
         {status === "authenticated" ? "내 우체국 가기" : "우체국 만들기"}
       </Button>
       <AlertModal

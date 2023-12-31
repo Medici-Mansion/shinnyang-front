@@ -23,6 +23,7 @@ import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const ReceiverPage = ({
   params: { letterId },
@@ -75,14 +76,19 @@ const ReceiverPage = ({
       form.setValue("receiverId", letter.senderId);
     }
   }, [form, letter?.senderId, letter?.senderNickname]);
+
+  const isEditRoute = router.hash === "#cat" || router.hash === "#letter";
   return (
     <Form {...form}>
       <BaseLayout
         as="form"
         onSubmit={form.handleSubmit(onValid)}
         className={cn(
-          'p-6" flex h-full flex-col overflow-y-hidden duration-100',
+          "flex h-full flex-col overflow-y-hidden duration-100",
           router.hash === "#answerLetter" && "bg-black",
+          router.hash === "#finish" && "bg-[#111111]",
+          !router.hash && "bg-[#482609]",
+          isEditRoute && "bg-point-500",
         )}
       >
         {router.hash !== "#mailing" && (data?.user || router.hash) ? (
@@ -133,6 +139,21 @@ const ReceiverPage = ({
           </AnimatePresence>
         </Suspense>
       </BaseLayout>
+      {isEditRoute ? (
+        <div className="absolute bottom-0">
+          <Image
+            src={
+              "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/oeyygajwd4m0z6yyrkwr.png"
+            }
+            width={752}
+            height={474}
+            priority
+            //  placeholder="blur"
+            //  blurDataURL={table.placeholder.base64}
+            alt="테이블"
+          />
+        </div>
+      ) : null}
     </Form>
   );
 };

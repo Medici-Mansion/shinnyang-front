@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LetterFormValues } from "@/form-state";
 import DisableEnterTextArea from "@/components/disable-enter-textarea";
-import Snow from "../snow";
 
 interface WriteLetterProps {
   router: Pick<IHashContext, "push" | "back">;
@@ -30,7 +29,7 @@ const WriteLetter = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative mt-4 flex grow flex-col space-y-4"
+      className="relative z-[1] mt-4 flex grow flex-col space-y-4"
     >
       <div className="mb-4">
         <h1 className="text-title-large tracking-normal">
@@ -42,10 +41,10 @@ const WriteLetter = ({
         name="receiverNickname"
         render={({ field }) => (
           <FormItem className="flex flex-col space-y-4">
-            <Label>받는 사람</Label>
+            <Label className="text-secondary-white">받는 사람</Label>
             <FormControl>
               <Input
-                className="rounded-lg"
+                className="rounded-lg text-black"
                 {...field}
                 placeholder="받는 사람"
               />
@@ -59,17 +58,18 @@ const WriteLetter = ({
         name="content"
         render={({ field }) => (
           <FormItem className="flex grow flex-col space-y-4">
-            <Label>편지 내용</Label>
-            <div className="flex grow-[0.5] flex-col justify-between rounded-lg bg-white p-6">
+            <Label className="text-secondary-white">편지 내용</Label>
+            <div className="flex grow-[0.4] flex-col justify-between rounded-lg bg-white p-6">
               <FormControl>
                 <DisableEnterTextArea
+                  className="text-black"
                   {...field}
                   maxLength={100}
                   onChange={field.onChange}
                   placeholder="내용을 적어주세요!"
                 />
               </FormControl>
-              <span className="block text-right">
+              <span className="block text-right text-black/50 opacity-70">
                 {field?.value?.length ?? 0}
                 <span className="opacity-20">/100자</span>
               </span>
@@ -84,7 +84,7 @@ const WriteLetter = ({
           name="senderNickname"
           render={({ field }) => (
             <FormItem className="flex flex-col space-y-4">
-              <Label>보내는 사람</Label>
+              <Label className="text-secondary-white">보내는 사람</Label>
               <FormControl>
                 <Input
                   className="rounded-lg border border-red"
@@ -97,7 +97,9 @@ const WriteLetter = ({
           )}
         />
       ) : null}
-      <Button type="submit">작성 완료</Button>
+      <Button type="submit" className="z-[1]">
+        작성 완료
+      </Button>
     </motion.div>
   );
 };

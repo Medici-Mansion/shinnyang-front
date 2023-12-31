@@ -1,12 +1,22 @@
 "use client";
+import CommonQuery from "@/lib/queries/common.query";
 import { cn } from "@/lib/utils";
+import { Cat } from "@/type";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import React, { HTMLAttributes, useCallback, useEffect, useRef } from "react";
+import React, {
+  HTMLAttributes,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 
 interface LetterWithSheetProps extends HTMLAttributes<HTMLDivElement> {
   to: string;
   content: string;
   from: string;
+  catType: Cat["code"];
   preview?: boolean;
   showStamp?: boolean;
 }
@@ -15,18 +25,24 @@ const LetterWithSheet = ({
   to,
   content,
   from,
+  catType,
   preview = false,
   showStamp = true,
   ...rest
 }: LetterWithSheetProps) => {
+  const { data } = useSuspenseQuery(CommonQuery.getCat);
   const imageRef = useRef<HTMLImageElement>(null);
   const letterWrapRef = useRef<HTMLDivElement>(null);
-
   const handleImageResize = useCallback(() => {
     if (letterWrapRef.current && imageRef.current) {
       letterWrapRef.current.style.height = imageRef.current.clientHeight + "px";
     }
   }, []);
+
+  const currentCat = useMemo(
+    () => data.find((cat) => cat.code === catType),
+    [catType, data],
+  );
   useEffect(() => {
     if (imageRef.current) {
       imageRef.current.addEventListener("resize", handleImageResize);
@@ -48,8 +64,22 @@ const LetterWithSheet = ({
       )}
     >
       <h1>{to} 에게</h1>
-      <p className="mt-4">{content}</p>
-      <h1 className="absolute bottom-[10%] right-[10%]">{from} 씀</h1>
+      <p className="mt-4 break-words">{content}</p>
+      <h1 className="absolute bottom-[15%] right-[15%]">
+        <div className="relative">
+          {from} 씀
+          {currentCat?.stampImage ? (
+            <Image
+              className="absolute -right-[60%] -top-full h-fit rotate-12 opacity-15"
+              src={currentCat?.stampImage}
+              alt="postal_stamp"
+              width={48}
+              height={48}
+              style={{ objectFit: "contain" }}
+            />
+          ) : null}
+        </div>
+      </h1>
       {preview ? (
         <Image
           ref={imageRef}

@@ -240,4 +240,7 @@ body {
   *[class*="subtitle-"] {
     @apply font-pretendard;
   }
+  *[class*="text-title-"] {
+    @apply font-pretendard;
+  }
 }

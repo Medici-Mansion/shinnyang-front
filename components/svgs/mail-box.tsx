@@ -97,7 +97,7 @@ const MailBox = () => {
           height={18}
           width={353}
         />
-        <div className="relative max-h-[223px] w-[80%] max-w-[324px] flex-1 border-x-4 border-x-[#28100B] bg-[#977C6A]">
+        <div className="relative max-h-[223px] w-[80%] max-w-[324px] border-x-4 border-x-[#28100B] bg-[#977C6A]">
           <div className="absolute h-1 bg-[rgba(0,0,0,0.2)] mix-blend-multiply"></div>
           <div className="grid h-fit w-full grid-cols-3 gap-1 p-1">
             {currentMails.map((mail, index) => (

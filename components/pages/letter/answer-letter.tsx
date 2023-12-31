@@ -65,6 +65,7 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         </h1>
         <div className="grow">
           <LetterWithSheet
+            catType={letter?.catName ?? "umu"}
             style={{ fontFamily: letter?.catName }}
             to={letter?.receiverNickname ?? ""}
             content={letter?.content ?? ""}
