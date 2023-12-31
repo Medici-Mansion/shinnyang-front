@@ -16,18 +16,6 @@ const LoginButton = () => {
         onClick={() => {
           setLoading(true);
           signin({
-            provider: "google",
-          });
-        }}
-      >
-        구글 로그인
-      </Button>
-      <Button
-        disabled={loading}
-        variant="kakao"
-        onClick={() => {
-          setLoading(true);
-          signin({
             provider: "kakao",
           });
         }}

@@ -73,7 +73,7 @@ module.exports = {
         sub: "#F1E5D1",
         background: "#FFF9EF",
         black: "#111111",
-        kakao: "white",
+        kakao: "#FFCD29",
         gray: {
           600: "#767676",
           500: "#999999",
