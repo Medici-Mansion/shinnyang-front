@@ -43,12 +43,20 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
   }, [letter?.senderId, router, session?.user]);
 
   const handleSaveLetter = useCallback(() => {
-    if (status === "authenticated" && letter?.id) {
-      mutate(letter.id);
+    if (status === "authenticated") {
+      if (session.user) {
+        if (letter?.senderId === session.user?.id) {
+          router.replace(`/${session.user.id}/post`, { native: true });
+        }
+      } else {
+        if (letter?.id) {
+          mutate(letter.id);
+        }
+      }
     } else {
       setOpen(true);
     }
-  }, [letter?.id, mutate, status]);
+  }, [letter?.id, letter?.senderId, mutate, router, session?.user, status]);
 
   return (
     <motion.div
