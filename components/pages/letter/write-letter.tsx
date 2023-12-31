@@ -44,7 +44,7 @@ const WriteLetter = ({
             <Label className="text-black">받는 사람</Label>
             <FormControl>
               <Input
-                className="rounded-lg border border-red"
+                className="rounded-lg"
                 {...field}
                 placeholder="받는 사람"
               />
@@ -59,7 +59,7 @@ const WriteLetter = ({
         render={({ field }) => (
           <FormItem className="flex grow flex-col space-y-4">
             <Label>편지 내용</Label>
-            <div className="flex grow flex-col justify-between rounded-lg border border-red bg-white p-6">
+            <div className="flex grow flex-col justify-between rounded-lg bg-white p-6">
               <FormControl>
                 <DisableEnterTextArea
                   {...field}
