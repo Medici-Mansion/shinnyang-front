@@ -32,7 +32,7 @@ const DisableEnterTextArea = forwardRef<
       {...props}
       className={cn(
         "w-full rounded-none bg-transparent p-0",
-        "z-10 h-full resize-none rounded-md border-none outline-none placeholder:text-muted-foreground",
+        "z-10 h-full resize-none rounded-md border-none outline-none placeholder:text-gray-300",
         props.className,
       )}
       onChange={(event) => {

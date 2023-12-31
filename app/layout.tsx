@@ -7,6 +7,7 @@ import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
 import localFont from "next/font/local";
 import { userAction } from "@/actions/user-action";
+import Loading from "@/components/loading";
 
 const umu = localFont({
   adjustFontFallback: "Arial",
@@ -113,10 +114,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={cn(
-          "relative h-[100dvh] font-sans antialiased",
-          pretendard.className,
-        )}
+        className={cn("relative font-sans antialiased", pretendard.className)}
       >
         <SessionProvider session={session}>
           <QueryProvider>

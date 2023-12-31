@@ -1,16 +1,19 @@
 "use client";
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import Snowfall from "react-snowfall";
+import { SnowflakeProps } from "react-snowfall/lib/Snowflake";
 
-const Snow = () => {
+type SnowProps = SnowflakeProps & HTMLAttributes<HTMLCanvasElement>;
+
+const Snow = (props?: Partial<SnowProps>) => {
   return (
     <Snowfall
       color="white"
-      radius={[1, 5]}
-      wind={[-10.5, 10.0]}
-      rotationSpeed={[-1.0, 10.0]}
-      style={{ backgroundColor: "transparent", zIndex: 2 }}
-      snowflakeCount={120}
+      radius={[0.5, 3]}
+      speed={[0.5, 3]}
+      wind={[-0.5, 1]}
+      snowflakeCount={62}
+      {...props}
     />
   );
 };

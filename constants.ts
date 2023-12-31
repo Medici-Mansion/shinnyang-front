@@ -1,5 +1,5 @@
 import * as z from "zod";
-export const ServiceProviders = z.enum(["google"], {
+export const ServiceProviders = z.enum(["google", "kakao"], {
   invalid_type_error: "지원하지 않는 서비스입니다.",
 });
 export type ServiceProviderType = z.infer<typeof ServiceProviders>;
@@ -7,6 +7,22 @@ export type ServiceProviderType = z.infer<typeof ServiceProviders>;
 export const BROWSER = {
   MAX_WIDTH: 574,
   MAX_HEIGHT: 1080,
+};
+
+export const PROVIDER: {
+  [key in ServiceProviderType]: {
+    redirectUrl: string;
+    clientId: string;
+  };
+} = {
+  google: {
+    redirectUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
+    clientId: process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID,
+  },
+  kakao: {
+    redirectUrl: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL,
+    clientId: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
+  },
 };
 
 export const dayToKorean = {

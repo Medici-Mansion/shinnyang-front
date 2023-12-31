@@ -10,6 +10,7 @@ import { useSession } from "@/components/provider/session-provider";
 import LetterWithSheet from "@/components/letter-with-sheet";
 import FinishBottomDeco from "./finish-bottom-deco";
 import { LazyMotion, domAnimation, m } from "framer-motion";
+import Snow from "../snow";
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace" | "state">;
   control: Control<LetterFormValues, any>;
@@ -43,7 +44,7 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
         className="flex grow flex-col"
       >
         <div className="relative z-0 mt-4 flex grow flex-col space-y-4">
-          <h1 className="text-title-large">
+          <h1 className="text-title-large text-white">
             {session?.user?.nickname ?? getValues().senderNickname}님의
             <br />
             편지가 완성되었어요!
