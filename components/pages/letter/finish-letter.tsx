@@ -41,7 +41,7 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="flex grow flex-col"
+        className="z-[2] flex grow flex-col"
       >
         <div className="relative z-0 mt-4 flex grow flex-col space-y-4">
           <h1 className="text-title-large text-white">
@@ -51,6 +51,8 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           </h1>
           <div className="grow">
             <LetterWithSheet
+              className="text-black"
+              catType={writtenLetter.catName}
               style={{ fontFamily: writtenLetter.catName }}
               to={writtenLetter.receiverNickname}
               content={writtenLetter.content}
@@ -74,6 +76,7 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           </Button>
         </div>
       </m.div>
+      <Snow />
     </LazyMotion>
   );
 };

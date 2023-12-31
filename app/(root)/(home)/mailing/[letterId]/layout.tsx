@@ -4,9 +4,11 @@ import React, { PropsWithChildren, Suspense } from "react";
 
 const MailLayout = ({ children }: PropsWithChildren) => {
   return (
-    <BaseLayout className='"flex p-6" h-full flex-col overflow-y-hidden bg-background'>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
-    </BaseLayout>
+    <Suspense fallback={<Loading />}>
+      <BaseLayout className='"flex p-6" h-full flex-col overflow-y-hidden bg-point-500'>
+        {children}
+      </BaseLayout>
+    </Suspense>
   );
 };
 

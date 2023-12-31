@@ -41,6 +41,10 @@ export const getUser = async (code: string) => {
   });
   return userResponse.data;
 };
+export const deleteMe = async () => {
+  const userResponse = await api.delete<boolean>("/user");
+  return userResponse.data;
+};
 
 export const getNewToken = async (refresh: string) => {
   const newToken = await api.post<Session["token"]>("/auth/refresh", {
@@ -144,6 +148,7 @@ const APIs = {
   getUserCat,
   postCatAccessory,
   updateLetterBySenderId,
+  deleteMe,
 };
 
 export default APIs;

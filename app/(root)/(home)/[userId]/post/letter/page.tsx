@@ -65,6 +65,13 @@ export default function LetterPage({
       letterWrapRef.current.style.height = imageRef.current.clientHeight + "px";
     }
   };
+
+  const handleSendLetter = () => {
+    if (mail?.senderId) {
+      router.push(replyURL || "");
+    }
+  };
+
   useEffect(() => {
     if (imageRef.current) {
       imageRef.current.addEventListener("resize", handleImageResize);
@@ -118,6 +125,7 @@ export default function LetterPage({
             style={{ fontFamily: mail?.catName }}
           >
             <LetterWithSheet
+              catType={mail?.catName ?? "umu"}
               showStamp={false}
               to={mail?.receiverNickname ?? ""}
               content={mail?.content ?? ""}
@@ -126,9 +134,9 @@ export default function LetterPage({
           </div>
         </div>
 
-        <Link href={replyURL || ""}>
-          <Button variant={"primary"}>답장하기</Button>
-        </Link>
+        <Button onClick={handleSendLetter} variant={"primary"}>
+          답장하기
+        </Button>
       </m.section>
     </LazyMotion>
   );

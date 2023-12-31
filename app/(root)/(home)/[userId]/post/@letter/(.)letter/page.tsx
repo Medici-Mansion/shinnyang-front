@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { m, LazyMotion, domAnimation } from "framer-motion";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { dayToKorean } from "@/constants";
 import CommonQuery from "@/lib/queries/common.query";
@@ -12,12 +12,16 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import APIs from "@/apis";
 import LetterWithSheet from "@/components/letter-with-sheet";
+import { AlertModal } from "@/components/modals/alert-modal";
+import { useSession } from "@/components/provider/session-provider";
 
 export default function LetterPage({
   params: { userId },
 }: {
   params: { userId: string };
 }) {
+  const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const mailId = searchParams.get("mailId");
   const { data: mail } = useQuery({
@@ -63,6 +67,14 @@ export default function LetterPage({
   const handleImageResize = () => {
     if (letterWrapRef.current && imageRef.current) {
       letterWrapRef.current.style.height = imageRef.current.clientHeight + "px";
+    }
+  };
+
+  const handleSendLetter = () => {
+    if (mail?.senderId) {
+      router.push(replyURL || "");
+    } else {
+      setOpen(true);
     }
   };
   useEffect(() => {
@@ -118,6 +130,7 @@ export default function LetterPage({
             style={{ fontFamily: mail?.catName }}
           >
             <LetterWithSheet
+              catType={mail?.catName ?? "umu"}
               showStamp={false}
               to={mail?.receiverNickname ?? ""}
               content={mail?.content ?? ""}
@@ -126,9 +139,22 @@ export default function LetterPage({
           </div>
         </div>
 
-        <Link href={replyURL || ""}>
-          <Button variant={"primary"}>답장하기</Button>
-        </Link>
+        <Button onClick={handleSendLetter} variant={"primary"}>
+          답장하기
+        </Button>
+        <AlertModal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          onConfirm={() => {
+            if (session?.user?.id) {
+              router.push(`/${session?.user?.id}/letter`);
+            }
+          }}
+          loading={false}
+          leftBtnTitle="아니오"
+          rightBtnTitle="편지쓰기"
+          title={"답장을 받을 우체국이 없습니다.\n새로 편지를 보내시겠어요?"}
+        />
       </m.section>
     </LazyMotion>
   );

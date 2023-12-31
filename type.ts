@@ -17,6 +17,7 @@ export interface Cat {
   faceImage: string;
   backImage: string;
   yearImage: string;
+  stampImage: string;
 }
 
 export interface WithParam<T extends string> extends PropsWithChildren {
@@ -61,7 +62,7 @@ export interface CompletedLetter {
   content: string;
   senderId: string;
   senderNickname: string;
-  catName: string;
+  catName: Cat["code"];
   createdAt: string;
   updatedAt: string;
   letterType: LETTER_TYPE;
@@ -80,7 +81,7 @@ export interface Mail {
   senderNickname: string;
   receiverNickname: string;
   content: string;
-  catName: string;
+  catName: Cat["code"];
   isRead: boolean;
   isRespond: boolean;
   mailId: string;
