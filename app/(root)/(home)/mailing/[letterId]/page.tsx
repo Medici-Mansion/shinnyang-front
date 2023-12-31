@@ -88,7 +88,11 @@ const Mailing = ({
         isOpen={open}
         loading={false}
         onClose={() => setOpen(false)}
-        onConfirm={() => signin(window.location.href)}
+        onConfirm={() =>
+          signin({
+            callbackUrl: window.location.href,
+          })
+        }
         title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
       />
     </motion.div>
