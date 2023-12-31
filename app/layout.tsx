@@ -132,7 +132,10 @@ export default async function RootLayout({
 
         <meta property="og:locale" content="ko_KR" />
         <meta property="og:title" content="신냥이우체국" />
-        <meta property="og:description" content="신냥이우체국" />
+        <meta
+          property="og:description"
+          content="2024 신년편지 신냥이우체국에서 답장 보내시겠어요?"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/og/banner.png" />
       </head>
