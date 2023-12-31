@@ -27,6 +27,7 @@ import {
 import { ArrowLeft } from "lucide-react";
 import { useSession } from "@/components/provider/session-provider";
 import toast from "react-hot-toast";
+import { getLimitedByteText } from "@/lib/utils";
 
 const formSchema = z.object({
   nickname: z
@@ -34,8 +35,9 @@ const formSchema = z.object({
     .min(1, {
       message: "닉네임을 지정해주세요!",
     })
-    .max(6, {
-      message: "닉네임은 6글자를 넘을 수 없어요.",
+    .regex(/^[a-zA-Z0-9가-힣]+$/, "특수문자는 사용할 수 없어요.")
+    .refine((nickname) => getLimitedByteText(nickname, 12), {
+      message: "닉네임이 너무 길어요.",
     }),
 });
 
@@ -91,14 +93,12 @@ const NicknamePage = () => {
                     <FormLabel>닉네임</FormLabel>
                     <FormControl>
                       <Input
-                        maxLength={6}
                         {...field}
-                        placeholder="닉네임을 작성해주세요."
+                        placeholder="최대 한글 6자, 영문 12자 입력 가능"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-
                   <Button
                     variant={isNicknameEntered ? "primary" : "disable"}
                     disabled={!isNicknameEntered}

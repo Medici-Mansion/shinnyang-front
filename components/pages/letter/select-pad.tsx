@@ -68,15 +68,17 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
 
                   <label
                     htmlFor={catType.code}
-                    className="relative mb-2 block aspect-square rounded-xl bg-sub opacity-50 duration-100 peer-checked:border-2 peer-checked:border-red peer-checked:opacity-100"
+                    className="relative mb-2 flex aspect-square items-center justify-center rounded-xl bg-sub opacity-50 duration-100 peer-checked:border-2 peer-checked:border-red peer-checked:opacity-100"
                   >
-                    <Image
-                      src={catType.faceImage}
-                      alt={catType.name}
-                      fill
-                      placeholder="blur"
-                      blurDataURL="data:image/png;base64,iVBORw0KG..."
-                    />
+                    <div className="relative aspect-square w-4/5">
+                      <Image
+                        src={catType.faceImage}
+                        alt={catType.name}
+                        fill
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KG..."
+                      />
+                    </div>
                   </label>
                   <span className="mt-2 rounded-full px-4 py-1 text-base peer-checked:bg-red peer-checked:text-white">
                     {catType.name}

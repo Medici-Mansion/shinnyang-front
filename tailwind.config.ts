@@ -33,9 +33,9 @@ module.exports = {
       fontSize: {
         // 타이틀 시작
         ["title-large"]: [
-          "1.3rem",
+          "26px",
           {
-            lineHeight: "1.8rem",
+            lineHeight: "36px",
             fontWeight: "600",
             letterSpacing: "-0.1rem",
           },
@@ -62,6 +62,7 @@ module.exports = {
         ["letter-umu"]: ["0.9rem", "1.8rem"],
         ["letter-gookie"]: ["0.8rem", "1.8rem"],
         // Letter 끝
+        ["subtitle-notice02"]: ["12px", "auto"],
       },
       colors: {
         wood: {
@@ -72,7 +73,7 @@ module.exports = {
         sub: "#F1E5D1",
         background: "#FFF9EF",
         black: "#111111",
-        kakao: "white",
+        kakao: "#FFCD29",
         gray: {
           600: "#767676",
           500: "#999999",

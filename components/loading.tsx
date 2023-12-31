@@ -25,11 +25,11 @@ const Loading = ({ className }: LoadingProps) => {
         animate="animate"
         exit="exit"
         className={cn(
-          "flex h-full items-center justify-center bg-background px-8",
+          "flex h-[100dvh] items-center justify-center bg-background px-8",
           className,
         )}
       >
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-1/2">
           <Image
             src="/assets/loading.gif"
             alt="loading"

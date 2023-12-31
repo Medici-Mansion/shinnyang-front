@@ -20,7 +20,10 @@ import {
 } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
+import PostTypeSelect from "./post-type-select";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface SelectAccessoriesProps {
   open: boolean;
@@ -149,7 +152,7 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
       <DialogPortal forceMount>
         <DialogContent
           close={<></>}
-          className="border-modal-border top-[35%] w-screen max-w-[calc(var(--max-width)*0.5)] grow rounded-xl border-[3px] p-3"
+          className="top-[35%] w-screen max-w-[calc(var(--max-width)*0.5)] grow rounded-xl border-[3px] border-modal-border p-3"
         >
           <DialogTitle className="mx-auto flex flex-col items-center text-title-medium">
             <svg
@@ -172,6 +175,7 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
             </svg>
             {currentCat?.name}의 옷장
           </DialogTitle>
+
           <div className="flex gap-x-2">
             {accessories.map((accType) => (
               <div
@@ -204,7 +208,7 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
                     className={cn(
                       "relative aspect-square w-full rounded-xl bg-gray-200 duration-100",
                       accType.id === selectedAcc?.id
-                        ? "bg-modal-active-bg outline-modal-active-border outline outline-2"
+                        ? "bg-modal-active-bg outline outline-2 outline-modal-active-border"
                         : "bg-gray-400",
                     )}
                   >

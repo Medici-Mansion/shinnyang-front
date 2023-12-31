@@ -1,5 +1,6 @@
 import { ServiceProviders } from "@/constants";
 import { Session } from "@/type";
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import * as z from "zod";
 
@@ -50,6 +51,7 @@ export async function GET(
       // 30일
       maxAge: 60 * 60 * 24 * 30,
     });
+
     return response;
   } catch (error: any) {
     const originWithErrorQuery = new URL(redirectUrl.origin);

@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 import { api, getMe, getNewToken } from "@/apis";
-import { ServiceProviders } from "@/constants";
+import { PROVIDER, ServiceProviderType, ServiceProviders } from "@/constants";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 const __SESSION__: SessionController = {
@@ -49,7 +49,10 @@ type UseSessionOptions<R extends boolean> = R extends true
     };
 
 type SessionHandler = {
-  signin: (callbackUrl?: string) => void;
+  signin: (args?: {
+    provider?: ServiceProviderType;
+    callbackUrl?: string;
+  }) => void;
   signout: () => Promise<void>;
 };
 export function useSession<T extends boolean>(
@@ -72,12 +75,13 @@ export function useSession<T extends boolean>(
 
   const requiredAndNotLoading = required && value?.status === "unauthenticated";
   const signin: SessionHandler["signin"] = useCallback(
-    (callbackUrl) => {
-      const url = `/api/auth/signin/${serviceName}?${new URLSearchParams({
-        callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL,
+    (args) => {
+      const service = args?.provider || serviceName;
+      const url = `/api/auth/signin/${service}?${new URLSearchParams({
+        callbackUrl: PROVIDER[service].redirectUrl,
       })}`;
-      if (callbackUrl) {
-        sessionStorage.setItem("callbackUrl", callbackUrl);
+      if (args?.callbackUrl) {
+        sessionStorage.setItem("callbackUrl", args.callbackUrl);
       }
       if (onUnauthenticated) onUnauthenticated();
       else window.location.href = url;

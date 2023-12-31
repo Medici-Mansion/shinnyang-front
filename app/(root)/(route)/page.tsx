@@ -39,7 +39,7 @@ const OnBoardingPage = async () => {
     <Layout>
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
-          <div className="text-shadow z-10 mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white">
+          <div className="z-10 mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white text-shadow">
             <div className=" mx-auto w-fit font-cheezu text-3xl font-medium leading-[50px]">
               새해를 알리는
               <br />
@@ -100,7 +100,7 @@ const OnBoardingPage = async () => {
           </div>
         </div>
         <Particles className="absolute left-0 top-0 z-[2] h-full w-full" />
-        <Snow />
+        <Snow style={{ backgroundColor: "transparent", zIndex: 2 }} />
       </div>
     </Layout>
   );

@@ -5,7 +5,7 @@ import { BROWSER } from "@/constants";
 import Image from "next/image";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-const Background = ({ post }: { post: ImageWithBlur }) => {
+const Background = ({ post }: { post?: ImageWithBlur }) => {
   const [loading, setLoading] = useState(true);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const handleResize = useCallback(() => {
@@ -42,14 +42,23 @@ const Background = ({ post }: { post: ImageWithBlur }) => {
         ref={backgroundRef}
         className="fixed top-0 -z-[1] h-full min-h-[1080px] w-[574px]"
       >
-        <Image
-          src={post.src}
-          placeholder="blur"
-          width={post.placeholder.metadata.width}
-          height={post.placeholder.metadata.height}
-          blurDataURL={post.placeholder.base64}
-          alt="background"
-        />
+        {post ? (
+          <Image
+            src={post.src}
+            placeholder="blur"
+            width={post.placeholder.metadata.width}
+            height={post.placeholder.metadata.height}
+            blurDataURL={post.placeholder.base64}
+            alt="background"
+          />
+        ) : (
+          <Image
+            src="https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/szxnpt36qkq5tvnrt909.png"
+            width={575}
+            height={1080}
+            alt="background"
+          />
+        )}
       </div>
       {loading && (
         <div className="fixed left-0 top-0 z-[9999] mx-auto h-full w-full">

@@ -13,6 +13,7 @@ import { useSession } from "@/components/provider/session-provider";
 import { AlertModal } from "@/components/modals/alert-modal";
 import LetterWithSheet from "@/components/letter-with-sheet";
 import FinishBottomDeco from "./finish-bottom-deco";
+import Snow from "../snow";
 
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
@@ -57,7 +58,7 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       className="flex grow flex-col"
     >
       <div className="relative z-0 mt-4 flex grow flex-col space-y-4">
-        <h1 className="text-title-large">
+        <h1 className="text-title-large text-white">
           편지에 답장하고
           <br />
           우체국에 보관해보세요!
@@ -90,7 +91,11 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         isOpen={open}
         loading={false}
         onClose={() => setOpen(false)}
-        onConfirm={() => signin(window.location.href)}
+        onConfirm={() =>
+          signin({
+            callbackUrl: window.location.href,
+          })
+        }
         title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
       />
       <AlertModal
@@ -100,6 +105,7 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         onClose={() => setOpenRequireLogin(false)}
         title={`내가 보낸 편지는 답장할 수 없어요!`}
       />
+      <Snow style={{ backgroundColor: "transparent", zIndex: 0 }} />
     </motion.div>
   );
 };
