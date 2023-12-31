@@ -40,7 +40,7 @@ const OnBoardingPage = async () => {
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
           <div className="z-10 mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white text-shadow">
-            <div className=" mx-auto w-fit font-cheezu text-3xl font-medium leading-[50px]">
+            <div className=" mx-auto w-fit font-umu text-3xl font-medium leading-[50px]">
               새해를 알리는
               <br />
               2024 신냥이 우체국
