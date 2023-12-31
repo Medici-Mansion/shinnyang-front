@@ -100,6 +100,7 @@ const Mailing = ({
         onConfirm={() =>
           signin({
             callbackUrl: window.location.href,
+            provider: "kakao",
           })
         }
         title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
