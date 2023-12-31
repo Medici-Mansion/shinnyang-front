@@ -133,6 +133,10 @@ export default async function RootLayout({
           content="width=device-width, initial-scale=1.0 , maximum-scale=1.0, user-scalable=no"
         />
 
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:title" content="신냥이우체국" />
+        <meta property="og:description" content="신냥이우체국" />
+        <meta property="og:type" content="website" />
         <meta property="og:image" content="/og/banner.png" />
       </head>
       <body
