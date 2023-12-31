@@ -59,7 +59,7 @@ const LetterWithSheet = ({
       ref={letterWrapRef}
       {...rest}
       className={cn(
-        "relative z-[1] w-full px-[10%] py-[10%] pr-[10%] font-bold",
+        "relative z-[1] w-full px-[10%] py-[10%] pr-[10%]",
         rest.className,
       )}
     >
@@ -70,7 +70,7 @@ const LetterWithSheet = ({
           {from} 씀
           {currentCat?.stampImage ? (
             <Image
-              className="absolute -right-[60%] -top-full h-fit rotate-12 opacity-15"
+              className="absolute -right-[40%] -top-full h-fit rotate-12 opacity-15"
               src={currentCat?.stampImage}
               alt="postal_stamp"
               width={48}

@@ -29,7 +29,7 @@ const WriteLetter = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative z-[1] mt-4 flex grow flex-col space-y-4"
+      className="relative z-[1] mt-4 flex grow flex-col space-y-4 text-secondary-white"
     >
       <div className="mb-4">
         <h1 className="text-title-large tracking-normal">
@@ -87,7 +87,7 @@ const WriteLetter = ({
               <Label className="text-secondary-white">보내는 사람</Label>
               <FormControl>
                 <Input
-                  className="rounded-lg border border-red"
+                  className="rounded-lg text-black"
                   {...field}
                   placeholder="보내는 사람"
                 />

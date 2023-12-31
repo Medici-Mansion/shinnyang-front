@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { Cat } from "@/type";
 import { LetterFormValues } from "@/form-state";
 import LetterWithSheet from "@/components/letter-with-sheet";
+import { cn } from "@/lib/utils";
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
@@ -89,7 +90,14 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
             <div className="grow">
               <LetterWithSheet
                 preview
-                className="font-bold text-black"
+                className={cn(
+                  "text-black",
+                  field.value === "umu"
+                    ? "font-umu"
+                    : field.value === "cheezu"
+                      ? "font-cheezu"
+                      : "font-gookie",
+                )}
                 catType={field.value}
                 style={{ fontFamily: field.value }}
                 to={catNameObj[field.value] ?? ""}

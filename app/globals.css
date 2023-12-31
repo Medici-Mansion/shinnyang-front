@@ -91,16 +91,6 @@ body {
 @layer base {
   @font-face {
     font-family: "umu";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeepuding.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-size: "36px";
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "cheezu";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeJJIBBABBA.woff")
       format("woff");
     font-weight: normal;
@@ -109,8 +99,17 @@ body {
   }
 
   @font-face {
+    font-family: "cheezu";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeecharming.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
     font-family: "gookie";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeGENWOO.woff")
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeenamsoyoung.woff")
       format("woff");
     font-weight: normal;
     font-style: normal;
@@ -129,7 +128,7 @@ body {
 
   .font-gookie {
     font-family: "gookie", sans-serif;
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .bg-snp {

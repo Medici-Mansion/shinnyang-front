@@ -10,20 +10,7 @@ import { userAction } from "@/actions/user-action";
 
 const umu = localFont({
   adjustFontFallback: "Arial",
-  display: "swap",
   variable: "--font-umu",
-  preload: true,
-  src: [
-    {
-      path: "fonts/UhBeepuding.woff",
-      weight: "normal",
-    },
-  ],
-});
-const cheezu = localFont({
-  adjustFontFallback: "Arial",
-  display: "swap",
-  variable: "--font-cheezu",
   preload: true,
   src: [
     {
@@ -32,14 +19,24 @@ const cheezu = localFont({
     },
   ],
 });
+const cheezu = localFont({
+  adjustFontFallback: "Arial",
+  variable: "--font-cheezu",
+  preload: true,
+  src: [
+    {
+      path: "fonts/UhBeecharming.woff",
+      weight: "normal",
+    },
+  ],
+});
 const gookie = localFont({
   adjustFontFallback: "Arial",
-  display: "swap",
   variable: "--font-gookie",
   preload: true,
   src: [
     {
-      path: "fonts/UhBeeGENWOO.woff",
+      path: "fonts/UhBeenamsoyoung.woff",
       weight: "normal",
     },
   ],
@@ -140,7 +137,13 @@ export default async function RootLayout({
         <meta property="og:image" content="/og/banner.png" />
       </head>
       <body
-        className={cn("relative font-sans antialiased", pretendard.className)}
+        className={cn(
+          "relative font-sans antialiased",
+          pretendard.className,
+          umu.className,
+          cheezu.className,
+          gookie.className,
+        )}
       >
         <SessionProvider session={session}>
           <QueryProvider>
