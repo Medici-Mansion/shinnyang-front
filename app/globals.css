@@ -237,7 +237,7 @@ body {
     @apply font-gookie;
   }
 
-  .subtitle-* {
+  *[class*="subtitle-"] {
     @apply font-pretendard;
   }
 }

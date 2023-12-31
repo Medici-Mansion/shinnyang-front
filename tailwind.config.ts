@@ -62,7 +62,43 @@ module.exports = {
         ["letter-umu"]: ["0.9rem", "1.8rem"],
         ["letter-gookie"]: ["0.8rem", "1.8rem"],
         // Letter 끝
-        ["subtitle-notice02"]: ["12px", "auto"],
+
+        // Subtitle 시작
+        ["subtitle-button"]: [
+          "16px",
+          {
+            lineHeight: "auto",
+            fontWeight: "700",
+          },
+        ],
+        ["subtitle-popup"]: [
+          "18px",
+          {
+            lineHeight: "28px",
+            fontWeight: "400",
+          },
+        ],
+        ["subtitle-menu"]: [
+          "14px",
+          {
+            lineHeight: "auto",
+            fontWeight: "500",
+          },
+        ],
+        ["subtitle-notice01"]: [
+          "12px",
+          {
+            lineHeight: "auto",
+            fontWeight: "700",
+          },
+        ],
+        ["subtitle-notice02"]: [
+          "12px",
+          {
+            lineHeight: "auto",
+            fontWeight: "400",
+          },
+        ],
       },
       colors: {
         wood: {
@@ -82,6 +118,13 @@ module.exports = {
           200: "#EDEDED",
           100: "#F6F6F6",
         },
+        point: {
+          500: "#39221B",
+          400: "#BA7032",
+          300: "#A88A76",
+          200: "#DDA973",
+          100: "#ECD2B9",
+        },
         modal: {
           border: "#BA7032",
           bg: "#FFF9EF",
@@ -97,10 +140,16 @@ module.exports = {
         // background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
+          // CUSTOM
+          red: "#B20000",
+          beige: "#F1E5D1",
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
+          black: "#111111",
+          white: "#FFFFFF",
+          bg: "#FFF9EF",
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },

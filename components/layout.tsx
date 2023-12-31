@@ -7,7 +7,7 @@ interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const DefaultLayout = ({ children, ...rest }: LayoutProps) => {
   return (
-    <div {...rest} className={cn("h-[100dvh] sm:h-screen", rest.className)}>
+    <div {...rest} className={cn("h-[100vh] sm:h-screen", rest.className)}>
       <main className="divide-x-3 flex h-full">
         <section className="pc-main-grid flex flex-[1] flex-col overflow-x-clip">
           {children}
