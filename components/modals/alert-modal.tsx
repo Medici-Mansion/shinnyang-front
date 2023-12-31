@@ -35,12 +35,21 @@ export const AlertModal = ({
     <Modal title={title} isOpen={isOpen} onClose={onClose}>
       <div className="flex w-full items-center justify-end space-x-2 pt-2 text-[16px]">
         {leftBtnTitle && (
-          <Button disabled={loading} variant={"secondary"} onClick={onClose}>
+          <Button
+            disabled={loading}
+            variant={"secondary"}
+            onClick={onClose}
+            className="h-10"
+          >
             {leftBtnTitle}
           </Button>
         )}
         {rightBtnTitle && (
-          <Button disabled={loading} onClick={onConfirm} className="bg-red">
+          <Button
+            disabled={loading}
+            onClick={onConfirm}
+            className="h-10 bg-red"
+          >
             {rightBtnTitle}
           </Button>
         )}
