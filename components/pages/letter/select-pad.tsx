@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { Cat } from "@/type";
 import { LetterFormValues } from "@/form-state";
 import LetterWithSheet from "@/components/letter-with-sheet";
+import { cn } from "@/lib/utils";
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
@@ -33,7 +34,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="mt-4 flex h-full flex-col space-y-4"
+      className="z-[1] mt-4 flex h-full flex-col space-y-4 text-secondary-white"
     >
       <div>
         <h1 className="text-title-large tracking-normal">
@@ -89,7 +90,15 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
             <div className="grow">
               <LetterWithSheet
                 preview
-                className="font-bold"
+                className={cn(
+                  "text-black",
+                  field.value === "umu"
+                    ? "font-umu"
+                    : field.value === "cheezu"
+                      ? "font-cheezu"
+                      : "font-gookie",
+                )}
+                catType={field.value}
                 style={{ fontFamily: field.value }}
                 to={catNameObj[field.value] ?? ""}
                 content={`냥이 ${field.value} 귀여운 글씨체야 이글씨 어때 귀엽냥?`}
@@ -102,7 +111,7 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
       <Button
         onClick={() => router.push("letter")}
         variant="primary"
-        className="mt-6 bg-red"
+        className="z-[1] mt-6 bg-red"
       >
         선택 완료
       </Button>

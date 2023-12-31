@@ -24,24 +24,26 @@ const Answer = ({ router, letter }: SelectPadProps) => {
       exit={{ opacity: 0 }}
       className="mt-4 flex h-full flex-col space-y-4"
     >
-      <h1 className="text-title-large tracking-normal">
+      <h1 className="text-title-large tracking-normal text-secondary-white">
         {letter?.senderNickname}님이 {letter?.receiverNickname}님에게
         <br />
         2024년 신년편지를 보냈어요!
       </h1>
 
-      <div className="relative flex grow justify-center">
-        <Image
-          className="object-contain"
-          src="/receiver.png"
-          alt="letter"
-          fill
-        />
-      </div>
+      <div className="relative flex grow justify-center"></div>
 
-      <Button variant="secondary" onClick={() => router.push(`answerLetter`)}>
+      <Button variant="primary" onClick={() => router.push(`answerLetter`)}>
         편지 보러가기
       </Button>
+      <div className="absolute left-0 top-1/2 -translate-y-1/2">
+        <Image
+          className="object-contain"
+          width={750}
+          height={648}
+          src="/assets/답장건내기.png"
+          alt="letter"
+        />
+      </div>
     </motion.div>
   );
 };

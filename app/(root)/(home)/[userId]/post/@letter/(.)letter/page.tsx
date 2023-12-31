@@ -118,6 +118,7 @@ export default function LetterPage({
             style={{ fontFamily: mail?.catName }}
           >
             <LetterWithSheet
+              catType={mail?.catName ?? "umu"}
               showStamp={false}
               to={mail?.receiverNickname ?? ""}
               content={mail?.content ?? ""}
