@@ -71,7 +71,7 @@ export function useSession<T extends boolean>(
     );
   }
 
-  const { required, onUnauthenticated, serviceName = "google" } = options ?? {};
+  const { required, onUnauthenticated, serviceName = "kakao" } = options ?? {};
 
   const requiredAndNotLoading = required && value?.status === "unauthenticated";
   const signin: SessionHandler["signin"] = useCallback(
