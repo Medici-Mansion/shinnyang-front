@@ -9,16 +9,32 @@ const LoginButton = () => {
   const { user } = data || {};
   const [loading, setLoading] = useState(false);
   return !user ? (
-    <Button
-      disabled={loading}
-      variant="kakao"
-      onClick={() => {
-        setLoading(true);
-        signin();
-      }}
-    >
-      구글 로그인
-    </Button>
+    <>
+      <Button
+        disabled={loading}
+        variant="kakao"
+        onClick={() => {
+          setLoading(true);
+          signin({
+            provider: "google",
+          });
+        }}
+      >
+        구글 로그인
+      </Button>
+      <Button
+        disabled={loading}
+        variant="kakao"
+        onClick={() => {
+          setLoading(true);
+          signin({
+            provider: "kakao",
+          });
+        }}
+      >
+        카카오 로그인
+      </Button>
+    </>
   ) : (
     <div className="z-[100] grid grid-cols-[1fr_0.4fr] gap-x-2">
       <Link

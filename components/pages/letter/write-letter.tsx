@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LetterFormValues } from "@/form-state";
 import DisableEnterTextArea from "@/components/disable-enter-textarea";
+import Snow from "../snow";
 
 interface WriteLetterProps {
   router: Pick<IHashContext, "push" | "back">;
@@ -31,7 +32,7 @@ const WriteLetter = ({
       exit={{ opacity: 0 }}
       className="relative mt-4 flex grow flex-col space-y-4"
     >
-      <div>
+      <div className="mb-4">
         <h1 className="text-title-large tracking-normal">
           편지를 작성해 주세요!
         </h1>
@@ -41,7 +42,7 @@ const WriteLetter = ({
         name="receiverNickname"
         render={({ field }) => (
           <FormItem className="flex flex-col space-y-4">
-            <Label className="text-black">받는 사람</Label>
+            <Label>받는 사람</Label>
             <FormControl>
               <Input
                 className="rounded-lg"
@@ -59,7 +60,7 @@ const WriteLetter = ({
         render={({ field }) => (
           <FormItem className="flex grow flex-col space-y-4">
             <Label>편지 내용</Label>
-            <div className="flex grow flex-col justify-between rounded-lg bg-white p-6">
+            <div className="flex grow-[0.5] flex-col justify-between rounded-lg bg-white p-6">
               <FormControl>
                 <DisableEnterTextArea
                   {...field}
@@ -83,7 +84,7 @@ const WriteLetter = ({
           name="senderNickname"
           render={({ field }) => (
             <FormItem className="flex flex-col space-y-4">
-              <Label className="text-black">보내는 사람</Label>
+              <Label>보내는 사람</Label>
               <FormControl>
                 <Input
                   className="rounded-lg border border-red"

@@ -22,6 +22,7 @@ import SelectPad from "@/components/pages/letter/select-pad";
 import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import { useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const ReceiverPage = ({
   params: { letterId },
@@ -79,7 +80,10 @@ const ReceiverPage = ({
       <BaseLayout
         as="form"
         onSubmit={form.handleSubmit(onValid)}
-        className='"flex p-6" h-full flex-col overflow-y-hidden'
+        className={cn(
+          'p-6" flex h-full flex-col overflow-y-hidden duration-100',
+          router.hash === "#answerLetter" && "bg-black",
+        )}
       >
         {router.hash !== "#mailing" && (data?.user || router.hash) ? (
           <ArrowLeft

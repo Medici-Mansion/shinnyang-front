@@ -3,7 +3,6 @@
 import React, { Suspense, useContext, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
 import { LETTER_TYPE, LetterFormValues, letterFormState } from "@/form-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HashContext } from "@/hooks/use-hash-router";
@@ -14,7 +13,8 @@ import { useSession } from "@/components/provider/session-provider";
 import dynamic from "next/dynamic";
 import Loading from "@/components/loading";
 import useSendLetter from "@/hooks/use-send-letter";
-import { copyURL } from "@/lib/utils";
+import { cn, copyURL } from "@/lib/utils";
+import Snow from "@/components/pages/snow";
 
 const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
 const WriteLetter = dynamic(
@@ -58,7 +58,10 @@ const LetterPage = () => {
       <BaseLayout
         as="form"
         onSubmit={form.handleSubmit(onValid)}
-        className='"flex p-6" h-full flex-col overflow-y-hidden'
+        className={cn(
+          'p-6" flex h-full flex-col overflow-y-hidden duration-100',
+          router.hash === "#finish" ? "bg-[#111111]" : "",
+        )}
       >
         {router.hash !== "#mailing" && (
           <ArrowLeft
@@ -107,6 +110,7 @@ const LetterPage = () => {
           </AnimatePresence>
         </Suspense>
       </BaseLayout>
+      <Snow />
     </Form>
   );
 };
