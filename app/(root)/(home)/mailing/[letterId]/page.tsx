@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import LetterQuery from "@/lib/queries/letter.query";
 import APIs from "@/apis";
+import Snow from "@/components/pages/snow";
 
 const Mailing = ({
   params: { letterId },
@@ -51,13 +52,19 @@ const Mailing = ({
       exit={{ opacity: 0 }}
       className="relative mt-4 flex grow flex-col text-secondary-white"
     >
-      <h1 className="mb-4 text-title-large tracking-normal ">
-        {letter?.senderNickname}가 {letter?.receiverNickname}님의
-        <br />
-        우체국에{" "}
-        {letter?.letterType === LETTER_TYPE.ANSWER ? "답장을" : "편지를"}{" "}
-        보냈어요!
-      </h1>
+      {user ? (
+        <h1 className="mb-4 text-title-large tracking-normal ">
+          신냥이가 {letter?.receiverNickname}에게
+          <br />
+          편지를 배달할 준비가 되었어요!
+        </h1>
+      ) : (
+        <h1 className="mb-4 text-title-large tracking-normal ">
+          신냥이가 {letter?.receiverNickname}님의
+          <br />
+          우체국에 편지를 보냈어요!
+        </h1>
+      )}
 
       <div className="flex grow flex-col p-8">
         <div className="relative flex-[0.5]">
@@ -105,6 +112,7 @@ const Mailing = ({
         }
         title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
       />
+      <Snow />
     </motion.div>
   );
 };
