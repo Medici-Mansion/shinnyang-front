@@ -89,10 +89,16 @@ const MailBox = () => {
           신냥이 우체국
         </p>
       </div>
-      <div className="relative flex h-[65%] max-h-[254px] w-full max-w-[375px] flex-col items-center">
-        <Image src="/assets/상단.png" alt="상단" height={18} width={353} />
-        <div className="relative max-h-[223px] w-full max-w-[324px] flex-1 border-x-4 border-x-[#28100B] bg-[#977C6A]">
-          <div className="absolute h-1 w-full bg-[rgba(0,0,0,0.2)] mix-blend-multiply"></div>
+      <div className="relative flex h-[65%] max-h-[254px] max-w-[375px] flex-col items-center">
+        <Image
+          src="/assets/상단.png"
+          className="w-[90%]"
+          alt="상단"
+          height={18}
+          width={353}
+        />
+        <div className="relative max-h-[223px] w-[80%] max-w-[324px] flex-1 border-x-4 border-x-[#28100B] bg-[#977C6A]">
+          <div className="absolute h-1 bg-[rgba(0,0,0,0.2)] mix-blend-multiply"></div>
           <div className="grid h-fit w-full grid-cols-3 gap-1 p-1">
             {currentMails.map((mail, index) => (
               <Mail
@@ -104,7 +110,13 @@ const MailBox = () => {
             ))}
           </div>
         </div>
-        <Image src="/assets/상단.png" alt="상단" height={18} width={353} />
+        <Image
+          className="w-[90%]"
+          src="/assets/상단.png"
+          alt="상단"
+          height={18}
+          width={353}
+        />
       </div>
     </div>
   );

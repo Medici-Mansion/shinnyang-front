@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import lazy from "next/dynamic";
 import Logout from "@/components/modals/logout";
+import Link from "next/link";
 const Layout = lazy(() => import("@/components/layout"));
 
 const OnBoardingLayout = ({ children }: PropsWithChildren) => {
@@ -9,7 +10,21 @@ const OnBoardingLayout = ({ children }: PropsWithChildren) => {
       {children}
       <div className="relative flex flex-col space-y-2 p-[1.5rem] py-10 text-subtitle-notice02 text-white">
         <div className="font-semibold">
-          <p>개인정보처리방침 | 이용약관</p>
+          <p>
+            <Link
+              href="https://www.notion.so/d056099356a3471ab25ba672e5b3be3c"
+              target="_blank"
+            >
+              개인정보처리방침
+            </Link>
+            <span className="mx-1">|</span>
+            <Link
+              href="https://www.notion.so/1b919136534b42eb85b28006750dc22a"
+              target="_blank"
+            >
+              이용약관
+            </Link>
+          </p>
           <div className="flex justify-between">
             <p className="font-normal">문의: medici.ideas@gmail.com</p>
             <Logout />
