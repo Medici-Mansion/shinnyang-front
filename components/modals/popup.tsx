@@ -49,7 +49,7 @@ const Popup = ({
     onChange(false);
   };
   return (
-    <Dialog open={open} onOpenChange={onChange}>
+    <Dialog open={open} onOpenChange={onChange} modal={false}>
       <DialogTrigger>{trigger}</DialogTrigger>
       <DialogPortal forceMount>
         <DialogContent
@@ -67,13 +67,13 @@ const Popup = ({
               />
             </svg>
           }
-          className="bg-secondary-bg w-screen max-w-[calc(var(--max-width)*0.6)] grow rounded-xl p-4 pb-8 font-pretendard"
+          className="w-screen max-w-[calc(var(--max-width)*0.6)] grow rounded-xl bg-secondary-bg p-4 pb-8 font-pretendard"
         >
           <DialogTitle
             className="mx-auto mb-2 flex flex-col items-center"
             asChild
           >
-            <h2 className="text-point-300 text-subtitle-menu">{title}</h2>
+            <h2 className="text-subtitle-menu text-point-300">{title}</h2>
           </DialogTitle>
           {content}
           <div className="flex w-full items-center justify-end space-x-2 pt-2 text-[16px]">

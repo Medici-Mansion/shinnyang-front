@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FormField } from "@/components/ui/form";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import CommonQuery from "@/lib/queries/common.query";
 import { cn } from "@/lib/utils";
@@ -20,13 +19,11 @@ import {
 } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { closetModalStore } from "@/store/closet.store";
 
-interface SelectAccessoriesProps {
-  open: boolean;
-  setOpen: (state: boolean) => void;
-}
-const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
+const SelectAccessories = () => {
+  const { open, setOpen } = closetModalStore();
   const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
   const { data: accessories } = useSuspenseQuery(CommonQuery.getAcc);
   const { data: userCat } = useQuery({
@@ -89,6 +86,12 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
   useEffect(() => {
     setSelectedAcc(currentAcc);
   }, [currentAcc, type]);
+
+  useEffect(() => {
+    return () => {
+      setOpen(false);
+    };
+  }, [setOpen]);
   return (
     <Dialog
       open={open}

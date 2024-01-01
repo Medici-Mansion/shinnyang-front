@@ -16,7 +16,9 @@ const Logout = () => {
   return (
     <Popup
       trigger={
-        <span className="text-subtitle-notice02 text-gray-500">탈퇴하기</span>
+        <div className="text-start text-subtitle-menu text-gray-500">
+          회원탈퇴
+        </div>
       }
       title="회원탈퇴"
       onConfirm={mutate}
@@ -25,7 +27,7 @@ const Logout = () => {
       }}
       content={
         <div className="space-y-2 text-center font-pretendard">
-          <h1 className="text-secondary-black font-bold">
+          <h1 className="font-bold text-secondary-black">
             정말 탈퇴하시겠어요?
           </h1>
           <p>

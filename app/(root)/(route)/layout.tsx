@@ -8,7 +8,7 @@ const OnBoardingLayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       {children}
-      <div className="relative flex flex-col space-y-2 p-[1.5rem] py-10 text-subtitle-notice02 text-white">
+      {/* <div className="relative flex flex-col space-y-2 p-[1.5rem] py-10 text-subtitle-notice02 text-white">
         <div className="font-semibold">
           <p>
             <Link
@@ -50,7 +50,7 @@ const OnBoardingLayout = ({ children }: PropsWithChildren) => {
             Reserved.
           </span>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
