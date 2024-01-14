@@ -94,7 +94,9 @@ const Mailing = ({
         <h1 className="mb-4 text-title-large tracking-normal ">
           신냥이가 {letter?.receiverNickname}님의
           <br />
-          우체국에 편지를 보냈어요!
+          우체국에{" "}
+          {letter.letterType === LETTER_TYPE.ANSWER ? "답장을" : "편지를"}{" "}
+          보냈어요!
         </h1>
       )}
 
@@ -116,11 +118,9 @@ const Mailing = ({
           />
         </div>
       </div>
-      {letter.letterType === LETTER_TYPE.LETTER ? (
-        <Button variant="secondary" onClick={handleCustom}>
-          편지 공유하기
-        </Button>
-      ) : null}
+      <Button variant="secondary" onClick={handleCustom}>
+        편지 공유하기
+      </Button>
       <Button disabled={isPending} className="mt-1" onClick={handlePostClick}>
         {status === "authenticated" ? "내 우체국 가기" : "우체국 만들기"}
       </Button>

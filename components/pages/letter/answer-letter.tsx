@@ -85,12 +85,10 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         </div>
       </div>
       <div className="z-[1]">
-        <Button variant="secondary" onClick={handleWriteReply}>
-          답장하기
-        </Button>
-        <Button className="mt-1" onClick={handleSaveLetter}>
+        <Button onClick={handleWriteReply}>답장하기</Button>
+        {/* <Button className="mt-1" onClick={handleSaveLetter}>
           편지 보관하기
-        </Button>
+        </Button> */}
       </div>
 
       {/* TODO: 모달 재사용성 고려하여 재구성필요 */}

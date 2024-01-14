@@ -64,9 +64,9 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           </div>
         </div>
         <div className="z-[1]">
-          <Button variant="secondary" onClick={() => router.replace("letter")}>
+          {/* <Button variant="secondary" onClick={() => router.replace("letter")}>
             다시 쓰기
-          </Button>
+          </Button> */}
           <Button
             className="mt-1 w-full"
             onClick={handleSendLetter}
