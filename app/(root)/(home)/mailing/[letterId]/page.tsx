@@ -1,19 +1,25 @@
 "use client";
 
-import React, { MouseEventHandler, useState } from "react";
+import React, {
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { copyURL } from "@/lib/utils";
 import { useSession } from "@/components/provider/session-provider";
 import { LETTER_TYPE } from "@/form-state";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { useRouter } from "next/navigation";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import LetterQuery from "@/lib/queries/letter.query";
 import APIs from "@/apis";
 import Snow from "@/components/pages/snow";
+import CommonQuery from "@/lib/queries/common.query";
 
 const Mailing = ({
   params: { letterId },
@@ -23,6 +29,7 @@ const Mailing = ({
   const {
     data: { data: letter },
   } = useSuspenseQuery(LetterQuery.getLetterById(letterId));
+  const { data: cats } = useQuery(CommonQuery.getCat);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { data: user, signin, status } = useSession();
@@ -44,6 +51,31 @@ const Mailing = ({
       setOpen(true);
     }
   };
+
+  const selectedCat = useMemo(() => {
+    return cats?.find((cat) => letter.catName === cat.code);
+  }, [cats, letter.catName]);
+
+  const handleCustom = useCallback(() => {
+    if (selectedCat) {
+      window.Kakao?.Share.sendCustom({
+        templateId: parseInt(process.env.NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID),
+        installTalk: true,
+        templateArgs: {
+          LETTER_ID: letterId,
+          CAT_AVATAR: selectedCat.faceImage,
+          CAT_NAME: selectedCat.name,
+          SENDER: letter.senderNickname,
+        },
+      });
+    }
+  }, [letter.senderNickname, letterId, selectedCat]);
+
+  useEffect(() => {
+    if (!window.Kakao?.isInitialized()) {
+      window.Kakao?.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+    }
+  }, []);
 
   return (
     <motion.div
@@ -85,13 +117,7 @@ const Mailing = ({
         </div>
       </div>
       {letter.letterType === LETTER_TYPE.LETTER ? (
-        <Button
-          variant="secondary"
-          onClick={async (event) => {
-            event.preventDefault();
-            copyURL(`/receiver/${letter.id}`);
-          }}
-        >
+        <Button variant="secondary" onClick={handleCustom}>
           편지 공유하기
         </Button>
       ) : null}
