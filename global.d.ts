@@ -9,6 +9,7 @@ interface ShareToKakaoArg {
     CAT_NAME: string;
     SENDER: string;
   };
+  serverCallbackArgs?: {};
 }
 
 export declare global {

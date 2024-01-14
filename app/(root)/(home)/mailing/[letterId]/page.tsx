@@ -67,9 +67,19 @@ const Mailing = ({
           CAT_NAME: selectedCat.name,
           SENDER: letter.senderNickname,
         },
+        serverCallbackArgs: {
+          letterId: letter.id,
+          letterType: letter.letterType,
+        },
       });
     }
-  }, [letter.senderNickname, letterId, selectedCat]);
+  }, [
+    letter.id,
+    letter.letterType,
+    letter.senderNickname,
+    letterId,
+    selectedCat,
+  ]);
 
   useEffect(() => {
     if (!window.Kakao?.isInitialized()) {
