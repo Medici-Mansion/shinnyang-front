@@ -5,7 +5,7 @@ import Link from "next/link";
 const GoBack = () => {
   return (
     <Link href="/">
-      <Button>돌아 가기</Button>;
+      <Button>돌아 가기</Button>
     </Link>
   );
 };

@@ -96,7 +96,7 @@ const LetterPage = () => {
                     },
                     {
                       async onSuccess(data) {
-                        copyURL(`/receiver/${data.data.id}`);
+                        // copyURL(`/receiver/${data.data.id}`);
                         if (data && data.ok) {
                           router.push(`/mailing/${data.data.id}`, {
                             native: true,
