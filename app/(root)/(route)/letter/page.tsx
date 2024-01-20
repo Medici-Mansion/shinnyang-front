@@ -9,11 +9,10 @@ import { HashContext } from "@/hooks/use-hash-router";
 import { ArrowLeft } from "lucide-react";
 import BaseLayout from "@/layout/base-layout";
 import { Form } from "@/components/ui/form";
-import { useSession } from "@/components/provider/session-provider";
 import dynamic from "next/dynamic";
 import Loading from "@/components/loading";
 import useSendLetter from "@/hooks/use-send-letter";
-import { cn, copyURL } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
@@ -25,11 +24,7 @@ const FinishLetter = dynamic(
 );
 
 const LetterPage = () => {
-  const {
-    mutate,
-    isPending: isLoading,
-    data: completedLeetter,
-  } = useSendLetter();
+  const { mutate } = useSendLetter();
   // const { data: session } = useSession();
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
@@ -75,11 +70,7 @@ const LetterPage = () => {
               <SelectPad router={router} control={form.control} />
             ) : null}
             {router.hash === "#letter" ? (
-              <WriteLetter
-                isSenderEditable={false}
-                router={router}
-                control={form.control}
-              />
+              <WriteLetter router={router} control={form.control} />
             ) : null}
             {router.hash === "#finish" ? (
               <FinishLetter

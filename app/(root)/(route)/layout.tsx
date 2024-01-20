@@ -1,8 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import lazy from "next/dynamic";
-import Logout from "@/components/modals/logout";
 import Link from "next/link";
-const Layout = lazy(() => import("@/components/layout"));
 
 const OnBoardingLayout = ({ children }: PropsWithChildren) => {
   return (
