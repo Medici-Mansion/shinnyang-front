@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useSession } from "../provider/session-provider";
 
 import Popup from "../modals/popup";
-import { useMutation } from "@tanstack/react-query";
-import APIs from "@/apis";
 
 const LoginButton = () => {
   const { data, signin, signout, status } = useSession();
@@ -51,7 +49,7 @@ const LoginButton = () => {
           label: "확인",
         }}
         content={
-          <h1 className="text-secondary-black my-2 text-center font-bold">
+          <h1 className="my-2 text-center font-bold text-secondary-black">
             로그아웃 하시겠어요?
           </h1>
         }

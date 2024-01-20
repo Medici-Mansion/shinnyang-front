@@ -27,7 +27,7 @@ const OnBoardingLayout = ({ children }: PropsWithChildren) => {
           </p>
           <div className="flex justify-between">
             <p className="font-normal">문의: medici.ideas@gmail.com</p>
-            <Logout />
+            {/* <Logout /> */}
           </div>
         </div>
         <div className="opacity-50">
