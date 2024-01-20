@@ -2,9 +2,10 @@ import React from "react";
 import lazy from "next/dynamic";
 import Image from "next/image";
 import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
+import HomeButton from "@/components/home-button";
 
 // export const dynamic = "force-static";
-const LoginButton = lazy(() => import("@/components/pages/login-button"));
+// const LoginButton = lazy(() => import("@/components/pages/login-button"));
 const Layout = lazy(() => import("@/components/layout"));
 const Particles = lazy(() => import("@/components/pages/particles"));
 const Snow = lazy(() => import("@/components/pages/snow"));
@@ -50,7 +51,7 @@ const OnBoardingPage = async () => {
             </span>
           </div>
           <div className="items-end">
-            <LoginButton />
+            <HomeButton />
           </div>
         </div>
       </div>

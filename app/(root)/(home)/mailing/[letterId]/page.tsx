@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useSession } from "@/components/provider/session-provider";
 import { LETTER_TYPE } from "@/form-state";
-import { AlertModal } from "@/components/modals/alert-modal";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import LetterQuery from "@/lib/queries/letter.query";
@@ -131,7 +130,7 @@ const Mailing = ({
       <Button variant="secondary" onClick={handleCustom}>
         편지 공유하기
       </Button>
-      <Button disabled={isPending} className="mt-1" onClick={handlePostClick}>
+      {/* <Button disabled={isPending} className="mt-1" onClick={handlePostClick}>
         {status === "authenticated" ? "내 우체국 가기" : "우체국 만들기"}
       </Button>
       <AlertModal
@@ -147,7 +146,7 @@ const Mailing = ({
           })
         }
         title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
-      />
+      /> */}
       <Snow />
     </motion.div>
   );
