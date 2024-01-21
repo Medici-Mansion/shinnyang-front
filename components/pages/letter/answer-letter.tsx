@@ -57,7 +57,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       setOpen(true);
     }
   }, [letter?.id, letter?.senderId, mutate, router, session?.user, status]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}

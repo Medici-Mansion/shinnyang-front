@@ -89,7 +89,7 @@ body {
   }
 }
 @layer base {
-  @font-face {
+  /* @font-face {
     font-family: "umu";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeJJIBBABBA.woff")
       format("woff");
@@ -114,7 +114,7 @@ body {
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-  }
+  } */
 
   .font-umu {
     font-family: "umu", sans-serif;

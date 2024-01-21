@@ -14,7 +14,6 @@ import AnswerLetter from "@/components/pages/letter/answer-letter";
 import Answer from "@/components/pages/letter/answer";
 import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
-import { useSession } from "@/components/provider/session-provider";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import LetterQuery from "@/lib/queries/letter.query";
 import Loading from "@/components/loading";
@@ -34,7 +33,6 @@ const ReceiverPage = ({
   const searchParams = useSearchParams();
   const replyMailId = searchParams.get("mailId");
   const router = useContext(HashContext);
-  const { data = { user: null, session: null } } = useSession();
   const {
     data: { data: letter },
   } = useSuspenseQuery(LetterQuery.getLetterById(letterId));
@@ -45,8 +43,8 @@ const ReceiverPage = ({
       catName: "umu",
       content: "",
       receiverNickname: letter?.senderNickname || "",
-      receiverId: letter?.senderId || "",
-      senderNickname: data?.user?.nickname || "",
+      ...(letter.senderId ? { receiverId: letter.senderId } : {}),
+      senderNickname: letter.receiverNickname || "",
       letterType: LETTER_TYPE.ANSWER,
       ...(replyMailId ? { replyMailId: replyMailId ?? "" } : {}),
     },
@@ -63,16 +61,11 @@ const ReceiverPage = ({
       }, 0);
     }
   }, []);
-
-  useEffect(() => {
-    if (data?.user?.nickname) {
-      form.setValue("senderNickname", data?.user?.nickname);
-    }
-  }, [data?.user?.nickname, form]);
-
   useEffect(() => {
     if (letter?.senderNickname) {
       form.setValue("receiverNickname", letter.senderNickname);
+    }
+    if (letter.senderId) {
       form.setValue("receiverId", letter.senderId);
     }
   }, [form, letter?.senderId, letter?.senderNickname]);
@@ -91,15 +84,7 @@ const ReceiverPage = ({
           isEditRoute && "bg-point-500",
         )}
       >
-        {router.hash !== "#mailing" && (data?.user || router.hash) ? (
-          <ArrowLeft
-            onClick={() =>
-              router.hash
-                ? router.back()
-                : router.replace(`/${data?.user?.id}/post`, { native: true })
-            }
-          />
-        ) : null}
+        <ArrowLeft onClick={() => router.back()} />
 
         <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
