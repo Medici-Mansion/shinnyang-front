@@ -5,13 +5,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "@/components/provider/session-provider";
 import QueryProvider from "@/components/provider/query-provider";
-import localFont from "next/font/local";
 import { userAction } from "@/actions/user-action";
-
+import localFont from "next/font/local";
 const umu = localFont({
   adjustFontFallback: "Arial",
-  variable: "--font-umu",
+  variable: "--var-font-umu",
   preload: true,
+
   src: [
     {
       path: "fonts/UhBeeJJIBBABBA.woff",
@@ -21,7 +21,7 @@ const umu = localFont({
 });
 const cheezu = localFont({
   adjustFontFallback: "Arial",
-  variable: "--font-cheezu",
+  variable: "--var-font-cheezu",
   preload: true,
   src: [
     {
@@ -32,7 +32,7 @@ const cheezu = localFont({
 });
 const gookie = localFont({
   adjustFontFallback: "Arial",
-  variable: "--font-gookie",
+  variable: "--var-font-gookie",
   preload: true,
   src: [
     {
@@ -44,7 +44,7 @@ const gookie = localFont({
 const pretendard = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
-  variable: "--font-pretendard",
+  variable: "--var-font-pretendard",
   preload: true,
   src: [
     {
@@ -94,8 +94,11 @@ export default async function RootLayout({
       lang="ko"
       className={cn(
         umu.variable,
+        umu.className,
         cheezu.variable,
+        cheezu.className,
         gookie.variable,
+        gookie.className,
         pretendard.variable,
         pretendard.className,
         "bg-background",

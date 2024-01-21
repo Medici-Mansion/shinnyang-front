@@ -21,7 +21,6 @@ interface WriteLetterProps {
 }
 const WriteLetter = ({
   control,
-  router,
   isSenderEditable = true,
 }: WriteLetterProps) => {
   return (
@@ -59,7 +58,7 @@ const WriteLetter = ({
         render={({ field }) => (
           <FormItem className="flex grow flex-col space-y-4">
             <Label className="text-secondary-white">편지 내용</Label>
-            <div className="flex grow-[0.4] flex-col justify-between rounded-lg bg-white p-6">
+            <div className="flex flex-1 flex-col justify-between rounded-lg bg-white p-6">
               <FormControl>
                 <DisableEnterTextArea
                   className="text-black"
@@ -78,25 +77,25 @@ const WriteLetter = ({
           </FormItem>
         )}
       />
-      {isSenderEditable ? (
-        <FormField
-          control={control}
-          name="senderNickname"
-          render={({ field }) => (
-            <FormItem className="flex flex-col space-y-4">
-              <Label className="text-secondary-white">보내는 사람</Label>
-              <FormControl>
-                <Input
-                  className="rounded-lg text-black"
-                  {...field}
-                  placeholder="보내는 사람"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      ) : null}
+
+      <FormField
+        control={control}
+        name="senderNickname"
+        render={({ field }) => (
+          <FormItem className="flex flex-col space-y-4">
+            <Label className="text-secondary-white">보내는 사람</Label>
+            <FormControl>
+              <Input
+                className="rounded-lg text-black"
+                {...field}
+                placeholder="보내는 사람"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
       <Button type="submit" className="z-[1]">
         작성 완료
       </Button>

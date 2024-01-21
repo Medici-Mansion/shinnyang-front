@@ -93,13 +93,12 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
                 className={cn(
                   "text-black",
                   field.value === "umu"
-                    ? "font-umu"
+                    ? "umu"
                     : field.value === "cheezu"
-                      ? "font-cheezu"
-                      : "font-gookie",
+                      ? "cheezu"
+                      : "gookie",
                 )}
                 catType={field.value}
-                style={{ fontFamily: field.value }}
                 to={catNameObj[field.value] ?? ""}
                 content={`냥이 ${field.value} 귀여운 글씨체야 이글씨 어때 귀엽냥?`}
                 from="닉네임"

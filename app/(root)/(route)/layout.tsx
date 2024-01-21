@@ -1,8 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import lazy from "next/dynamic";
-import Logout from "@/components/modals/logout";
 import Link from "next/link";
-const Layout = lazy(() => import("@/components/layout"));
 
 const OnBoardingLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -27,7 +24,7 @@ const OnBoardingLayout = ({ children }: PropsWithChildren) => {
           </p>
           <div className="flex justify-between">
             <p className="font-normal">문의: medici.ideas@gmail.com</p>
-            <Logout />
+            {/* <Logout /> */}
           </div>
         </div>
         <div className="opacity-50">
