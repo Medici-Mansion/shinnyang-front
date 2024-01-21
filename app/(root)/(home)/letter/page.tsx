@@ -59,10 +59,7 @@ const LetterPage = () => {
         )}
       >
         {router.hash !== "#mailing" && (
-          <ArrowLeft
-            className="text-secondary-white invert"
-            onClick={() => router.back()}
-          />
+          <ArrowLeft className="invert-0" onClick={() => router.back()} />
         )}
         <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
