@@ -14,6 +14,7 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import LetterWithSheet from "@/components/letter-with-sheet";
 import FinishBottomDeco from "./finish-bottom-deco";
 import Snow from "../snow";
+import { cn } from "@/lib/utils";
 
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
@@ -57,7 +58,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       setOpen(true);
     }
   }, [letter?.id, letter?.senderId, mutate, router, session?.user, status]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -73,8 +73,14 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         </h1>
         <div className="grow">
           <LetterWithSheet
+            className={cn(
+              letter?.catName === "umu"
+                ? "umu"
+                : letter?.catName === "cheezu"
+                  ? "cheezu"
+                  : "gookie",
+            )}
             catType={letter?.catName ?? "umu"}
-            style={{ fontFamily: letter?.catName }}
             to={letter?.receiverNickname ?? ""}
             content={letter?.content ?? ""}
             from={letter?.senderNickname ?? ""}
@@ -86,9 +92,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       </div>
       <div className="z-[1]">
         <Button onClick={handleWriteReply}>답장하기</Button>
-        {/* <Button className="mt-1" onClick={handleSaveLetter}>
-          편지 보관하기
-        </Button> */}
       </div>
 
       {/* TODO: 모달 재사용성 고려하여 재구성필요 */}

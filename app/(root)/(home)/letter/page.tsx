@@ -60,7 +60,7 @@ const LetterPage = () => {
       >
         {router.hash !== "#mailing" && (
           <ArrowLeft
-            className="text-secondary-white"
+            className="text-secondary-white invert"
             onClick={() => router.back()}
           />
         )}

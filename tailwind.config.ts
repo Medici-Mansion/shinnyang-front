@@ -25,10 +25,10 @@ module.exports = {
         anchor: "var(--max-width)",
       },
       fontFamily: {
-        pretendard: ["var(--font-pretendard)"],
-        umu: ["var(--font-umu)"],
-        cheezu: ["var(--font-cheezu)"],
-        gookie: ["var(--font-gookie)"],
+        pretendard: ["var(--var-font-pretendard)", "sans-serif"],
+        umu: ["var(--var-font-umu)", "sans-serif"],
+        cheezu: ["var(--var-font-cheezu)", "sans-serif"],
+        gookie: ["var(--var-font-gookie)", "sans-serif"],
       },
       fontSize: {
         // 타이틀 시작
