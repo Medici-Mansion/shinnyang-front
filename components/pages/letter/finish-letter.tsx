@@ -11,6 +11,7 @@ import LetterWithSheet from "@/components/letter-with-sheet";
 import FinishBottomDeco from "./finish-bottom-deco";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Snow from "../snow";
+import { cn } from "@/lib/utils";
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace" | "state">;
   control: Control<LetterFormValues, any>;
@@ -51,9 +52,15 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           </h1>
           <div className="grow">
             <LetterWithSheet
-              className="text-black"
+              className={cn(
+                "text-black",
+                writtenLetter?.catName === "umu"
+                  ? "umu"
+                  : writtenLetter?.catName === "cheezu"
+                    ? "cheezu"
+                    : "gookie",
+              )}
               catType={writtenLetter.catName}
-              style={{ fontFamily: writtenLetter.catName }}
               to={writtenLetter.receiverNickname}
               content={writtenLetter.content}
               from={writtenLetter.senderNickname ?? ""}
@@ -64,9 +71,6 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           </div>
         </div>
         <div className="z-[1]">
-          {/* <Button variant="secondary" onClick={() => router.replace("letter")}>
-            다시 쓰기
-          </Button> */}
           <Button
             className="mt-1 w-full"
             onClick={handleSendLetter}

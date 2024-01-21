@@ -9,7 +9,7 @@ import { userAction } from "@/actions/user-action";
 import localFont from "next/font/local";
 const umu = localFont({
   adjustFontFallback: "Arial",
-  variable: "--font-umu",
+  variable: "--var-font-umu",
   preload: true,
 
   src: [
@@ -21,7 +21,7 @@ const umu = localFont({
 });
 const cheezu = localFont({
   adjustFontFallback: "Arial",
-  variable: "--font-cheezu",
+  variable: "--var-font-cheezu",
   preload: true,
   src: [
     {
@@ -32,7 +32,7 @@ const cheezu = localFont({
 });
 const gookie = localFont({
   adjustFontFallback: "Arial",
-  variable: "--font-gookie",
+  variable: "--var-font-gookie",
   preload: true,
   src: [
     {
@@ -44,7 +44,7 @@ const gookie = localFont({
 const pretendard = localFont({
   adjustFontFallback: "Arial",
   display: "swap",
-  variable: "--font-pretendard",
+  variable: "--var-font-pretendard",
   preload: true,
   src: [
     {

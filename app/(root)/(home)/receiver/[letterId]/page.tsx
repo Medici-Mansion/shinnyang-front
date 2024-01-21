@@ -84,7 +84,7 @@ const ReceiverPage = ({
           isEditRoute && "bg-point-500",
         )}
       >
-        <ArrowLeft onClick={() => router.back()} />
+        <ArrowLeft className="invert" onClick={() => router.back()} />
 
         <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
