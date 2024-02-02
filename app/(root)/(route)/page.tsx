@@ -59,7 +59,7 @@ const OnBoardingPage = async () => {
         <div className="relative -left-4">
           <Image
             src={home.src}
-            alt="main_background"
+            alt="신냥이우체국_집"
             className="z-[1]"
             width={575}
             height={1080}
@@ -71,7 +71,7 @@ const OnBoardingPage = async () => {
               src={ct.src}
               blurDataURL={ct.placeholder.base64}
               placeholder="blur"
-              alt="main_background"
+              alt="신냥이우체국_창틀"
               className="z-[1]"
               width={575}
               height={1080}
@@ -82,7 +82,7 @@ const OnBoardingPage = async () => {
               src={cat.src}
               placeholder="blur"
               blurDataURL={cat.placeholder.base64}
-              alt="cat"
+              alt="창틀에 앉은 산타모자 쓴 우무"
               style={{
                 objectFit: "contain",
               }}
