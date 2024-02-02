@@ -142,7 +142,7 @@ export default async function RootLayout({
         <meta property="og:image" content="/og/banner.png" />
         <meta
           name="naver-site-verification"
-          content="067dd107b9e2376390a50c6bcf83fb3d7a9972b0"
+          content="740aa45f79210f9f4181fbbde2c09af1dbc0ea83"
         />
       </head>
       <body
