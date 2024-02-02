@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, MetadataRoute } from "next";
 
 export const defaultMetadata: Metadata = {
   title: "신냥이우체국",
