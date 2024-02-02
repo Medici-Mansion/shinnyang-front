@@ -1,4 +1,4 @@
-import type { Metadata, MetadataRoute } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -77,27 +77,6 @@ const pretendard = localFont({
     "sans-serif",
   ],
 });
-
-export function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://catsnewyear.site",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://catsnewyear.site/letter",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://catsnewyear.site/mailing",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://catsnewyear.site/receiver",
-      lastModified: new Date(),
-    },
-  ];
-}
 
 export const metadata: Metadata = {
   ...defaultMetadata,
