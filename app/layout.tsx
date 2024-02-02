@@ -117,10 +117,6 @@ export const metadata: Metadata = {
   category: "신년 편지 우체국 귀여운고양이 우무 체즈 구키 한해 시작",
 };
 
-export const generateMetadata = ({}): Metadata => {
-  return {};
-};
-
 export default async function RootLayout({
   children,
 }: {
