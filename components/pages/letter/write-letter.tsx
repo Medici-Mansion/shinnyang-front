@@ -43,6 +43,7 @@ const WriteLetter = ({
             <Label className="text-secondary-white">받는 사람</Label>
             <FormControl>
               <Input
+                maxLength={14}
                 className="rounded-lg text-black"
                 {...field}
                 placeholder="받는 사람"
@@ -86,6 +87,7 @@ const WriteLetter = ({
             <Label className="text-secondary-white">보내는 사람</Label>
             <FormControl>
               <Input
+                maxLength={14}
                 className="rounded-lg text-black"
                 {...field}
                 placeholder="보내는 사람"
