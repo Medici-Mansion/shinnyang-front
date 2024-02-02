@@ -39,7 +39,7 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
     if (session?.user && session?.user.id === letter?.senderId) {
       setOpenRequireLogin(true);
     } else {
-      router.replace("cat");
+      router.push("cat");
     }
   }, [letter?.senderId, router, session?.user]);
 

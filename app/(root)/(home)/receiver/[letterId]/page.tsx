@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useSendLetter from "@/hooks/use-send-letter";
 
 import AnswerLetter from "@/components/pages/letter/answer-letter";
-import Answer from "@/components/pages/letter/answer";
 import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -78,20 +77,18 @@ const ReceiverPage = ({
         onSubmit={form.handleSubmit(onValid)}
         className={cn(
           "flex h-full flex-col overflow-y-hidden duration-100",
-          router.hash === "#answerLetter" && "bg-black",
           router.hash === "#finish" && "bg-[#111111]",
-          !router.hash && "bg-[#482609]",
+          !router.hash && "bg-black",
           isEditRoute && "bg-point-500",
         )}
       >
-        <ArrowLeft className="invert" onClick={() => router.back()} />
+        {router.hash && (
+          <ArrowLeft className="invert" onClick={() => router.back()} />
+        )}
 
         <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
             {!router.hash ? (
-              <Answer router={router} control={form.control} letter={letter} />
-            ) : null}
-            {router.hash === "#answerLetter" ? (
               <AnswerLetter
                 router={router}
                 control={form.control}

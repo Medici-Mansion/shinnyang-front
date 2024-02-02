@@ -42,6 +42,7 @@ const AnswerWrite = ({ control, isLoading }: AnswerLetterProps) => {
           <div className="flex flex-col space-y-4">
             <Label className="text-black">받는 사람</Label>
             <Input
+              maxLength={14}
               className="rounded-lg border border-red bg-background"
               {...field}
               placeholder="받는 사람"
@@ -105,6 +106,7 @@ const AnswerWrite = ({ control, isLoading }: AnswerLetterProps) => {
           <div className="flex flex-col space-y-4">
             <Label className="text-black">보내는 사람</Label>
             <Input
+              maxLength={14}
               className="rounded-lg border border-red bg-background"
               {...field}
               placeholder="보내는 사람"
