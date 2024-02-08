@@ -1,9 +1,9 @@
-import 윷좌측 from "@/app/assets/윷/윷_좌측.png";
-import 윷우측아래 from "@/app/assets/윷/윷_우측아래.png";
-import 윷중간아래 from "@/app/assets/윷/윷_중간아래.png";
-import 중간위 from "@/app/assets/윷/윷_중간위.png";
-import 효과우측 from "@/app/assets/윷/효과_우측.png";
-import 효과좌측 from "@/app/assets/윷/효과_좌측.png";
+import 윷좌측 from "@/app/assets/윷/U_l.png";
+import 윷우측아래 from "@/app/assets/윷/U_rb.png";
+import 윷중간아래 from "@/app/assets/윷/U_mb.png";
+import 중간위 from "@/app/assets/윷/U_mu.png";
+import 효과우측 from "@/app/assets/윷/E_r.png";
+import 효과좌측 from "@/app/assets/윷/E_l.png";
 
 const images = [
   {

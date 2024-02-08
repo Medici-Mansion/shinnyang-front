@@ -12,7 +12,7 @@ import React, {
   useRef,
 } from "react";
 
-import 편지지 from "@/app/assets/편지지.png";
+import 편지지 from "@/app/assets/letter.png";
 
 interface LetterWithSheetProps extends HTMLAttributes<HTMLDivElement> {
   to: string;

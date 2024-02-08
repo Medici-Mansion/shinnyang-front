@@ -13,8 +13,8 @@ import Snow from "../snow";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-import 담요 from "@/app/assets/담요.png";
-import 식빵 from "@/app/assets/식빵.png";
+import 담요 from "@/app/assets/carpet.png";
+import 식빵 from "@/app/assets/bread.png";
 import { AnimateArticle, CatImage } from "./select-pad";
 
 import 윷 from "@/app/assets/윷";
