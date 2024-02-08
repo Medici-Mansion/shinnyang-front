@@ -62,6 +62,7 @@ const ReceiverPage = ({
       }, 0);
     }
   }, []);
+
   useEffect(() => {
     if (letter?.senderNickname) {
       form.setValue("receiverNickname", letter.senderNickname);
@@ -72,6 +73,9 @@ const ReceiverPage = ({
   }, [form, letter?.senderId, letter?.senderNickname]);
 
   const isEditRoute = router.hash === "#cat" || router.hash === "#letter";
+
+  const catType = form.watch("catName");
+
   return loading ? (
     <ReceiverLoading
       onFinish={() => {
@@ -104,10 +108,18 @@ const ReceiverPage = ({
               />
             ) : null}
             {router.hash === "#cat" ? (
-              <SelectPad router={router} control={form.control} />
+              <SelectPad
+                catType={catType}
+                router={router}
+                control={form.control}
+              />
             ) : null}
             {router.hash === "#letter" ? (
-              <WriteLetter router={router} control={form.control} />
+              <WriteLetter
+                catType={catType}
+                router={router}
+                control={form.control}
+              />
             ) : null}
             {router.hash === "#finish" ? (
               <FinishLetter
