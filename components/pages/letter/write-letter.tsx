@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { LetterFormValues } from "@/form-state";
 import DisableEnterTextArea from "@/components/disable-enter-textarea";
 
-import 담요 from "@/app/assets/담요_2.png";
+import 담요 from "@/app/assets/carpet_2.png";
 import Image from "next/image";
 
 interface WriteLetterProps {

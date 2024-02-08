@@ -9,9 +9,9 @@ import { Control } from "react-hook-form";
 import { motion } from "framer-motion";
 import { LetterFormValues } from "@/form-state";
 
-import 담요 from "@/app/assets/담요.png";
-import 식빵 from "@/app/assets/식빵.png";
-import 말풍선 from "@/app/assets/말풍선.png";
+import 담요 from "@/app/assets/carpet.png";
+import 식빵 from "@/app/assets/bread.png";
+import 말풍선 from "@/app/assets/speech_bubble.png";
 import 윷 from "@/app/assets/윷";
 
 import { cn } from "@/lib/utils";

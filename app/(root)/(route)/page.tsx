@@ -4,7 +4,7 @@ import Image from "next/image";
 import HomeButton from "@/components/home-button";
 import cloud1 from "@/app/assets/cloud1.png";
 import cloud2 from "@/app/assets/cloud2.png";
-import 설냥 from "@/app/assets/설냥.png";
+import 설냥 from "@/app/assets/cat.png";
 
 export const dynamic = "force-static";
 
