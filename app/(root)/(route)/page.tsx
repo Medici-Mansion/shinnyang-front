@@ -59,7 +59,7 @@ const OnBoardingPage = async () => {
       </div>
       <div>
         <svg
-          className="moon fixed -right-[80px] -top-[80px]"
+          className="moon absolute -right-[80px] -top-[80px]"
           width="220"
           height="220"
           viewBox="0 0 220 220"
@@ -124,7 +124,7 @@ const OnBoardingPage = async () => {
           </defs>
         </svg>
         <Image
-          className="cloud2 absolute right-0 top-1/4"
+          className="absolute -left-12 top-1/4"
           src={cloud1}
           width={cloud1.width}
           height={cloud1.height}
@@ -133,7 +133,7 @@ const OnBoardingPage = async () => {
           alt=""
         />
         <Image
-          className="cloud absolute right-0 top-8"
+          className="absolute -right-12 top-8"
           src={cloud2}
           width={cloud2.width}
           height={cloud2.height}
