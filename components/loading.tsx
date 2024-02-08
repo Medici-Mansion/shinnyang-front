@@ -39,7 +39,7 @@ const Loading = ({ className }: LoadingProps) => {
         animate="animate"
         exit="exit"
         className={cn(
-          "flex h-[100dvh] items-center justify-center bg-background px-8",
+          "flex h-[100dvh] items-center justify-center  px-8",
           className,
         )}
       >

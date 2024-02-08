@@ -13,23 +13,33 @@ import { Button } from "@/components/ui/button";
 import { LetterFormValues } from "@/form-state";
 import DisableEnterTextArea from "@/components/disable-enter-textarea";
 
-import 담요 from "@/app/assets/carpet_2.png";
 import Image from "next/image";
+
+import cheezu from "@/app/assets/체즈";
+import umu from "@/app/assets/우무";
+import { cn } from "@/lib/utils";
 
 interface WriteLetterProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
+  catType: "cheezu" | "gookie" | "umu";
 }
-const WriteLetter = ({ control }: WriteLetterProps) => {
+const WriteLetter = ({ control, catType }: WriteLetterProps) => {
+  const selectedCat = catType === "umu" ? umu : cheezu;
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="z-[1] flex grow flex-col space-y-4 text-main"
+      className={cn("z-[1] flex grow flex-col space-y-4 text-main")}
     >
       <div className="mb-4">
-        <h1 className="whitespace-nowrap font-umu text-[26px] leading-[46px] text-main [word-spacing:-6px]">
+        <h1
+          className={cn(
+            "whitespace-nowrap font-umu text-[26px] leading-[46px] [word-spacing:-6px]",
+            catType !== "umu" && "invert",
+          )}
+        >
           편지를 작성해주라냥 ₍˄·͈༝·͈˄₎♡
         </h1>
       </div>
@@ -38,7 +48,9 @@ const WriteLetter = ({ control }: WriteLetterProps) => {
         name="receiverNickname"
         render={({ field }) => (
           <FormItem className="flex flex-col space-y-4">
-            <Label className="text-main">받는 사람</Label>
+            <Label className={cn("text-main", catType !== "umu" && "invert")}>
+              받는 사람
+            </Label>
             <FormControl>
               <div className="flex h-14 w-full items-center rounded-md bg-white p-3 px-5 text-base outline-none ring-offset-background file:bg-transparent file:text-base file:font-medium  placeholder:text-title-regular placeholder:text-gray-300 disabled:cursor-not-allowed disabled:opacity-50">
                 <input
@@ -62,7 +74,9 @@ const WriteLetter = ({ control }: WriteLetterProps) => {
         name="content"
         render={({ field }) => (
           <FormItem className="flex grow flex-col space-y-4">
-            <Label className="text-main">편지 내용</Label>
+            <Label className={cn("text-main", catType !== "umu" && "invert")}>
+              편지 내용
+            </Label>
             <div className="flex flex-1 flex-col justify-between rounded-lg bg-white p-6">
               <FormControl>
                 <DisableEnterTextArea
@@ -88,7 +102,9 @@ const WriteLetter = ({ control }: WriteLetterProps) => {
         name="senderNickname"
         render={({ field }) => (
           <FormItem className="flex flex-col space-y-4">
-            <Label className="text-main">보내는 사람</Label>
+            <Label className={cn("text-main", catType !== "umu" && "invert")}>
+              보내는 사람
+            </Label>
             <FormControl>
               <div className="flex h-14 w-full items-center rounded-md bg-white p-3 px-5 text-base outline-none ring-offset-background file:bg-transparent file:text-base file:font-medium  placeholder:text-title-regular placeholder:text-gray-300 disabled:cursor-not-allowed disabled:opacity-50">
                 <input
@@ -110,12 +126,12 @@ const WriteLetter = ({ control }: WriteLetterProps) => {
       <div className="grow">
         <div className="absolute -bottom-[7%] left-0 -z-[1]">
           <Image
-            src={담요.src}
+            src={selectedCat.bg.src}
             placeholder="blur"
-            width={담요.width}
-            height={담요.height}
-            blurDataURL={담요.blurDataURL}
-            alt="담요"
+            width={selectedCat.bg.width}
+            height={selectedCat.bg.height}
+            blurDataURL={selectedCat.bg.blurDataURL}
+            alt=""
           />
         </div>
       </div>

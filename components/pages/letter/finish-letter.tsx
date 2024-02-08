@@ -13,11 +13,11 @@ import Snow from "../snow";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-import 담요 from "@/app/assets/carpet.png";
-import 식빵 from "@/app/assets/bread.png";
 import { AnimateArticle, CatImage } from "./select-pad";
 
-import 윷 from "@/app/assets/윷";
+import 우무 from "@/app/assets/우무";
+import cheezu from "@/app/assets/체즈";
+
 import Link from "next/link";
 
 interface FinishLetterProps {
@@ -50,7 +50,12 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
         className="z-[2] flex grow flex-col"
       >
         <div className="relative z-0 flex grow flex-col space-y-4">
-          <h1 className="whitespace-nowrap font-umu text-[26px] leading-[46px] text-main">
+          <h1
+            className={cn(
+              "whitespace-nowrap font-umu text-[26px] leading-[46px] text-main",
+              writtenLetter.catName !== "umu" && "invert",
+            )}
+          >
             편지가 완성되었다냥!
           </h1>
           <div className="mx-auto w-[95%]">
@@ -71,32 +76,49 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           </div>
         </div>
         <div className="grow">
-          <div className="absolute -bottom-[7%] left-0">
-            <Image
-              src={담요.src}
-              placeholder="blur"
-              width={담요.width}
-              height={담요.height}
-              blurDataURL={담요.blurDataURL}
-              alt="담요"
-            />
-            {writtenLetter?.catName && (
-              <CatImage catType={writtenLetter.catName} />
-            )}
-            <Image
-              className="absolute -top-[28%] left-[32%] z-[2] w-[43%]"
-              style={{ transform: "rotateY(180deg)" }}
-              src={식빵.src}
-              width={식빵.width}
-              height={식빵.height}
-              alt="식빵"
-              placeholder="blur"
-              blurDataURL={식빵.blurDataURL}
-            />
-            {윷.map((item) => (
-              <AnimateArticle key={item.name} item={item} />
-            ))}
-          </div>
+          {writtenLetter.catName === "umu" ? (
+            <div className="absolute -bottom-[7%] left-0">
+              <Image
+                src={우무.bg.src}
+                placeholder="blur"
+                width={우무.bg.width}
+                height={우무.bg.height}
+                blurDataURL={우무.bg.blurDataURL}
+                alt="담요"
+              />
+              {writtenLetter?.catName && (
+                <CatImage catType={writtenLetter.catName} />
+              )}
+
+              {우무.floating.map((item) => (
+                <AnimateArticle key={item.name} item={item} />
+              ))}
+            </div>
+          ) : (
+            <div className="absolute -bottom-[7%] left-0">
+              <Image
+                src={cheezu.bg.src}
+                placeholder="blur"
+                width={cheezu.bg.width}
+                height={cheezu.bg.height}
+                blurDataURL={cheezu.bg.blurDataURL}
+                alt=""
+              />
+              <Image
+                className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
+                src={cheezu.main.src}
+                alt={""}
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+                placeholder="blur"
+                blurDataURL={cheezu.main.blurDataURL}
+              />
+
+              {cheezu.floating.map((item, index) => (
+                <AnimateArticle key={item.name} item={item} />
+              ))}
+            </div>
+          )}
         </div>
         <div className="z-[1] flex gap-x-2">
           <Link href="/" className="rounded-md bg-[#00223E] px-5 py-4">

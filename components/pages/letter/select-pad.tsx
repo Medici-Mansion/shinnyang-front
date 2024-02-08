@@ -8,21 +8,22 @@ import Image, { StaticImageData } from "next/image";
 import { Control } from "react-hook-form";
 import { motion } from "framer-motion";
 import { LetterFormValues } from "@/form-state";
-import cloud2 from "@/app/assets/cloud2.png";
-import 담요 from "@/app/assets/carpet.png";
-import 식빵 from "@/app/assets/bread.png";
-import 말풍선 from "@/app/assets/speech_bubble.png";
-import 윷 from "@/app/assets/윷";
+
+import cheezu from "@/app/assets/체즈";
+import umu from "@/app/assets/우무";
 
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
+import 말풍선 from "@/app/assets/speech_bubble.png";
+
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
+  catType: "cheezu" | "gookie" | "umu";
 }
 
-const SelectPad = ({ router, control }: SelectPadProps) => {
+const SelectPad = ({ router, control, catType }: SelectPadProps) => {
   const { data: cats } = useSuspenseQuery(CommonQuery.getCat);
 
   return (
@@ -32,7 +33,12 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
       exit={{ opacity: 0 }}
       className="z-[1] flex h-full flex-col text-main"
     >
-      <div className="font-umu text-[26px] leading-[46px]">
+      <div
+        className={cn(
+          "font-umu text-[26px] leading-[46px]",
+          catType !== "umu" && "invert",
+        )}
+      >
         마음에 드는 설냥이를
         <br />
         선택해주냥 =^･ω･^=
@@ -81,135 +87,91 @@ const SelectPad = ({ router, control }: SelectPadProps) => {
               ))}
             </div>
             <div className="grow">
-              <div className="absolute -bottom-[7%] left-0">
-                <Image
-                  src={담요.src}
-                  placeholder="blur"
-                  width={담요.width}
-                  height={담요.height}
-                  blurDataURL={담요.blurDataURL}
-                  alt="담요"
-                />
-                <CatImage catType={field.value} />
-                <Image
-                  className="absolute -top-[28%] left-[32%] z-[2] w-[43%]"
-                  style={{ transform: "rotateY(180deg)" }}
-                  src={식빵.src}
-                  width={식빵.width}
-                  height={식빵.height}
-                  alt="식빵"
-                  placeholder="blur"
-                  blurDataURL={식빵.blurDataURL}
-                />
-                {윷.map((item, index) => (
-                  <AnimateArticle key={item.name} item={item} />
-                ))}
-                <div className="absolute -top-[83%] left-[14%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
+              {field.value === "umu" ? (
+                <div className="absolute -bottom-[7%] left-0">
                   <Image
-                    src={말풍선.src}
-                    width={말풍선.width}
-                    height={말풍선.height}
-                    alt="말풍선"
+                    src={umu.bg.src}
                     placeholder="blur"
-                    blurDataURL={말풍선.blurDataURL}
+                    width={umu.bg.width}
+                    height={umu.bg.height}
+                    blurDataURL={umu.bg.blurDataURL}
+                    alt="담요"
                   />
-                  <p
-                    className={cn(
-                      "absolute text-black",
-                      field.value === "umu"
-                        ? "umu"
-                        : field.value === "cheezu"
-                          ? "cheezu"
-                          : "gookie",
-                    )}
-                  >
-                    나의 귀여운 글씨체와 함께
-                    <br />
-                    편지를 써보는 건 어떠냥!
-                  </p>
+                  <CatImage catType={field.value} />
+
+                  {umu.floating.map((item, index) => (
+                    <AnimateArticle key={item.name} item={item} />
+                  ))}
+                  <div className="absolute -top-[83%] left-[14%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
+                    <Image
+                      src={말풍선.src}
+                      width={말풍선.width}
+                      height={말풍선.height}
+                      alt="말풍선"
+                      placeholder="blur"
+                      blurDataURL={말풍선.blurDataURL}
+                    />
+                    <p
+                      className={cn(
+                        "absolute text-black",
+                        field.value === "umu"
+                          ? "umu"
+                          : field.value === "cheezu"
+                            ? "cheezu"
+                            : "gookie",
+                      )}
+                    >
+                      나의 귀여운 글씨체와 함께
+                      <br />
+                      편지를 써보는 건 어떠냥!
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="absolute -bottom-[7%] left-0">
+                  <Image
+                    src={cheezu.bg.src}
+                    placeholder="blur"
+                    width={cheezu.bg.width}
+                    height={cheezu.bg.height}
+                    blurDataURL={cheezu.bg.blurDataURL}
+                    alt=""
+                  />
+                  <Image
+                    className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
+                    src={cheezu.main.src}
+                    alt={catType}
+                    width={cheezu.main.width}
+                    height={cheezu.main.height}
+                    placeholder="blur"
+                    blurDataURL={cheezu.main.blurDataURL}
+                  />
+
+                  {cheezu.floating.map((item, index) => (
+                    <AnimateArticle key={item.name} item={item} />
+                  ))}
+                  <div className="absolute -top-[98%] left-[19%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
+                    <Image
+                      src={말풍선.src}
+                      width={말풍선.width}
+                      height={말풍선.height}
+                      alt="말풍선"
+                      placeholder="blur"
+                      blurDataURL={말풍선.blurDataURL}
+                    />
+                    <p className={cn("cheezu absolute text-black")}>
+                      나의 귀여운 글씨체와 함께
+                      <br />
+                      편지를 써보는 건 어떠냥!
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </>
         )}
       />
-      <div>
-        <svg
-          className="moon absolute -right-[80px] -top-[80px]"
-          width="220"
-          height="220"
-          viewBox="0 0 220 220"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g filter="url(#filter0_f_1056_16087)">
-            <path
-              d="M170 110C170 143.137 143.137 170 110 170C76.8629 170 50 143.137 50 110C50 76.8629 76.8629 50 110 50C143.137 50 170 76.8629 170 110Z"
-              fill="#F0D460"
-            />
-          </g>
-          <g filter="url(#filter1_f_1056_16087)">
-            <path
-              d="M170 110C170 143.137 143.137 170 110 170C76.8629 170 50 143.137 50 110C50 76.8629 76.8629 50 110 50C143.137 50 170 76.8629 170 110Z"
-              fill="#FAF5C8"
-            />
-          </g>
-          <defs>
-            <filter
-              id="filter0_f_1056_16087"
-              x="46"
-              y="46"
-              width="128"
-              height="128"
-              filterUnits="userSpaceOnUse"
-              colorInterpolationFilters="sRGB"
-            >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="BackgroundImageFix"
-                result="shape"
-              />
-              <feGaussianBlur
-                stdDeviation="2"
-                result="effect1_foregroundBlur_1056_16087"
-              />
-            </filter>
-            <filter
-              id="filter1_f_1056_16087"
-              x="0"
-              y="0"
-              width="220"
-              height="220"
-              filterUnits="userSpaceOnUse"
-              colorInterpolationFilters="sRGB"
-            >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="BackgroundImageFix"
-                result="shape"
-              />
-              <feGaussianBlur
-                stdDeviation="25"
-                result="effect1_foregroundBlur_1056_16087"
-              />
-            </filter>
-          </defs>
-        </svg>
 
-        <Image
-          className="absolute -right-12 top-8"
-          src={cloud2}
-          width={cloud2.width}
-          height={cloud2.height}
-          blurDataURL={cloud2.blurDataURL}
-          placeholder="blur"
-          alt=""
-        />
-      </div>
       <Button
         onClick={() => router.push("letter")}
         variant="primary"
@@ -233,6 +195,7 @@ export const AnimateArticle = memo(
       width: number;
       left: number;
       top: number;
+      z?: number;
     };
   }) => {
     const image = item.image;
@@ -244,6 +207,7 @@ export const AnimateArticle = memo(
           top: `${item.top}%`,
           left: `${item.left}%`,
           animationDuration: `${Math.random() * 3000 + 1500}ms`,
+          zIndex: item.z ? item.z : 0,
         }}
         key={item.name}
         src={image.src}
