@@ -34,7 +34,7 @@ const OnBoardingPage = async () => {
             <div className=" mx-auto w-fit font-umu text-4xl font-medium leading-[50px]">
               배달부 설냥
             </div>
-            <span className="title-regular mt-2 font-umu">
+            <span className="title-regular font-umu leading-10">
               설날 편지 대신 써드린다냥
             </span>
             <p className="mx-auto flex h-12 w-fit items-center rounded-md bg-[rgba(164,214,255,0.5)] px-4 font-umu">

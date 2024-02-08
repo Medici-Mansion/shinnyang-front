@@ -19,12 +19,8 @@ import Image from "next/image";
 interface WriteLetterProps {
   router: Pick<IHashContext, "push" | "back">;
   control: Control<LetterFormValues, any>;
-  isSenderEditable?: boolean;
 }
-const WriteLetter = ({
-  control,
-  isSenderEditable = true,
-}: WriteLetterProps) => {
+const WriteLetter = ({ control }: WriteLetterProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -33,7 +29,7 @@ const WriteLetter = ({
       className="z-[1] flex grow flex-col space-y-4 text-main"
     >
       <div className="mb-4">
-        <h1 className="font-umu text-[26px] leading-[46px] text-main">
+        <h1 className="whitespace-nowrap font-umu text-[26px] leading-[46px] text-main [word-spacing:-6px]">
           편지를 작성해주라냥 ₍˄·͈༝·͈˄₎♡
         </h1>
       </div>

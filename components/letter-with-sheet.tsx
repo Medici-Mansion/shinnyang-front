@@ -63,7 +63,7 @@ const LetterWithSheet = ({
     >
       <h1>{to} 에게</h1>
       <p className="mt-4 break-words">{content}</p>
-      <h1 className="absolute bottom-[15%] right-[15%]">
+      <h1 className="absolute bottom-[8%] right-[15%]">
         <div className="relative">{from} 씀</div>
       </h1>
 

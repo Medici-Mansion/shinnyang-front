@@ -50,13 +50,10 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
         className="z-[2] flex grow flex-col"
       >
         <div className="relative z-0 flex grow flex-col space-y-4">
-          <h1 className="font-umu text-[26px] leading-[46px] text-main">
-            {session?.user?.nickname ?? getValues().senderNickname}에게 보낼
-            편지가
-            <br />
-            완성되었다냥! ฅ^•ﻌ•^ฅ
+          <h1 className="whitespace-nowrap font-umu text-[26px] leading-[46px] text-main">
+            편지가 완성되었다냥!
           </h1>
-          <div>
+          <div className="mx-auto w-[95%]">
             <LetterWithSheet
               className={cn(
                 "text-black",
@@ -111,8 +108,8 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M12.5045 4.47239C12.2184 4.21233 11.7816 4.21233 11.4955 4.47239L4.5 10.8319V19.5002H9V15.3752C9 14.7538 9.50368 14.2502 10.125 14.2502H13.875C14.4963 14.2502 15 14.7538 15 15.3752V19.5002H19.5V10.8319L12.5045 4.47239ZM10.4865 3.36248C11.3447 2.5823 12.6553 2.5823 13.5135 3.36248L20.6318 9.83361C20.8663 10.0468 21 10.3491 21 10.666V19.8752C21 20.4965 20.4963 21.0002 19.875 21.0002H14.625C14.0037 21.0002 13.5 20.4965 13.5 19.8752V15.7502H10.5V19.8752C10.5 20.4965 9.99632 21.0002 9.375 21.0002H4.125C3.50368 21.0002 3 20.4965 3 19.8752V10.666C3 10.3491 3.13371 10.0468 3.36824 9.83361L10.4865 3.36248Z"
                 fill="#FFF1CB"
               />
