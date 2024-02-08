@@ -9,7 +9,7 @@ interface UseSendLetterOptions {
 
 const useSendLetter = (options?: UseSendLetterOptions) => {
   const { onSuccess } = options || {};
-  const { mutate, isPending, data } = useMutation<
+  const { mutate, mutateAsync, isPending, data } = useMutation<
     LetterResponse,
     unknown,
     Letters
@@ -24,6 +24,7 @@ const useSendLetter = (options?: UseSendLetterOptions) => {
 
   return {
     mutate,
+    mutateAsync,
     isPending,
     data: data?.data,
   };

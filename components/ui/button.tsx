@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         // 231230 RAYMOND: 모바일 hover이펙트가 무작위로 활성화 되는 이슈로 인해 호버를 제거한 스타일 적용
-        primary: "bg-red text-white font-bold text-md",
+        primary: "bg-main text-black font-bold text-md",
         secondary: "bg-sub text-red font-bold text-md",
         disable: "bg-gray-300 text-gray-500 font-bold text-md",
         kakao: "bg-kakao text-black font-bold text-md",

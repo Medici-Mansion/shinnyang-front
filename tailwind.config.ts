@@ -2,14 +2,20 @@ import plaiceholder from "@plaiceholder/tailwindcss";
 import plugin from "tailwindcss/plugin";
 import fs from "node:fs";
 import path from "node:path";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: import("tailwindcss").Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+  ],
+  safelist: [
+    {
+      pattern: /duration-[\d{1,4}ms]/,
+    },
   ],
   theme: {
     container: {
@@ -105,9 +111,10 @@ module.exports = {
           DEFAULT: "#603F37",
           deep: "#300815",
         },
+        main: "#FFF1CB",
         red: "#B20000",
         sub: "#F1E5D1",
-        background: "#FFF9EF",
+        background: "#00223E",
         black: "#111111",
         kakao: "#FFCD29",
         gray: {
@@ -181,12 +188,12 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
         pulse: {
           "50%": {
@@ -223,3 +230,5 @@ module.exports = {
     }),
   ],
 };
+
+export default config;

@@ -108,7 +108,7 @@ body {
   /* 텍스트스타일 */
   /* TITLE */
   .title-regular {
-    @apply text-base leading-6;
+    @apply text-2xl leading-[58px];
   }
   .text-title-home {
     @apply font-cheezu;
@@ -139,4 +139,37 @@ body {
   *[class*="text-title-"] {
     @apply font-pretendard;
   }
+}
+
+@keyframes CloudMove {
+  0% {
+    transform: translateX(100%);
+  }
+  80% {
+    transform: translateX(-500%);
+  }
+  100% {
+    transform: translateX(-500%);
+  }
+}
+
+@keyframes CloudMove2 {
+  0% {
+    transform: translateX(100%);
+  }
+  95% {
+    transform: translateX(-500%);
+  }
+  100% {
+    transform: translateX(-500%);
+  }
+}
+
+.cloud {
+  animation: CloudMove infinite 21s linear;
+}
+.cloud2 {
+  animation: CloudMove2 infinite 23s linear;
+  animation-delay: 1500ms;
+  animation-fill-mode: both;
 }

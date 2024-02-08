@@ -1,9 +1,7 @@
 import withPlaiceHolder from "@plaiceholder/next";
 import bundleAnalyzer from "@next/bundle-analyzer";
-import withPlaiceholder from "@plaiceholder/next";
-import withImages from "next-images";
 /** @type {import('next').NextConfig} */
-const nextConfig = withImages({
+const nextConfig = {
   experimental: {
     gzipSize: true,
   },
@@ -19,7 +17,7 @@ const nextConfig = withImages({
     ],
   },
   swcMinify: true,
-});
+};
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled:
