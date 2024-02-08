@@ -1,12 +1,26 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import loadingImages from "@/app/assets/우무로딩";
+
 interface LoadingProps {
   className?: string;
 }
 const Loading = ({ className }: LoadingProps) => {
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const timeoutId = setInterval(() => {
+      setTime((prev) => prev + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(timeoutId);
+      setTime(0);
+    };
+  }, []);
   return (
     <LazyMotion features={domAnimation}>
       <m.div
@@ -30,8 +44,9 @@ const Loading = ({ className }: LoadingProps) => {
         )}
       >
         <div className="relative h-full w-1/2">
+          {}
           <Image
-            src="/assets/loading.gif"
+            src={loadingImages[time % loadingImages.length].src}
             alt="loading"
             fill
             style={{ objectFit: "contain" }}

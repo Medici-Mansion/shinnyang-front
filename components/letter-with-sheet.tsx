@@ -2,7 +2,7 @@
 import CommonQuery from "@/lib/queries/common.query";
 import { cn } from "@/lib/utils";
 import { Cat } from "@/type";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React, {
   HTMLAttributes,
@@ -11,6 +11,8 @@ import React, {
   useMemo,
   useRef,
 } from "react";
+
+import 편지지 from "@/app/assets/편지지.png";
 
 interface LetterWithSheetProps extends HTMLAttributes<HTMLDivElement> {
   to: string;
@@ -39,10 +41,6 @@ const LetterWithSheet = ({
     }
   }, []);
 
-  const currentCat = useMemo(
-    () => data.find((cat) => cat.code === catType),
-    [catType, data],
-  );
   useEffect(() => {
     if (imageRef.current) {
       imageRef.current.addEventListener("resize", handleImageResize);
@@ -66,52 +64,20 @@ const LetterWithSheet = ({
       <h1>{to} 에게</h1>
       <p className="mt-4 break-words">{content}</p>
       <h1 className="absolute bottom-[15%] right-[15%]">
-        <div className="relative">
-          {from} 씀
-          {currentCat?.stampImage ? (
-            <Image
-              className="absolute -right-[40%] -top-full h-fit rotate-12 opacity-15"
-              src={currentCat?.stampImage}
-              alt="postal_stamp"
-              width={48}
-              height={48}
-              style={{ objectFit: "contain" }}
-            />
-          ) : null}
-        </div>
+        <div className="relative">{from} 씀</div>
       </h1>
-      {preview ? (
-        <Image
-          ref={imageRef}
-          className="absolute bottom-0 left-0 right-0 top-0 -z-[1]"
-          src="/assets/편지지_preview.png"
-          alt="편지지"
-          width={654}
-          height={500}
-          style={{ objectFit: "cover" }}
-        />
-      ) : (
-        <Image
-          ref={imageRef}
-          className="absolute bottom-0 left-0 right-0 top-0 -z-[1]"
-          src="/assets/편지지.png"
-          alt="편지지"
-          width={750}
-          height={790}
-          style={{ objectFit: "cover" }}
-        />
-      )}
 
-      {showStamp ? (
-        <Image
-          className="absolute right-0 top-0 -z-[1] h-fit w-[35%]"
-          src="/postal_stamp.png"
-          alt="postal_stamp"
-          width={200}
-          height={100}
-          style={{ objectFit: "contain" }}
-        />
-      ) : null}
+      <Image
+        ref={imageRef}
+        className="absolute bottom-0 left-0 right-0 top-0 -z-[1]"
+        src={편지지.src}
+        alt="편지지"
+        width={편지지.width}
+        height={편지지.height}
+        placeholder="blur"
+        blurDataURL={편지지.blurDataURL}
+        style={{ objectFit: "cover" }}
+      />
     </div>
   );
 };

@@ -5,7 +5,8 @@ import React, { PropsWithChildren } from "react";
 const LetterTemplate = ({ children }: PropsWithChildren) => {
   return (
     <HashContextProvider>
-      <DefaultLayout>{children}</DefaultLayout>
+      {children}
+      {/* <DefaultLayout>{children}</DefaultLayout> */}
     </HashContextProvider>
   );
 };

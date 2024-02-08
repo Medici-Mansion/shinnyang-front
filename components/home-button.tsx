@@ -4,7 +4,7 @@ import Link from "next/link";
 const HomeButton = () => {
   return (
     <Link href="/letter">
-      <Button>편지쓰러가기</Button>
+      <Button>편지쓰기</Button>
     </Link>
   );
 };

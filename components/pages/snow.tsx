@@ -12,7 +12,7 @@ const Snow = (props?: Partial<SnowProps>) => {
       radius={[0.5, 3]}
       speed={[0.5, 3]}
       wind={[-0.5, 1]}
-      snowflakeCount={62}
+      snowflakeCount={20}
       {...props}
     />
   );

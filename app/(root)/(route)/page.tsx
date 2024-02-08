@@ -1,109 +1,152 @@
 import React from "react";
 import lazy from "next/dynamic";
 import Image from "next/image";
-import { generateBlurImageByImageList } from "@/actions/blur-image-.action";
 import HomeButton from "@/components/home-button";
+import cloud1 from "@/app/assets/cloud1.png";
+import cloud2 from "@/app/assets/cloud2.png";
+import 설냥 from "@/app/assets/설냥.png";
 
-// export const dynamic = "force-static";
-// const LoginButton = lazy(() => import("@/components/pages/login-button"));
-const Layout = lazy(() => import("@/components/layout"));
-const Particles = lazy(() => import("@/components/pages/particles"));
+export const dynamic = "force-static";
+
 const Snow = lazy(() => import("@/components/pages/snow"));
 
-const getOnBoardImages = async () => {
-  const imageList = [
-    {
-      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753598/bwbfn8z9corqnfw0rcrj.png",
-      name: "home" as const,
-    },
-    {
-      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/jgaag0mb7khxxulwnzcr.png",
-      name: "ct" as const,
-    },
-    {
-      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703511402/jz3ek5fcya8xqfru0u3h.png",
-      name: "cat" as const,
-    },
-    {
-      path: "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703511402/pi7piy7sekpe48tzuszi.png",
-      name: "accessory" as const,
-    },
-  ];
+function daysUntilNewYear() {
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const nextYear =
+    today > new Date(`${today.getFullYear()}-02-10`)
+      ? currentYear + 1
+      : currentYear;
+  const newYearDate = new Date(`${nextYear}-02-10`);
 
-  return await generateBlurImageByImageList(imageList);
-};
+  const differenceInTime = newYearDate.getTime() - today.getTime();
+  const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+
+  return differenceInDays - 1;
+}
 
 const OnBoardingPage = async () => {
-  const { accessory, cat, ct, home } = await getOnBoardImages();
-
   return (
-    <Layout>
+    <>
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
-          <div className="z-10 mt-[4dvh] flex flex-1 flex-col justify-start text-center text-white text-shadow">
-            <div className=" mx-auto w-fit font-umu text-3xl font-medium leading-[50px]">
-              새해를 알리는
-              <br />
-              2024 신냥이 우체국
+          <div className="relative z-10 flex flex-1 flex-col justify-start text-center text-main">
+            <div className=" mx-auto w-fit font-umu text-4xl font-medium leading-[50px]">
+              배달부 설냥
             </div>
-            <span className="title-regular mt-2">
-              신년편지 냥이가 대신 전달해드립니다
+            <span className="title-regular mt-2 font-umu">
+              설날 편지 대신 써드린다냥
             </span>
+            <p className="mx-auto flex h-12 w-fit items-center rounded-md bg-[rgba(164,214,255,0.5)] px-4 font-umu">
+              종료 D-{daysUntilNewYear()}
+            </p>
+          </div>
+          <div className="absolute bottom-[5%] right-0 w-[90%] grow">
+            <Image
+              className="w-full"
+              width={설냥.width}
+              height={설냥.height}
+              src={설냥.src}
+              blurDataURL={설냥.blurDataURL}
+              placeholder="blur"
+              alt="설냥"
+            />
           </div>
           <div className="items-end">
             <HomeButton />
           </div>
         </div>
       </div>
-      <div className="fixed left-1/2 top-1/2 h-[1080px] w-[575px] -translate-x-1/2 -translate-y-1/2 bg-black">
-        <div className="relative -left-4">
-          <Image
-            src={home.src}
-            alt="신냥이우체국_집"
-            className="z-[1]"
-            width={575}
-            height={1080}
-            placeholder="blur"
-            blurDataURL={home.placeholder.base64}
-          />
-          <div className="absolute top-1 z-[1]">
-            <Image
-              src={ct.src}
-              blurDataURL={ct.placeholder.base64}
-              placeholder="blur"
-              alt="신냥이우체국_창틀"
-              className="z-[1]"
-              width={575}
-              height={1080}
+      <div>
+        <svg
+          className="moon fixed -right-[80px] -top-[80px]"
+          width="220"
+          height="220"
+          viewBox="0 0 220 220"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g filter="url(#filter0_f_1056_16087)">
+            <path
+              d="M170 110C170 143.137 143.137 170 110 170C76.8629 170 50 143.137 50 110C50 76.8629 76.8629 50 110 50C143.137 50 170 76.8629 170 110Z"
+              fill="#F0D460"
             />
-          </div>
-          <div className="absolute left-1/2 top-[54%] z-0 aspect-[375/329] h-[15%] -translate-x-1/2">
-            <Image
-              src={cat.src}
-              placeholder="blur"
-              blurDataURL={cat.placeholder.base64}
-              alt="창틀에 앉은 산타모자 쓴 우무"
-              style={{
-                objectFit: "contain",
-              }}
-              fill
+          </g>
+          <g filter="url(#filter1_f_1056_16087)">
+            <path
+              d="M170 110C170 143.137 143.137 170 110 170C76.8629 170 50 143.137 50 110C50 76.8629 76.8629 50 110 50C143.137 50 170 76.8629 170 110Z"
+              fill="#FAF5C8"
             />
-            <Image
-              src={accessory.src}
-              placeholder="blur"
-              blurDataURL={accessory.placeholder.base64}
-              style={{
-                objectFit: "contain",
-              }}
-              alt="acc"
-              fill
-            />
-          </div>
-        </div>
-        <Particles className="absolute left-0 top-0 z-[2] h-full w-full" />
-        <Snow style={{ backgroundColor: "transparent", zIndex: 2 }} />
+          </g>
+          <defs>
+            <filter
+              id="filter0_f_1056_16087"
+              x="46"
+              y="46"
+              width="128"
+              height="128"
+              filterUnits="userSpaceOnUse"
+              colorInterpolationFilters="sRGB"
+            >
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"
+              />
+              <feGaussianBlur
+                stdDeviation="2"
+                result="effect1_foregroundBlur_1056_16087"
+              />
+            </filter>
+            <filter
+              id="filter1_f_1056_16087"
+              x="0"
+              y="0"
+              width="220"
+              height="220"
+              filterUnits="userSpaceOnUse"
+              colorInterpolationFilters="sRGB"
+            >
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"
+              />
+              <feGaussianBlur
+                stdDeviation="25"
+                result="effect1_foregroundBlur_1056_16087"
+              />
+            </filter>
+          </defs>
+        </svg>
+        <Image
+          className="cloud2 absolute right-0 top-1/4"
+          src={cloud1}
+          width={cloud1.width}
+          height={cloud1.height}
+          blurDataURL={cloud1.blurDataURL}
+          placeholder="blur"
+          alt=""
+        />
+        <Image
+          className="cloud absolute right-0 top-8"
+          src={cloud2}
+          width={cloud2.width}
+          height={cloud2.height}
+          blurDataURL={cloud2.blurDataURL}
+          placeholder="blur"
+          alt=""
+        />
       </div>
-    </Layout>
+
+      {/* <Particles className="absolute left-0 top-0 z-[2] h-full w-full" />
+       */}
+      <Snow style={{ backgroundColor: "transparent", zIndex: 2 }} />
+    </>
   );
 };
 

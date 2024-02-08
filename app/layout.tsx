@@ -101,7 +101,7 @@ export default async function RootLayout({
         gookie.className,
         pretendard.variable,
         pretendard.className,
-        "bg-background",
+        "overflow-x-hidden bg-background",
         // "bg-[#26040D]",
       )}
       suppressHydrationWarning
@@ -147,7 +147,7 @@ export default async function RootLayout({
       </head>
       <body
         className={cn(
-          "relative font-sans antialiased",
+          "relative overflow-x-hidden font-sans antialiased",
           pretendard.className,
           umu.className,
           cheezu.className,
