@@ -11,6 +11,9 @@ import cat from "@/app/assets/구키/cat.png";
 
 const images = {
   main: cat,
+  kettle: f5,
+  songpyeon: f6,
+  mug: f7,
   bg,
   floating: [
     {
@@ -42,27 +45,6 @@ const images = {
       width: 10,
       left: 28,
       top: -35,
-    },
-    {
-      name: "f5",
-      image: f5,
-      width: 15,
-      left: 15,
-      top: -10,
-    },
-    {
-      name: "f6",
-      image: f6,
-      width: 25,
-      left: 23,
-      top: 13,
-    },
-    {
-      name: "f7",
-      image: f7,
-      width: 8,
-      left: 50,
-      top: 15,
     },
   ],
 };
