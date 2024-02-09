@@ -30,16 +30,16 @@ const OnBoardingPage = async () => {
     <>
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
-          <div className="relative z-10 flex flex-1 flex-col justify-start text-center text-main">
+          <div className="relative z-10 mt-10 flex flex-1 flex-col justify-start text-center text-main">
             <div className=" mx-auto w-fit font-umu text-4xl font-medium leading-[50px]">
               새해복설냥
             </div>
             <span className="title-regular font-umu leading-10">
-              설날 편지 대신 써드린다냥
+              설날 편지 대신 주러간다냥
             </span>
-            <p className="mx-auto flex h-12 w-fit items-center rounded-md bg-[rgba(164,214,255,0.5)] px-4 font-umu">
+            {/* <p className="mx-auto flex h-12 w-fit items-center rounded-md bg-[rgba(164,214,255,0.5)] px-4 font-umu">
               종료 D-{daysUntilNewYear()}
-            </p>
+            </p> */}
           </div>
           <div className="absolute bottom-[5%] right-0 w-[90%] grow">
             <Image
