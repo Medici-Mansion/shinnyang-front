@@ -98,7 +98,12 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       <div className="grow">
         {letter.catName === "umu" ? (
           <div className="absolute -bottom-[7%] left-0">
-            <Image src={umu.bg.src} width={umu.bg.width} alt="담요" />
+            <Image
+              src={umu.bg.src}
+              width={umu.bg.width}
+              height={umu.bg.height}
+              alt="담요"
+            />
             {letter.catName && <CatImage catType={letter.catName} />}
 
             {umu.floating.map((item) => (
