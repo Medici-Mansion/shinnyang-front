@@ -179,7 +179,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     alt=""
                   />
                   <Image
-                    className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
+                    className="absolute -top-[35%] left-[50%] z-[2] w-[43%]"
                     src={gookie.main.src}
                     alt={catType}
                     width={cheezu.main.width}
