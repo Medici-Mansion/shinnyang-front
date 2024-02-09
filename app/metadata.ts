@@ -33,8 +33,8 @@ export const defaultMetadata: Metadata = {
     locale: "ko_KR",
     siteName: "배달부 설냥",
     images: [
-      "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1706878495/tv5bhomeesnia17xkfcr.png",
-      "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1706877880/p1ojq4jdwkwoksrpeykd.png",
+      "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1707479297/o2ghfvd9vqprddzbpqmg.png",
+      "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1707477052/uvt55nfusidzaf3c8gm7.png",
     ],
   },
   category: "신년 편지 우체국 귀여운고양이 우무 체즈 구키 한해 시작",
