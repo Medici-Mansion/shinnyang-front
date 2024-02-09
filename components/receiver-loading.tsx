@@ -54,7 +54,12 @@ const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
                 : "bg-background",
         )}
       >
-        <div className="mt-6 font-umu text-[26px] leading-[46px]">
+        <div
+          className={cn(
+            "mt-6 font-umu text-[26px] leading-[46px]",
+            catType === "cheezu" && "invert",
+          )}
+        >
           설냥이가 안전하게
           <br />
           편지 주러왔다냥 ค^•ﻌ•^ค
