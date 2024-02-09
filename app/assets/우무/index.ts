@@ -5,6 +5,7 @@ import 중간위 from "@/app/assets/우무/U_mu.png";
 import 효과우측 from "@/app/assets/우무/E_r.png";
 import 효과좌측 from "@/app/assets/우무/E_l.png";
 import bg from "@/app/assets/우무/bg.png";
+import bgFlat from "@/app/assets/우무/bgFlat.png";
 
 import main from "@/app/assets/우무/main.png";
 
@@ -55,7 +56,7 @@ const images = {
   ],
   main,
   bg,
-  bgFlat: bg,
+  bgFlat,
 };
 
 export default images;

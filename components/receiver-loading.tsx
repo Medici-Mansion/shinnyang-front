@@ -57,7 +57,7 @@ const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
         <div className="mt-6 font-umu text-[26px] leading-[46px]">
           설냥이가 안전하게
           <br />
-          편지 배달왔다냥 ค^•ﻌ•^ค
+          편지 주러왔다냥 ค^•ﻌ•^ค
         </div>
         <m.div
           variants={{

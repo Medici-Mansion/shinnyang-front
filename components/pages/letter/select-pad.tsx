@@ -42,7 +42,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
       >
         마음에 드는 설냥이를
         <br />
-        선택해주냥 =^･ω･^=
+        선택해주라냥 =^･ω･^=
       </div>
       <FormField
         name="catName"
@@ -95,28 +95,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                   {umu.floating.map((item, index) => (
                     <AnimateArticle key={item.name} item={item} />
                   ))}
-                  <div className="absolute -top-[83%] left-[14%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
-                    <Image
-                      src={말풍선.src}
-                      width={말풍선.width}
-                      height={말풍선.height}
-                      alt="말풍선"
-                    />
-                    <p
-                      className={cn(
-                        "absolute text-black",
-                        field.value === "umu"
-                          ? "umu"
-                          : field.value === "cheezu"
-                            ? "cheezu"
-                            : "gookie",
-                      )}
-                    >
-                      나의 귀여운 글씨체와 함께
-                      <br />
-                      편지를 써보는 건 어떠냥!
-                    </p>
-                  </div>
                 </div>
               ) : field.value === "cheezu" ? (
                 <div className="absolute -bottom-[7%] left-0">
@@ -137,19 +115,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                   {cheezu.floating.map((item, index) => (
                     <AnimateArticle key={item.name} item={item} />
                   ))}
-                  <div className="absolute -top-[98%] left-[19%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
-                    <Image
-                      src={말풍선.src}
-                      width={말풍선.width}
-                      height={말풍선.height}
-                      alt="말풍선"
-                    />
-                    <p className={cn("cheezu absolute text-black")}>
-                      나의 귀여운 글씨체와 함께
-                      <br />
-                      편지를 써보는 건 어떠냥!
-                    </p>
-                  </div>
                 </div>
               ) : (
                 <div className="absolute -bottom-[7%] left-0">
@@ -191,21 +156,30 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                   {gookie.floating.map((item, index) => (
                     <AnimateArticle key={item.name} item={item} />
                   ))}
-                  <div className="absolute -top-[98%] left-[19%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
-                    <Image
-                      src={말풍선.src}
-                      width={말풍선.width}
-                      height={말풍선.height}
-                      alt="말풍선"
-                    />
-                    <p className={cn("gookie absolute text-black")}>
-                      나의 귀여운 글씨체와 함께
-                      <br />
-                      편지를 써보는 건 어떠냥!
-                    </p>
-                  </div>
                 </div>
               )}
+              <div className="absolute left-[7%] z-[2] flex w-[80%] scale-75 items-center justify-center">
+                <Image
+                  src={말풍선.src}
+                  width={말풍선.width}
+                  height={말풍선.height}
+                  alt="말풍선"
+                />
+                <p
+                  className={cn(
+                    "absolute text-black",
+                    field.value === "umu"
+                      ? "umu"
+                      : field.value === "cheezu"
+                        ? "cheezu"
+                        : "gookie",
+                  )}
+                >
+                  나의 귀여운 글씨체와 함께
+                  <br />
+                  편지를 써보는 건 어떠냥!
+                </p>
+              </div>
             </div>
           </>
         )}
