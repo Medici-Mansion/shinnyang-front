@@ -158,7 +158,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                   ))}
                 </div>
               )}
-              <div className="absolute left-[7%] z-[2] flex w-[80%] scale-75 items-center justify-center">
+              <div className="absolute left-[7%] z-[2] -mt-[5%] flex w-[80%] scale-75 items-center justify-center">
                 <Image
                   src={말풍선.src}
                   width={말풍선.width}
