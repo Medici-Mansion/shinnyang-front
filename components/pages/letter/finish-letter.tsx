@@ -15,8 +15,9 @@ import Image from "next/image";
 
 import { AnimateArticle, CatImage } from "./select-pad";
 
-import 우무 from "@/app/assets/우무";
 import cheezu from "@/app/assets/체즈";
+import umu from "@/app/assets/우무";
+import gookie from "@/app/assets/구키";
 
 import Link from "next/link";
 
@@ -53,7 +54,7 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           <h1
             className={cn(
               "whitespace-nowrap font-umu text-[26px] leading-[46px] text-main",
-              writtenLetter.catName !== "umu" && "invert",
+              writtenLetter.catName === "cheezu" && "invert",
             )}
           >
             편지가 완성되었다냥!
@@ -79,22 +80,22 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
           {writtenLetter.catName === "umu" ? (
             <div className="absolute -bottom-[7%] left-0">
               <Image
-                src={우무.bg.src}
+                src={umu.bg.src}
                 placeholder="blur"
-                width={우무.bg.width}
-                height={우무.bg.height}
-                blurDataURL={우무.bg.blurDataURL}
+                width={umu.bg.width}
+                height={umu.bg.height}
+                blurDataURL={umu.bg.blurDataURL}
                 alt="담요"
               />
               {writtenLetter?.catName && (
                 <CatImage catType={writtenLetter.catName} />
               )}
 
-              {우무.floating.map((item) => (
+              {umu.floating.map((item) => (
                 <AnimateArticle key={item.name} item={item} />
               ))}
             </div>
-          ) : (
+          ) : writtenLetter.catName === "cheezu" ? (
             <div className="absolute -bottom-[7%] left-0">
               <Image
                 src={cheezu.bg.src}
@@ -115,6 +116,57 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
               />
 
               {cheezu.floating.map((item, index) => (
+                <AnimateArticle key={item.name} item={item} />
+              ))}
+            </div>
+          ) : (
+            <div className="absolute -bottom-[7%] left-0">
+              <Image
+                src={gookie.bg.src}
+                placeholder="blur"
+                width={gookie.bg.width}
+                height={gookie.bg.height}
+                blurDataURL={gookie.bg.blurDataURL}
+                alt=""
+              />
+              <Image
+                className="absolute -top-[35%] left-[53%] z-[2] w-[43%]"
+                src={gookie.main.src}
+                alt=""
+                width={gookie.main.width}
+                height={gookie.main.height}
+                placeholder="blur"
+                blurDataURL={gookie.main.blurDataURL}
+              />
+              <Image
+                className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
+                src={gookie.kettle.src}
+                alt=""
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+                placeholder="blur"
+                blurDataURL={cheezu.main.blurDataURL}
+              />
+              <Image
+                className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
+                src={gookie.songpyeon.src}
+                alt=""
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+                placeholder="blur"
+                blurDataURL={cheezu.main.blurDataURL}
+              />
+              <Image
+                className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
+                src={gookie.mug.src}
+                alt=""
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+                placeholder="blur"
+                blurDataURL={cheezu.main.blurDataURL}
+              />
+
+              {gookie.floating.map((item, index) => (
                 <AnimateArticle key={item.name} item={item} />
               ))}
             </div>

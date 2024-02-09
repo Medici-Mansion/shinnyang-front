@@ -17,6 +17,8 @@ import Image from "next/image";
 
 import cheezu from "@/app/assets/체즈";
 import umu from "@/app/assets/우무";
+import gookie from "@/app/assets/구키";
+
 import { cn } from "@/lib/utils";
 
 interface WriteLetterProps {
@@ -24,8 +26,15 @@ interface WriteLetterProps {
   control: Control<LetterFormValues, any>;
   catType: "cheezu" | "gookie" | "umu";
 }
+
+const catAssetObj = {
+  umu,
+  cheezu,
+  gookie,
+};
+
 const WriteLetter = ({ control, catType }: WriteLetterProps) => {
-  const selectedCat = catType === "umu" ? umu : cheezu;
+  const selectedCat = catAssetObj[catType];
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -37,7 +46,7 @@ const WriteLetter = ({ control, catType }: WriteLetterProps) => {
         <h1
           className={cn(
             "whitespace-nowrap font-umu text-[26px] leading-[46px] [word-spacing:-6px]",
-            catType !== "umu" && "invert",
+            catType === "cheezu" && "invert",
           )}
         >
           편지를 작성해주라냥 ₍˄·͈༝·͈˄₎♡
@@ -48,7 +57,9 @@ const WriteLetter = ({ control, catType }: WriteLetterProps) => {
         name="receiverNickname"
         render={({ field }) => (
           <FormItem className="flex flex-col space-y-4">
-            <Label className={cn("text-main", catType !== "umu" && "invert")}>
+            <Label
+              className={cn("text-main", catType === "cheezu" && "invert")}
+            >
               받는 사람
             </Label>
             <FormControl>
@@ -74,7 +85,9 @@ const WriteLetter = ({ control, catType }: WriteLetterProps) => {
         name="content"
         render={({ field }) => (
           <FormItem className="flex grow flex-col space-y-4">
-            <Label className={cn("text-main", catType !== "umu" && "invert")}>
+            <Label
+              className={cn("text-main", catType === "cheezu" && "invert")}
+            >
               편지 내용
             </Label>
             <div className="flex flex-1 flex-col justify-between rounded-lg bg-white p-6">
@@ -102,7 +115,9 @@ const WriteLetter = ({ control, catType }: WriteLetterProps) => {
         name="senderNickname"
         render={({ field }) => (
           <FormItem className="flex flex-col space-y-4">
-            <Label className={cn("text-main", catType !== "umu" && "invert")}>
+            <Label
+              className={cn("text-main", catType === "cheezu" && "invert")}
+            >
               보내는 사람
             </Label>
             <FormControl>
@@ -126,11 +141,11 @@ const WriteLetter = ({ control, catType }: WriteLetterProps) => {
       <div className="grow">
         <div className="absolute -bottom-[7%] left-0 -z-[1]">
           <Image
-            src={selectedCat.bg.src}
+            src={selectedCat.bgFlat.src}
             placeholder="blur"
-            width={selectedCat.bg.width}
-            height={selectedCat.bg.height}
-            blurDataURL={selectedCat.bg.blurDataURL}
+            width={selectedCat.bgFlat.width}
+            height={selectedCat.bgFlat.height}
+            blurDataURL={selectedCat.bgFlat.blurDataURL}
             alt=""
           />
         </div>

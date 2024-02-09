@@ -10,16 +10,20 @@ import { CompletedLetter } from "@/type";
 import { useMutation } from "@tanstack/react-query";
 import APIs from "@/apis";
 import { useSession } from "@/components/provider/session-provider";
-import { AlertModal } from "@/components/modals/alert-modal";
 import LetterWithSheet from "@/components/letter-with-sheet";
-import FinishBottomDeco from "./finish-bottom-deco";
 import Snow from "../snow";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+
+import cheezu from "@/app/assets/체즈";
+import umu from "@/app/assets/우무";
+import gookie from "@/app/assets/구키";
+import { AnimateArticle, CatImage } from "./select-pad";
 
 interface FinishLetterProps {
   router: Pick<IHashContext, "push" | "back" | "replace">;
   control: Control<LetterFormValues, any>;
-  letter?: CompletedLetter;
+  letter: CompletedLetter;
 }
 
 const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
@@ -65,57 +69,103 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
       exit={{ opacity: 0 }}
       className="flex grow flex-col"
     >
-      <div className="relative z-0 mt-4 flex grow flex-col space-y-4">
-        <h1 className="text-title-large text-white">
-          편지에 답장하고
-          <br />
-          우체국에 보관해보세요!
+      <div className="relative z-0 flex grow flex-col space-y-4">
+        <h1
+          className={cn(
+            "whitespace-nowrap font-umu text-[26px] leading-[46px] text-main",
+            letter.catName === "cheezu" && "invert",
+          )}
+        >
+          도착한 편지다냥 =^･ω･^=
         </h1>
-        <div className="grow">
+        <div className="mx-auto w-[95%]">
           <LetterWithSheet
             className={cn(
-              letter?.catName === "umu"
+              "text-black",
+              letter.catName === "umu"
                 ? "umu"
                 : letter?.catName === "cheezu"
                   ? "cheezu"
                   : "gookie",
             )}
-            catType={letter?.catName ?? "umu"}
-            to={letter?.receiverNickname ?? ""}
-            content={letter?.content ?? ""}
-            from={letter?.senderNickname ?? ""}
+            catType={letter.catName}
+            to={letter.receiverNickname}
+            content={letter.content}
+            from={letter.senderNickname ?? ""}
           />
-          {letter?.catName ? (
-            <FinishBottomDeco catName={letter.catName} />
-          ) : null}
         </div>
+      </div>
+      <div className="grow">
+        {letter.catName === "umu" ? (
+          <div className="absolute -bottom-[7%] left-0">
+            <Image
+              src={umu.bg.src}
+              placeholder="blur"
+              width={umu.bg.width}
+              height={umu.bg.height}
+              blurDataURL={umu.bg.blurDataURL}
+              alt="담요"
+            />
+            {letter.catName && <CatImage catType={letter.catName} />}
+
+            {umu.floating.map((item) => (
+              <AnimateArticle key={item.name} item={item} />
+            ))}
+          </div>
+        ) : letter.catName === "cheezu" ? (
+          <div className="absolute -bottom-[7%] left-0">
+            <Image
+              src={cheezu.bg.src}
+              placeholder="blur"
+              width={cheezu.bg.width}
+              height={cheezu.bg.height}
+              blurDataURL={cheezu.bg.blurDataURL}
+              alt=""
+            />
+            <Image
+              className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
+              src={cheezu.main.src}
+              alt={""}
+              width={cheezu.main.width}
+              height={cheezu.main.height}
+              placeholder="blur"
+              blurDataURL={cheezu.main.blurDataURL}
+            />
+
+            {cheezu.floating.map((item, index) => (
+              <AnimateArticle key={item.name} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="absolute -bottom-[7%] left-0">
+            <Image
+              src={gookie.bg.src}
+              placeholder="blur"
+              width={cheezu.bg.width}
+              height={cheezu.bg.height}
+              blurDataURL={cheezu.bg.blurDataURL}
+              alt=""
+            />
+            <Image
+              className="absolute -top-[35%] left-[50%] z-[2] w-[43%]"
+              src={gookie.main.src}
+              alt=""
+              width={cheezu.main.width}
+              height={cheezu.main.height}
+              placeholder="blur"
+              blurDataURL={cheezu.main.blurDataURL}
+            />
+
+            {gookie.floating.map((item, index) => (
+              <AnimateArticle key={item.name} item={item} />
+            ))}
+          </div>
+        )}
       </div>
       <div className="z-[1]">
         <Button onClick={handleWriteReply}>답장하기</Button>
       </div>
 
-      {/* TODO: 모달 재사용성 고려하여 재구성필요 */}
-      <AlertModal
-        leftBtnTitle="아니오"
-        rightBtnTitle="우체국 만들기"
-        isOpen={open}
-        loading={false}
-        onClose={() => setOpen(false)}
-        onConfirm={() =>
-          signin({
-            callbackUrl: window.location.href,
-            provider: "kakao",
-          })
-        }
-        title={`나만의 우체국을 만들면\n받은 편지를 보관하고 답장할 수 있어요!`}
-      />
-      <AlertModal
-        leftBtnTitle="확인했어요"
-        isOpen={openRequireLogin}
-        loading={false}
-        onClose={() => setOpenRequireLogin(false)}
-        title={`내가 보낸 편지는 답장할 수 없어요!`}
-      />
       <Snow style={{ backgroundColor: "transparent", zIndex: 0 }} />
     </motion.div>
   );

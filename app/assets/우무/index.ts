@@ -55,6 +55,7 @@ const images = {
   ],
   main,
   bg,
+  bgFlat: bg,
 };
 
 export default images;

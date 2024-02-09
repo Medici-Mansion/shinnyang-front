@@ -5,12 +5,14 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import loadingImages from "@/app/assets/배달로딩";
 import Snow from "./pages/snow";
+import { LetterFormValues } from "@/form-state";
 
 interface LoadingProps {
   className?: string;
+  catType: LetterFormValues["catName"];
   onFinish: () => void;
 }
-const ReceiverLoading = ({ className, onFinish }: LoadingProps) => {
+const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
   const [time, setTime] = useState(0);
 
   useLayoutEffect(() => {
@@ -43,6 +45,13 @@ const ReceiverLoading = ({ className, onFinish }: LoadingProps) => {
       <div
         className={cn(
           "flex  h-full  flex-col overflow-y-hidden overflow-x-clip p-6 text-main duration-100",
+          catType === "umu"
+            ? "bg-background"
+            : catType === "cheezu"
+              ? "bg-[#E8E2D6]"
+              : catType === "gookie"
+                ? "bg-[#92AFC7]"
+                : "bg-background",
         )}
       >
         <div className="mt-6 font-umu text-[26px] leading-[46px]">
@@ -66,7 +75,7 @@ const ReceiverLoading = ({ className, onFinish }: LoadingProps) => {
           animate="animate"
           exit="exit"
           className={cn(
-            "flex h-[100dvh] items-center justify-center bg-background px-8",
+            "flex h-[100dvh] items-center justify-center px-8",
             className,
           )}
         >

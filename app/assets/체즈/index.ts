@@ -10,6 +10,7 @@ import cat from "@/app/assets/체즈/cat.png";
 const images = {
   main: cat,
   bg,
+  bgFlat: bg,
   floating: [
     {
       name: "f1",

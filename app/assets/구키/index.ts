@@ -7,6 +7,8 @@ import f6 from "@/app/assets/구키/f2.png";
 import f7 from "@/app/assets/구키/f3.png";
 import bg from "@/app/assets/구키/bg.png";
 
+import bgFlat from "@/app/assets/구키/bg2.png";
+
 import cat from "@/app/assets/구키/cat.png";
 
 const images = {
@@ -15,6 +17,7 @@ const images = {
   songpyeon: f6,
   mug: f7,
   bg,
+  bgFlat,
   floating: [
     {
       name: "f1",

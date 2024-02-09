@@ -4,7 +4,6 @@ import React, { Suspense, useContext, useEffect, useState } from "react";
 import { HashContext } from "@/hooks/use-hash-router";
 import { AnimatePresence } from "framer-motion";
 
-import BaseLayout from "@/layout/base-layout";
 import { LETTER_TYPE, LetterFormValues, letterFormState } from "@/form-state";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,8 +20,8 @@ import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import ReceiverLoading from "@/components/receiver-loading";
+import { TestQ } from "../../../letter/page";
 const ReceiverPage = ({
   params: { letterId },
 }: {
@@ -52,7 +51,11 @@ const ReceiverPage = ({
   });
 
   const onValid = (values: LetterFormValues) => {
-    router.push("finish");
+    mutate(values, {
+      async onSuccess(data) {
+        router.push("finish");
+      },
+    });
   };
 
   useEffect(() => {
@@ -72,30 +75,43 @@ const ReceiverPage = ({
     }
   }, [form, letter?.senderId, letter?.senderNickname]);
 
-  const isEditRoute = router.hash === "#cat" || router.hash === "#letter";
-
   const catType = form.watch("catName");
 
   return loading ? (
     <ReceiverLoading
+      catType={letter.catName}
       onFinish={() => {
         setLoading(false);
       }}
     />
   ) : (
     <Form {...form}>
-      <BaseLayout
-        as="form"
+      <form
         onSubmit={form.handleSubmit(onValid)}
         className={cn(
-          "flex h-full flex-col overflow-y-hidden duration-100",
-          router.hash === "#finish" && "bg-[#111111]",
-          !router.hash && "bg-black",
-          isEditRoute && "bg-point-500",
+          "flex h-full flex-col overflow-y-hidden overflow-x-clip p-6 text-secondary-white duration-100",
+          !router.hash
+            ? letter.catName === "umu"
+              ? "bg-background"
+              : letter.catName === "cheezu"
+                ? "bg-[#E8E2D6]"
+                : letter.catName === "gookie"
+                  ? "bg-[#92AFC7]"
+                  : "bg-background"
+            : catType === "umu"
+              ? "bg-background"
+              : catType === "cheezu"
+                ? "bg-[#E8E2D6]"
+                : catType === "gookie"
+                  ? "bg-[#92AFC7]"
+                  : "bg-background",
         )}
       >
         {router.hash && (
-          <ArrowLeft className="invert" onClick={() => router.back()} />
+          <ArrowLeft
+            className={cn("text-main", catType === "cheezu" && "invert")}
+            onClick={() => router.back()}
+          />
         )}
 
         <Suspense fallback={<Loading />}>
@@ -122,40 +138,27 @@ const ReceiverPage = ({
               />
             ) : null}
             {router.hash === "#finish" ? (
-              <FinishLetter
-                router={router}
-                control={form.control}
-                onSendLetter={(values) => {
-                  mutate(values, {
-                    async onSuccess(data) {
-                      if (data && data.ok) {
-                        router.push(`/mailing/${data.data.id}`, {
-                          native: true,
-                        });
-                      }
-                    },
-                  });
-                }}
-              />
+              <TestQ>
+                <FinishLetter
+                  router={router}
+                  control={form.control}
+                  onSendLetter={(values) => {
+                    mutate(values, {
+                      async onSuccess(data) {
+                        if (data && data.ok) {
+                          router.push(`/mailing/${data.data.id}`, {
+                            native: true,
+                          });
+                        }
+                      },
+                    });
+                  }}
+                />
+              </TestQ>
             ) : null}
           </AnimatePresence>
         </Suspense>
-      </BaseLayout>
-      {isEditRoute ? (
-        <div className="absolute bottom-0">
-          <Image
-            src={
-              "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1703753597/oeyygajwd4m0z6yyrkwr.png"
-            }
-            width={752}
-            height={474}
-            priority
-            //  placeholder="blur"
-            //  blurDataURL={table.placeholder.base64}
-            alt="테이블"
-          />
-        </div>
-      ) : null}
+      </form>
     </Form>
   );
 };

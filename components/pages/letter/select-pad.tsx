@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 import { memo } from "react";
 
 import 말풍선 from "@/app/assets/speech_bubble.png";
-import { Divide } from "lucide-react";
 
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
@@ -38,7 +37,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
       <div
         className={cn(
           "font-umu text-[26px] leading-[46px]",
-          catType !== "umu" && "invert",
+          catType === "cheezu" && "invert",
         )}
       >
         마음에 드는 설냥이를
@@ -173,19 +172,19 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                   <Image
                     src={gookie.bg.src}
                     placeholder="blur"
-                    width={cheezu.bg.width}
-                    height={cheezu.bg.height}
-                    blurDataURL={cheezu.bg.blurDataURL}
+                    width={gookie.bg.width}
+                    height={gookie.bg.height}
+                    blurDataURL={gookie.bg.blurDataURL}
                     alt=""
                   />
                   <Image
                     className="absolute -top-[35%] left-[53%] z-[2] w-[43%]"
                     src={gookie.main.src}
                     alt={catType}
-                    width={cheezu.main.width}
-                    height={cheezu.main.height}
+                    width={gookie.main.width}
+                    height={gookie.main.height}
                     placeholder="blur"
-                    blurDataURL={cheezu.main.blurDataURL}
+                    blurDataURL={gookie.main.blurDataURL}
                   />
                   <Image
                     className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
@@ -227,7 +226,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                       placeholder="blur"
                       blurDataURL={말풍선.blurDataURL}
                     />
-                    <p className={cn("cheezu absolute text-black")}>
+                    <p className={cn("gookie absolute text-black")}>
                       나의 귀여운 글씨체와 함께
                       <br />
                       편지를 써보는 건 어떠냥!

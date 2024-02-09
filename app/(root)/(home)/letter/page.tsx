@@ -69,7 +69,7 @@ const LetterPage = () => {
       >
         {router.hash !== "#mailing" && (
           <ArrowLeft
-            className={cn("text-main", catType !== "umu" && "invert")}
+            className={cn("text-main", catType === "cheezu" && "invert")}
             onClick={() => router.back()}
           />
         )}
@@ -188,7 +188,7 @@ const LetterPage = () => {
 
 export default LetterPage;
 
-function TestQ({ children }: PropsWithChildren) {
+export function TestQ({ children }: PropsWithChildren) {
   const {} = useSuspenseQuery({
     queryKey: ["TEST"],
     queryFn: () =>
