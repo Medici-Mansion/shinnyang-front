@@ -141,14 +141,41 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
             <Image
               src={gookie.bg.src}
               placeholder="blur"
-              width={cheezu.bg.width}
-              height={cheezu.bg.height}
-              blurDataURL={cheezu.bg.blurDataURL}
+              width={gookie.bg.width}
+              height={gookie.bg.height}
+              blurDataURL={gookie.bg.blurDataURL}
               alt=""
             />
             <Image
-              className="absolute -top-[35%] left-[50%] z-[2] w-[43%]"
+              className="absolute -top-[35%] left-[53%] z-[2] w-[43%]"
               src={gookie.main.src}
+              alt=""
+              width={gookie.main.width}
+              height={gookie.main.height}
+              placeholder="blur"
+              blurDataURL={gookie.main.blurDataURL}
+            />
+            <Image
+              className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
+              src={gookie.kettle.src}
+              alt=""
+              width={cheezu.main.width}
+              height={cheezu.main.height}
+              placeholder="blur"
+              blurDataURL={cheezu.main.blurDataURL}
+            />
+            <Image
+              className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
+              src={gookie.songpyeon.src}
+              alt=""
+              width={cheezu.main.width}
+              height={cheezu.main.height}
+              placeholder="blur"
+              blurDataURL={cheezu.main.blurDataURL}
+            />
+            <Image
+              className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
+              src={gookie.mug.src}
               alt=""
               width={cheezu.main.width}
               height={cheezu.main.height}
