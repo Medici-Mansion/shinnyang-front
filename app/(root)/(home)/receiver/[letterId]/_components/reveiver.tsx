@@ -74,6 +74,10 @@ const ReceiverPage = ({
         router.push("cat");
       }, 0);
     }
+
+    if (!window.Kakao?.isInitialized()) {
+      window.Kakao?.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+    }
   }, []);
 
   useEffect(() => {

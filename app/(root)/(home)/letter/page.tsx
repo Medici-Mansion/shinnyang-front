@@ -1,6 +1,12 @@
 "use client";
 
-import React, { PropsWithChildren, Suspense, useContext, useMemo } from "react";
+import React, {
+  PropsWithChildren,
+  Suspense,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { LETTER_TYPE, LetterFormValues, letterFormState } from "@/form-state";
@@ -52,6 +58,13 @@ const LetterPage = () => {
       },
     );
   };
+
+  useEffect(() => {
+    if (!window.Kakao?.isInitialized()) {
+      window.Kakao?.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+    }
+  }, []);
+
   const catType = form.watch("catName");
   const selectedCat = useMemo(() => {
     return cats?.find((cat) => data?.catName === cat.code);
