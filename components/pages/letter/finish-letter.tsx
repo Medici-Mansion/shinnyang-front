@@ -30,7 +30,12 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
   const { getValues } = useFormContext<LetterFormValues>();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const userAgent = navigator.userAgent;
+  var isMobile = userAgent.match(
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i,
+  );
 
+  console.log(isMobile, "<<<<");
   const writtenLetter = useMemo(() => getValues(), [getValues]);
 
   const handleSendLetter = async () => {
