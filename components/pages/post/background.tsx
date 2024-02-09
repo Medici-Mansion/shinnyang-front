@@ -45,10 +45,8 @@ const Background = ({ post }: { post?: ImageWithBlur }) => {
         {post ? (
           <Image
             src={post.src}
-            placeholder="blur"
             width={post.placeholder.metadata.width}
             height={post.placeholder.metadata.height}
-            blurDataURL={post.placeholder.base64}
             alt="background"
           />
         ) : (

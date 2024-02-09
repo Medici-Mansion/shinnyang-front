@@ -72,13 +72,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     className="relative mb-2 flex aspect-square items-center justify-center rounded-xl bg-white opacity-50 duration-100 peer-checked:border-2 peer-checked:border-main peer-checked:opacity-100"
                   >
                     <div className="relative aspect-square w-4/5">
-                      <Image
-                        src={catType.faceImage}
-                        alt={catType.name}
-                        fill
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KG..."
-                      />
+                      <Image src={catType.faceImage} alt={catType.name} fill />
                     </div>
                   </label>
                   <span className="mt-2 rounded-full px-4 py-1 text-title-medium peer-checked:bg-main peer-checked:text-black">
@@ -92,10 +86,8 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                 <div className="absolute -bottom-[7%] left-0">
                   <Image
                     src={umu.bg.src}
-                    placeholder="blur"
                     width={umu.bg.width}
                     height={umu.bg.height}
-                    blurDataURL={umu.bg.blurDataURL}
                     alt="담요"
                   />
                   <CatImage catType={field.value} />
@@ -109,8 +101,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                       width={말풍선.width}
                       height={말풍선.height}
                       alt="말풍선"
-                      placeholder="blur"
-                      blurDataURL={말풍선.blurDataURL}
                     />
                     <p
                       className={cn(
@@ -132,10 +122,8 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                 <div className="absolute -bottom-[7%] left-0">
                   <Image
                     src={cheezu.bg.src}
-                    placeholder="blur"
                     width={cheezu.bg.width}
                     height={cheezu.bg.height}
-                    blurDataURL={cheezu.bg.blurDataURL}
                     alt=""
                   />
                   <Image
@@ -144,8 +132,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     alt={catType}
                     width={cheezu.main.width}
                     height={cheezu.main.height}
-                    placeholder="blur"
-                    blurDataURL={cheezu.main.blurDataURL}
                   />
 
                   {cheezu.floating.map((item, index) => (
@@ -157,8 +143,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                       width={말풍선.width}
                       height={말풍선.height}
                       alt="말풍선"
-                      placeholder="blur"
-                      blurDataURL={말풍선.blurDataURL}
                     />
                     <p className={cn("cheezu absolute text-black")}>
                       나의 귀여운 글씨체와 함께
@@ -171,10 +155,8 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                 <div className="absolute -bottom-[7%] left-0">
                   <Image
                     src={gookie.bg.src}
-                    placeholder="blur"
                     width={gookie.bg.width}
                     height={gookie.bg.height}
-                    blurDataURL={gookie.bg.blurDataURL}
                     alt=""
                   />
                   <Image
@@ -183,8 +165,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     alt={catType}
                     width={gookie.main.width}
                     height={gookie.main.height}
-                    placeholder="blur"
-                    blurDataURL={gookie.main.blurDataURL}
                   />
                   <Image
                     className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
@@ -192,8 +172,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     alt={catType}
                     width={cheezu.main.width}
                     height={cheezu.main.height}
-                    placeholder="blur"
-                    blurDataURL={cheezu.main.blurDataURL}
                   />
                   <Image
                     className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
@@ -201,8 +179,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     alt={catType}
                     width={cheezu.main.width}
                     height={cheezu.main.height}
-                    placeholder="blur"
-                    blurDataURL={cheezu.main.blurDataURL}
                   />
                   <Image
                     className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
@@ -210,8 +186,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     alt={catType}
                     width={cheezu.main.width}
                     height={cheezu.main.height}
-                    placeholder="blur"
-                    blurDataURL={cheezu.main.blurDataURL}
                   />
 
                   {gookie.floating.map((item, index) => (
@@ -223,8 +197,6 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                       width={말풍선.width}
                       height={말풍선.height}
                       alt="말풍선"
-                      placeholder="blur"
-                      blurDataURL={말풍선.blurDataURL}
                     />
                     <p className={cn("gookie absolute text-black")}>
                       나의 귀여운 글씨체와 함께
@@ -281,8 +253,6 @@ export const AnimateArticle = memo(
         alt={item.name}
         width={image.width}
         height={image.height}
-        placeholder="blur"
-        blurDataURL={image.blurDataURL}
       />
     );
   },
@@ -303,8 +273,6 @@ export function CatImage({
       alt={catType}
       width={cat.width}
       height={cat.height}
-      placeholder="blur"
-      blurDataURL={cat.blurDataURL}
     />
   );
 }

@@ -47,8 +47,6 @@ const OnBoardingPage = async () => {
               width={설냥.width}
               height={설냥.height}
               src={설냥.src}
-              // blurDataURL={설냥.blurDataURL}
-              // placeholder="blur"
               alt="설냥"
             />
           </div>
@@ -128,8 +126,6 @@ const OnBoardingPage = async () => {
           src={cloud1}
           width={cloud1.width}
           height={cloud1.height}
-          // blurDataURL={cloud1.blurDataURL}
-          // placeholder="blur"
           alt=""
         />
         <Image
@@ -137,8 +133,6 @@ const OnBoardingPage = async () => {
           src={cloud2}
           width={cloud2.width}
           height={cloud2.height}
-          // blurDataURL={cloud2.blurDataURL}
-          // placeholder="blur"
           alt=""
         />
       </div>

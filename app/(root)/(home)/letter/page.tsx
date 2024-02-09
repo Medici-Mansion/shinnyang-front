@@ -212,8 +212,6 @@ const LetterPage = () => {
               src={cloud2}
               width={cloud2.width}
               height={cloud2.height}
-              blurDataURL={cloud2.blurDataURL}
-              placeholder="blur"
               alt=""
             />
           </div>

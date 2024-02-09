@@ -11,8 +11,6 @@ async function ImgWithPlaceholder({ src }: { src: string }) {
       width={placeholder.metadata.width}
       height={placeholder.metadata.height}
       style={{ objectFit: "contain" }}
-      placeholder="blur"
-      blurDataURL={placeholder.base64}
     />
   );
 }

@@ -223,13 +223,7 @@ const SelectAccessories = ({ open, setOpen }: SelectAccessoriesProps) => {
                         : "bg-gray-400",
                     )}
                   >
-                    <Image
-                      src={accType.iconImage}
-                      alt={accType.name}
-                      fill
-                      placeholder="blur"
-                      blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcOnt2PQAF5AJMrzp1XwAAAABJRU5ErkJggg=="
-                    />
+                    <Image src={accType.iconImage} alt={accType.name} fill />
                   </div>
                   {accType.name.replace(" 모자", "")}
                 </label>

@@ -74,8 +74,6 @@ const LetterWithSheet = ({
         alt="편지지"
         width={편지지.width}
         height={편지지.height}
-        placeholder="blur"
-        blurDataURL={편지지.blurDataURL}
         style={{ objectFit: "cover" }}
       />
     </div>

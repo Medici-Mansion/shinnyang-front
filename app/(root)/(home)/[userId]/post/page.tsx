@@ -100,8 +100,6 @@ const PostPage = () => {
                   }
                   fill
                   priority
-                  //  placeholder="blur"
-                  //  blurDataURL={table.placeholder.base64}
                   alt="테이블"
                   className="-z-[1]"
                 />

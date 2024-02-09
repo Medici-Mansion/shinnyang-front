@@ -102,8 +102,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               src={umu.bg.src}
               placeholder="blur"
               width={umu.bg.width}
-              height={umu.bg.height}
-              blurDataURL={umu.bg.blurDataURL}
               alt="담요"
             />
             {letter.catName && <CatImage catType={letter.catName} />}
@@ -118,8 +116,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               src={cheezu.bg.src}
               placeholder="blur"
               width={cheezu.bg.width}
-              height={cheezu.bg.height}
-              blurDataURL={cheezu.bg.blurDataURL}
               alt=""
             />
             <Image
@@ -128,8 +124,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               alt={""}
               width={cheezu.main.width}
               height={cheezu.main.height}
-              placeholder="blur"
-              blurDataURL={cheezu.main.blurDataURL}
             />
 
             {cheezu.floating.map((item, index) => (
@@ -140,10 +134,8 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
           <div className="absolute -bottom-[7%] left-0">
             <Image
               src={gookie.bg.src}
-              placeholder="blur"
               width={gookie.bg.width}
               height={gookie.bg.height}
-              blurDataURL={gookie.bg.blurDataURL}
               alt=""
             />
             <Image
@@ -152,8 +144,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               alt=""
               width={gookie.main.width}
               height={gookie.main.height}
-              placeholder="blur"
-              blurDataURL={gookie.main.blurDataURL}
             />
             <Image
               className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
@@ -161,8 +151,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               alt=""
               width={cheezu.main.width}
               height={cheezu.main.height}
-              placeholder="blur"
-              blurDataURL={cheezu.main.blurDataURL}
             />
             <Image
               className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
@@ -170,8 +158,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               alt=""
               width={cheezu.main.width}
               height={cheezu.main.height}
-              placeholder="blur"
-              blurDataURL={cheezu.main.blurDataURL}
             />
             <Image
               className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
@@ -179,8 +165,6 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
               alt=""
               width={cheezu.main.width}
               height={cheezu.main.height}
-              placeholder="blur"
-              blurDataURL={cheezu.main.blurDataURL}
             />
 
             {gookie.floating.map((item, index) => (

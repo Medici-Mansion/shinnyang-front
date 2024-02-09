@@ -142,10 +142,8 @@ const WriteLetter = ({ control, catType }: WriteLetterProps) => {
         <div className="absolute -bottom-[7%] left-0 -z-[1]">
           <Image
             src={selectedCat.bgFlat.src}
-            placeholder="blur"
             width={selectedCat.bgFlat.width}
             height={selectedCat.bgFlat.height}
-            blurDataURL={selectedCat.bgFlat.blurDataURL}
             alt=""
           />
         </div>

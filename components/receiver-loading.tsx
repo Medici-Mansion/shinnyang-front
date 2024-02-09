@@ -84,8 +84,6 @@ const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
               src={image.src}
               width={image.width}
               height={image.height}
-              blurDataURL={image.blurDataURL}
-              placeholder="blur"
               alt="loading"
               style={{ objectFit: "contain" }}
             />

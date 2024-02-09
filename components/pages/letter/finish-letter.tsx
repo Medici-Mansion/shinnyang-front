@@ -86,10 +86,8 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
             <div className="absolute -bottom-[7%] left-0">
               <Image
                 src={umu.bg.src}
-                placeholder="blur"
                 width={umu.bg.width}
                 height={umu.bg.height}
-                blurDataURL={umu.bg.blurDataURL}
                 alt="담요"
               />
               {writtenLetter?.catName && (
@@ -104,10 +102,8 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
             <div className="absolute -bottom-[7%] left-0">
               <Image
                 src={cheezu.bg.src}
-                placeholder="blur"
                 width={cheezu.bg.width}
                 height={cheezu.bg.height}
-                blurDataURL={cheezu.bg.blurDataURL}
                 alt=""
               />
               <Image
@@ -116,8 +112,6 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
                 alt={""}
                 width={cheezu.main.width}
                 height={cheezu.main.height}
-                placeholder="blur"
-                blurDataURL={cheezu.main.blurDataURL}
               />
 
               {cheezu.floating.map((item, index) => (
@@ -128,10 +122,8 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
             <div className="absolute -bottom-[7%] left-0">
               <Image
                 src={gookie.bg.src}
-                placeholder="blur"
                 width={gookie.bg.width}
                 height={gookie.bg.height}
-                blurDataURL={gookie.bg.blurDataURL}
                 alt=""
               />
               <Image
@@ -140,8 +132,6 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
                 alt=""
                 width={gookie.main.width}
                 height={gookie.main.height}
-                placeholder="blur"
-                blurDataURL={gookie.main.blurDataURL}
               />
               <Image
                 className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
@@ -149,8 +139,6 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
                 alt=""
                 width={cheezu.main.width}
                 height={cheezu.main.height}
-                placeholder="blur"
-                blurDataURL={cheezu.main.blurDataURL}
               />
               <Image
                 className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
@@ -158,8 +146,6 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
                 alt=""
                 width={cheezu.main.width}
                 height={cheezu.main.height}
-                placeholder="blur"
-                blurDataURL={cheezu.main.blurDataURL}
               />
               <Image
                 className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
@@ -167,8 +153,6 @@ const FinishLetter = ({ onSendLetter, router }: FinishLetterProps) => {
                 alt=""
                 width={cheezu.main.width}
                 height={cheezu.main.height}
-                placeholder="blur"
-                blurDataURL={cheezu.main.blurDataURL}
               />
 
               {gookie.floating.map((item, index) => (
