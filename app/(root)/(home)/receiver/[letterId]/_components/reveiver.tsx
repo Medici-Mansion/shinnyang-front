@@ -19,7 +19,7 @@ import SelectPad from "@/components/pages/letter/select-pad";
 import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import { useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, copyURL } from "@/lib/utils";
 import ReceiverLoading from "@/components/receiver-loading";
 import { TestQ } from "../../../letter/page";
 const ReceiverPage = ({
@@ -29,7 +29,7 @@ const ReceiverPage = ({
 }) => {
   // ReceiverLoading
   const [loading, setLoading] = useState(true);
-  const { mutate } = useSendLetter();
+  const { mutate, data } = useSendLetter();
   const searchParams = useSearchParams();
   const replyMailId = searchParams.get("mailId");
   const router = useContext(HashContext);
@@ -143,15 +143,9 @@ const ReceiverPage = ({
                   router={router}
                   control={form.control}
                   onSendLetter={(values) => {
-                    mutate(values, {
-                      async onSuccess(data) {
-                        if (data && data.ok) {
-                          router.push(`/mailing/${data.data.id}`, {
-                            native: true,
-                          });
-                        }
-                      },
-                    });
+                    if (data) {
+                      copyURL(`/receiver/${data?.id}`);
+                    }
                   }}
                 />
               </TestQ>
