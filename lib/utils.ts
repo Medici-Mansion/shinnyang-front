@@ -43,3 +43,9 @@ export function getLimitedByteText(inputText: string, maxByte: number) {
     }, 0) <= maxByte
   );
 }
+
+export function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { PropsWithChildren, Suspense, useContext } from "react";
+import React, { PropsWithChildren, Suspense, useContext, useMemo } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { LETTER_TYPE, LetterFormValues, letterFormState } from "@/form-state";
@@ -11,10 +11,11 @@ import { Form } from "@/components/ui/form";
 import dynamic from "next/dynamic";
 import Loading from "@/components/loading";
 import useSendLetter from "@/hooks/use-send-letter";
-import { cn, copyURL } from "@/lib/utils";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { cn, copyURL, isMobile } from "@/lib/utils";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import cloud2 from "@/app/assets/cloud2.png";
+import CommonQuery from "@/lib/queries/common.query";
 
 const SelectPad = dynamic(() => import("@/components/pages/letter/select-pad"));
 const WriteLetter = dynamic(
@@ -25,6 +26,7 @@ const FinishLetter = dynamic(
 );
 
 const LetterPage = () => {
+  const { data: cats } = useQuery(CommonQuery.getCat);
   const { mutate, data } = useSendLetter();
   const router = useContext(HashContext);
   const form = useForm<LetterFormValues>({
@@ -51,6 +53,9 @@ const LetterPage = () => {
     );
   };
   const catType = form.watch("catName");
+  const selectedCat = useMemo(() => {
+    return cats?.find((cat) => data?.catName === cat.code);
+  }, [cats, data?.catName]);
 
   return (
     <Form {...form}>
@@ -96,7 +101,26 @@ const LetterPage = () => {
                   control={form.control}
                   onSendLetter={(values) => {
                     if (data) {
-                      copyURL(`/receiver/${data?.id}`);
+                      if (isMobile() && selectedCat) {
+                        window.Kakao?.Share.sendCustom({
+                          templateId: parseInt(
+                            process.env.NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID,
+                          ),
+                          installTalk: true,
+                          templateArgs: {
+                            LETTER_ID: data.id,
+                            CAT_AVATAR: selectedCat.faceImage,
+                            CAT_NAME: selectedCat.name,
+                            SENDER: data.senderNickname,
+                          },
+                          serverCallbackArgs: {
+                            letterId: data.id,
+                            letterType: data.letterType,
+                          },
+                        });
+                      } else {
+                        copyURL(`/receiver/${data?.id}`);
+                      }
                     }
                   }}
                 />

@@ -5,6 +5,7 @@ import React, {
   Suspense,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { HashContext } from "@/hooks/use-hash-router";
@@ -18,15 +19,16 @@ import useSendLetter from "@/hooks/use-send-letter";
 import AnswerLetter from "@/components/pages/letter/answer-letter";
 import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import LetterQuery from "@/lib/queries/letter.query";
 import Loading from "@/components/loading";
 import SelectPad from "@/components/pages/letter/select-pad";
 import WriteLetter from "@/components/pages/letter/write-letter";
 import FinishLetter from "@/components/pages/letter/finish-letter";
 import { useSearchParams } from "next/navigation";
-import { cn, copyURL } from "@/lib/utils";
+import { cn, copyURL, isMobile } from "@/lib/utils";
 import ReceiverLoading from "@/components/receiver-loading";
+import CommonQuery from "@/lib/queries/common.query";
 
 const ReceiverPage = ({
   params: { letterId },
@@ -34,7 +36,9 @@ const ReceiverPage = ({
   params: { letterId: string };
 }) => {
   // ReceiverLoading
+
   const [loading, setLoading] = useState(true);
+  const { data: cats } = useQuery(CommonQuery.getCat);
   const { mutate, data } = useSendLetter();
   const searchParams = useSearchParams();
   const replyMailId = searchParams.get("mailId");
@@ -82,6 +86,9 @@ const ReceiverPage = ({
   }, [form, letter?.senderId, letter?.senderNickname]);
 
   const catType = form.watch("catName");
+  const selectedCat = useMemo(() => {
+    return cats?.find((cat) => data?.catName === cat.code);
+  }, [cats, data?.catName]);
 
   return loading ? (
     <ReceiverLoading
@@ -150,7 +157,26 @@ const ReceiverPage = ({
                   control={form.control}
                   onSendLetter={(values) => {
                     if (data) {
-                      copyURL(`/receiver/${data?.id}`);
+                      if (isMobile() && selectedCat) {
+                        window.Kakao?.Share.sendCustom({
+                          templateId: parseInt(
+                            process.env.NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID,
+                          ),
+                          installTalk: true,
+                          templateArgs: {
+                            LETTER_ID: data.id,
+                            CAT_AVATAR: selectedCat.faceImage,
+                            CAT_NAME: selectedCat.name,
+                            SENDER: data.senderNickname,
+                          },
+                          serverCallbackArgs: {
+                            letterId: data.id,
+                            letterType: data.letterType,
+                          },
+                        });
+                      } else {
+                        copyURL(`/receiver/${data?.id}`);
+                      }
                     }
                   }}
                 />
