@@ -75,7 +75,7 @@ const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
           animate="animate"
           exit="exit"
           className={cn(
-            "flex h-[100dvh] items-center justify-center px-8",
+            "screen-height flex items-center justify-center px-8",
             className,
           )}
         >
