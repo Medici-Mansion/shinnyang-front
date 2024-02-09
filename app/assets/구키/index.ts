@@ -21,12 +21,11 @@ const images = {
   floating: [
     {
       name: "f1",
-      image: f1,
-      width: 5,
-      left: 43,
+      image: f3,
+      width: 4,
+      left: 45,
       top: -10,
     },
-
     {
       name: "f2",
       image: f2,
@@ -36,10 +35,10 @@ const images = {
     },
     {
       name: "f3",
-      image: f3,
+      image: f1,
       width: 2,
       left: 50,
-      top: 10,
+      top: 9,
       z: 1,
     },
     {
