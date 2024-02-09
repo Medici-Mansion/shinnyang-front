@@ -1,13 +1,13 @@
 import { Metadata, MetadataRoute } from "next";
 
 export const defaultMetadata: Metadata = {
-  title: "배달부 설냥",
+  title: "새해복설냥",
   description: "",
   authors: {
     name: "Medici-mansion",
     url: "https://medici-mansion.com",
   },
-  applicationName: "배달부 설냥",
+  applicationName: "새해복설냥",
   creator: "메디치 맨션",
   icons:
     "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1707477052/uvt55nfusidzaf3c8gm7.png",
@@ -28,10 +28,10 @@ export const defaultMetadata: Metadata = {
     description:
       "귀여운 고양이 '우무', '체즈', '구키'를 통해 새해 편지를 공유하고 활기찬 한해를 시작해 보세요!",
     emails: "medici-ideas@gmail.com",
-    title: "새해를 알리는 2024 배달부 설냥",
+    title: "새해를 알리는 2024 새해복설냥",
     url: "https://catsnewyear.site",
     locale: "ko_KR",
-    siteName: "배달부 설냥",
+    siteName: "새해복설냥",
     images: [
       "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1707479297/o2ghfvd9vqprddzbpqmg.png",
       "https://res.cloudinary.com/dzfrlb2nb/image/upload/v1707477052/uvt55nfusidzaf3c8gm7.png",

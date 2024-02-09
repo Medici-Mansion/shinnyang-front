@@ -2,8 +2,8 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "배달부 설냥",
-    short_name: "배달부 설냥",
+    name: "새해복설냥",
+    short_name: "새해복설냥",
     description:
       "설날 연휴 새해복을 전달하는 귀여운 설냥이와 함께 특별한 행복을 선물해보세냥 ฅ•ω•ฅ",
     start_url: "/",
