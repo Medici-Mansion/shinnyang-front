@@ -96,82 +96,84 @@ const AnswerLetter = ({ control, router, letter }: FinishLetterProps) => {
         </div>
       </div>
       <div className="grow">
-        {letter.catName === "umu" ? (
-          <div className="absolute -bottom-[7%] left-0">
-            <Image
-              src={umu.bg.src}
-              width={umu.bg.width}
-              height={umu.bg.height}
-              alt="담요"
-            />
-            {letter.catName && <CatImage catType={letter.catName} />}
+        <div className="absolute -bottom-[7%] left-0">
+          {letter.catName === "umu" ? (
+            <>
+              <Image
+                src={umu.bg.src}
+                width={umu.bg.width}
+                height={umu.bg.height}
+                alt="담요"
+              />
+              {letter.catName && <CatImage catType={letter.catName} />}
 
-            {umu.floating.map((item) => (
-              <AnimateArticle key={item.name} item={item} />
-            ))}
-          </div>
-        ) : letter.catName === "cheezu" ? (
-          <div className="absolute -bottom-[7%] left-0">
-            <Image
-              src={cheezu.bg.src}
-              width={cheezu.bg.width}
-              height={cheezu.bg.height}
-              alt=""
-            />
-            <Image
-              className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
-              src={cheezu.main.src}
-              alt={""}
-              width={cheezu.main.width}
-              height={cheezu.main.height}
-            />
+              {umu.floating.map((item) => (
+                <AnimateArticle key={item.name} item={item} />
+              ))}
+            </>
+          ) : letter.catName === "cheezu" ? (
+            <>
+              <Image
+                src={cheezu.bg.src}
+                width={cheezu.bg.width}
+                height={cheezu.bg.height}
+                alt=""
+              />
+              <Image
+                className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
+                src={cheezu.main.src}
+                alt={""}
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+              />
 
-            {cheezu.floating.map((item, index) => (
-              <AnimateArticle key={item.name} item={item} />
-            ))}
-          </div>
-        ) : (
-          <div className="absolute -bottom-[7%] left-0">
-            <Image
-              src={gookie.bg.src}
-              width={gookie.bg.width}
-              height={gookie.bg.height}
-              alt=""
-            />
-            <Image
-              className="absolute -top-[35%] left-[53%] z-[2] w-[43%]"
-              src={gookie.main.src}
-              alt=""
-              width={gookie.main.width}
-              height={gookie.main.height}
-            />
-            <Image
-              className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
-              src={gookie.kettle.src}
-              alt=""
-              width={cheezu.main.width}
-              height={cheezu.main.height}
-            />
-            <Image
-              className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
-              src={gookie.songpyeon.src}
-              alt=""
-              width={cheezu.main.width}
-              height={cheezu.main.height}
-            />
-            <Image
-              className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
-              src={gookie.mug.src}
-              alt=""
-              width={cheezu.main.width}
-              height={cheezu.main.height}
-            />
+              {cheezu.floating.map((item, index) => (
+                <AnimateArticle key={item.name} item={item} />
+              ))}
+            </>
+          ) : (
+            <>
+              <Image
+                src={gookie.bg.src}
+                width={gookie.bg.width}
+                height={gookie.bg.height}
+                alt=""
+              />
+              <Image
+                className="absolute -top-[35%] left-[53%] z-[2] w-[43%]"
+                src={gookie.main.src}
+                alt=""
+                width={gookie.main.width}
+                height={gookie.main.height}
+              />
+              <Image
+                className="absolute -top-[12%] left-[11%] z-[2] w-[18%]"
+                src={gookie.kettle.src}
+                alt=""
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+              />
+              <Image
+                className="absolute -top-[-5%] left-[24%] z-[2] w-[25%]"
+                src={gookie.songpyeon.src}
+                alt=""
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+              />
+              <Image
+                className="absolute -top-[-13%] left-[50%] z-[2] w-[10%]"
+                src={gookie.mug.src}
+                alt=""
+                width={cheezu.main.width}
+                height={cheezu.main.height}
+              />
 
-            {gookie.floating.map((item, index) => (
-              <AnimateArticle key={item.name} item={item} />
-            ))}
-          </div>
-        )}
+              {gookie.floating.map((item, index) => (
+                <AnimateArticle key={item.name} item={item} />
+              ))}
+            </>
+          )}
+        </div>
       </div>
       <div className="z-[1]">
         <Button onClick={handleWriteReply}>답장하기</Button>
