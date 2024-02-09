@@ -62,7 +62,9 @@ const LetterPage = () => {
             ? "bg-background"
             : catType === "cheezu"
               ? "bg-[#E8E2D6]"
-              : "bg-background",
+              : catType === "gookie"
+                ? "bg-[#92AFC7]"
+                : "bg-background",
         )}
       >
         {router.hash !== "#mailing" && (

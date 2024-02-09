@@ -6,7 +6,7 @@ import cloud1 from "@/app/assets/cloud1.png";
 import cloud2 from "@/app/assets/cloud2.png";
 import 설냥 from "@/app/assets/cat.png";
 
-export const dynamic = "force-static";
+export const revalidate = 3600;
 
 const Snow = lazy(() => import("@/components/pages/snow"));
 
@@ -22,7 +22,7 @@ function daysUntilNewYear() {
   const differenceInTime = newYearDate.getTime() - today.getTime();
   const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
 
-  return differenceInDays - 1;
+  return differenceInDays;
 }
 
 const OnBoardingPage = async () => {

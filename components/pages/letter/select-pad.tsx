@@ -11,11 +11,13 @@ import { LetterFormValues } from "@/form-state";
 
 import cheezu from "@/app/assets/체즈";
 import umu from "@/app/assets/우무";
+import gookie from "@/app/assets/구키";
 
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
 import 말풍선 from "@/app/assets/speech_bubble.png";
+import { Divide } from "lucide-react";
 
 interface SelectPadProps {
   router: Pick<IHashContext, "push" | "back">;
@@ -127,7 +129,7 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                     </p>
                   </div>
                 </div>
-              ) : (
+              ) : field.value === "cheezu" ? (
                 <div className="absolute -bottom-[7%] left-0">
                   <Image
                     src={cheezu.bg.src}
@@ -148,6 +150,45 @@ const SelectPad = ({ router, control, catType }: SelectPadProps) => {
                   />
 
                   {cheezu.floating.map((item, index) => (
+                    <AnimateArticle key={item.name} item={item} />
+                  ))}
+                  <div className="absolute -top-[98%] left-[19%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
+                    <Image
+                      src={말풍선.src}
+                      width={말풍선.width}
+                      height={말풍선.height}
+                      alt="말풍선"
+                      placeholder="blur"
+                      blurDataURL={말풍선.blurDataURL}
+                    />
+                    <p className={cn("cheezu absolute text-black")}>
+                      나의 귀여운 글씨체와 함께
+                      <br />
+                      편지를 써보는 건 어떠냥!
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="absolute -bottom-[7%] left-0">
+                  <Image
+                    src={gookie.bg.src}
+                    placeholder="blur"
+                    width={cheezu.bg.width}
+                    height={cheezu.bg.height}
+                    blurDataURL={cheezu.bg.blurDataURL}
+                    alt=""
+                  />
+                  <Image
+                    className="absolute -top-[43%] left-[25%] z-[2] w-[43%]"
+                    src={gookie.main.src}
+                    alt={catType}
+                    width={cheezu.main.width}
+                    height={cheezu.main.height}
+                    placeholder="blur"
+                    blurDataURL={cheezu.main.blurDataURL}
+                  />
+
+                  {gookie.floating.map((item, index) => (
                     <AnimateArticle key={item.name} item={item} />
                   ))}
                   <div className="absolute -top-[98%] left-[19%] z-[2] flex w-[67.7%] scale-75 items-center justify-center">
