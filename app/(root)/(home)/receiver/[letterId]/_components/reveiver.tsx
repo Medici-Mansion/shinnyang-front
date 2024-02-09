@@ -1,6 +1,12 @@
 "use client";
 
-import React, { Suspense, useContext, useEffect, useState } from "react";
+import React, {
+  PropsWithChildren,
+  Suspense,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { HashContext } from "@/hooks/use-hash-router";
 import { AnimatePresence } from "framer-motion";
 
@@ -21,7 +27,7 @@ import FinishLetter from "@/components/pages/letter/finish-letter";
 import { useSearchParams } from "next/navigation";
 import { cn, copyURL } from "@/lib/utils";
 import ReceiverLoading from "@/components/receiver-loading";
-import { TestQ } from "../../../letter/page";
+
 const ReceiverPage = ({
   params: { letterId },
 }: {
@@ -158,3 +164,18 @@ const ReceiverPage = ({
 };
 
 export default ReceiverPage;
+
+function TestQ({ children }: PropsWithChildren) {
+  const {} = useSuspenseQuery({
+    queryKey: ["TEST"],
+    queryFn: () =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(true);
+        }, 3100);
+      }),
+    gcTime: 0,
+    staleTime: 0,
+  });
+  return children;
+}

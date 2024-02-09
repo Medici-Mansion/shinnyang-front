@@ -188,7 +188,7 @@ const LetterPage = () => {
 
 export default LetterPage;
 
-export function TestQ({ children }: PropsWithChildren) {
+function TestQ({ children }: PropsWithChildren) {
   const {} = useSuspenseQuery({
     queryKey: ["TEST"],
     queryFn: () =>
