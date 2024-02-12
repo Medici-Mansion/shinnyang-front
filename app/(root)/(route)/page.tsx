@@ -5,41 +5,33 @@ import HomeButton from "@/components/home-button";
 import cloud1 from "@/app/assets/cloud1.png";
 import cloud2 from "@/app/assets/cloud2.png";
 import 설냥 from "@/app/assets/cat.png";
+import { getLetterCount } from "@/actions/letter-count";
 
 export const revalidate = 3600;
 
 const Snow = lazy(() => import("@/components/pages/snow"));
 
-function daysUntilNewYear() {
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const nextYear =
-    today > new Date(`${today.getFullYear()}-02-10`)
-      ? currentYear + 1
-      : currentYear;
-  const newYearDate = new Date(`${nextYear}-02-10`);
-
-  const differenceInTime = newYearDate.getTime() - today.getTime();
-  const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
-
-  return differenceInDays;
-}
-
 const OnBoardingPage = async () => {
+  const totalLetterCount = await getLetterCount();
+
   return (
     <>
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
           <div className="relative z-10 mt-10 flex flex-1 flex-col justify-start text-center text-main">
-            <div className=" mx-auto w-fit font-umu text-4xl font-medium leading-[50px]">
+            <div className=" mx-auto w-fit font-umu text-4xl font-medium leading-[58px]">
               새해복설냥
             </div>
-            <span className="title-regular font-umu leading-10">
+            <span className="font-umu text-[22px] leading-[58px]">
               설날 편지 대신 주러간다냥
             </span>
-            {/* <p className="mx-auto flex h-12 w-fit items-center rounded-md bg-[rgba(164,214,255,0.5)] px-4 font-umu">
-              종료 D-{daysUntilNewYear()}
-            </p> */}
+            <div className="mt-2 flex items-center justify-center">
+              {totalLetterCount && (
+                <span className="rounded-full bg-gradient-to-r from-[#D6FFD6] via-[#FFFFD4] to-[#FFDAFF] px-5 py-2 font-pretendard text-sm font-semibold text-[#002232]">
+                  총 {totalLetterCount.letterCount} 개의 편지를 줬다냥!
+                </span>
+              )}
+            </div>
           </div>
           <div className="absolute bottom-[5%] right-0 w-[90%] grow">
             <Image

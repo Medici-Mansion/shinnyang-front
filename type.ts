@@ -100,3 +100,7 @@ export interface PostCatAccessoryDTO {
   catId: string;
   accessoryId?: string;
 }
+
+export interface LetterCount {
+  letterCount: number;
+}

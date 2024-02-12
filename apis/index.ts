@@ -8,6 +8,7 @@ import {
   Session,
   User,
   UserCatResponse,
+  LetterCount,
 } from "@/type";
 import axios from "axios";
 export const api = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
@@ -132,6 +133,11 @@ export const postCatAccessory = async (
   return response.data;
 };
 
+export const getTotalLetterCount = async () => {
+  const response = await api.get<LetterCount>("/common/letter-count");
+  return response.data;
+};
+
 const APIs = {
   getGoogleCode,
   getUser,
@@ -149,6 +155,7 @@ const APIs = {
   postCatAccessory,
   updateLetterBySenderId,
   deleteMe,
+  getTotalLetterCount,
 };
 
 export default APIs;
