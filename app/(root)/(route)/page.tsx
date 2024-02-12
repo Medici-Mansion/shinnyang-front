@@ -18,14 +18,14 @@ const OnBoardingPage = async () => {
     <>
       <div className="theme-responsive relative">
         <div className="flex h-full w-full flex-col">
-          <div className="relative z-10 mt-10 flex flex-1 flex-col justify-start text-center text-main">
+          <div className="relative z-10 mt-5 flex flex-1 flex-col justify-start text-center text-main">
             <div className=" mx-auto w-fit font-umu text-4xl font-medium leading-[58px]">
               새해복설냥
             </div>
             <span className="font-umu text-[22px] leading-[58px]">
               설날 편지 대신 주러간다냥
             </span>
-            <div className="mt-2 flex items-center justify-center">
+            <div className="flex items-center justify-center">
               {totalLetterCount && (
                 <span className="rounded-full bg-gradient-to-r from-[#D6FFD6] via-[#FFFFD4] to-[#FFDAFF] px-5 py-2 font-pretendard text-sm font-semibold text-[#002232]">
                   총 {totalLetterCount.letterCount} 개의 편지를 줬다냥!
@@ -33,7 +33,7 @@ const OnBoardingPage = async () => {
               )}
             </div>
           </div>
-          <div className="absolute bottom-[5%] right-0 w-[90%] grow">
+          <div className="absolute bottom-[0%] right-0 w-[90%] grow">
             <Image
               className="w-full"
               width={설냥.width}
