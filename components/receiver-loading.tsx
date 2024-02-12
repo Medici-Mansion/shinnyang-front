@@ -1,27 +1,28 @@
 "use client";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import loadingImages from "@/app/assets/배달로딩";
+import loadingFromCatType from "@/app/assets/배달로딩";
 import Snow from "./pages/snow";
 import { LetterFormValues } from "@/form-state";
 
 interface LoadingProps {
   className?: string;
   catType: LetterFormValues["catName"];
-  onFinish: () => void;
+  onFinish?: () => void;
 }
 const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
   const [time, setTime] = useState(0);
 
+  const loadingImages = useMemo(() => loadingFromCatType[catType], [catType]);
   useLayoutEffect(() => {
     const timeoutId = setInterval(() => {
       setTime((prev) => {
         if (prev === loadingImages.length - 1) {
           clearInterval(timeoutId);
           setTimeout(() => {
-            onFinish();
+            onFinish && onFinish();
           }, 2000);
         }
 
@@ -33,7 +34,7 @@ const ReceiverLoading = ({ className, onFinish, catType }: LoadingProps) => {
       clearInterval(timeoutId);
       setTime(0);
     };
-  }, [onFinish]);
+  }, [loadingImages.length, onFinish]);
 
   const image =
     time >= loadingImages.length
